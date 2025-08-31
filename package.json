@@ -1,0 +1,31 @@
+{
+  "name": "melissa-casole-portfolio",
+  "version": "1.0.0",
+  "description": "UX/UI Portfolio website with password protection and dark theme",
+  "main": "index.html",
+  "scripts": {
+    "build": "sass css/styles.scss css/styles.css",
+    "watch": "sass --watch css/styles.scss css/styles.css",
+    "dev": "sass --watch css/styles.scss css/styles.css --style expanded",
+    "build:compressed": "sass css/styles.scss css/styles.css --style compressed"
+  },
+  "keywords": [
+    "portfolio",
+    "ux",
+    "ui",
+    "design",
+    "scss",
+    "jquery",
+    "gsap"
+  ],
+  "author": "Melissa Casole",
+  "license": "MIT",
+  "devDependencies": {
+    "sass": "^1.69.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}
