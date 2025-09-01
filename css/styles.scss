@@ -609,46 +609,41 @@ img {
   }
   
   .navbar-toggle {
-    display: none;
+    display: block; // Always visible by default (mobile-first)
     background: none;
     border: none;
     color: color(text, primary);
     font-size: 24px;
     cursor: pointer;
-    
-    @include breakpoint(md) {
-      display: block;
-    }
   }
   
-  @include breakpoint(md) {
-    .navbar-nav {
-      display: none;
+  // Mobile navigation (below 768px)
+  .navbar-nav {
+    display: none;
+    
+    &.show {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: color(background, secondary);
+      border-top: 1px solid color(border, primary);
+      padding: spacing(md);
+      @include elevation(md);
+      z-index: map-get($z-index, 'dropdown');
       
-      &.show {
-        display: flex;
-        flex-direction: column;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background: color(background, secondary);
-        border-top: 1px solid color(border, primary);
-        padding: spacing(md);
-        @include elevation(md);
-        z-index: map-get($z-index, 'dropdown');
+      .nav-link {
+        padding: spacing(md) spacing(lg);
+        border-bottom: 1px solid color(border, primary);
         
-        .nav-link {
-          padding: spacing(md) spacing(lg);
-          border-bottom: 1px solid color(border, primary);
-          
-          &:last-child {
-            border-bottom: none;
-          }
-          
-          &:hover {
-            background: color(background, tertiary);
-          }
+        &:last-child {
+          border-bottom: none;
+        }
+        
+        &:hover {
+          background: color(background, tertiary);
         }
       }
     }

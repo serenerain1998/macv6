@@ -850,9 +850,9 @@ body.is-scrolling .contact-section {
   background: rgba(255, 255, 255, 0.15);
 }
 
-/* Mobile Navigation Toggle (hidden on desktop) */
+/* Mobile Navigation Toggle (visible by default, hidden on desktop) */
 .navbar-toggle {
-  display: none;
+  display: block;
   background: none;
   border: none;
   color: white;
@@ -867,46 +867,40 @@ body.is-scrolling .contact-section {
   background: rgba(255, 255, 255, 0.1);
 }
 
-/* Mobile Navigation (768px and below) */
-@media (max-width: 768px) {
-  .navbar-nav {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: rgba(0, 0, 0, 0.95);
-    backdrop-filter: blur(20px);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    padding: var(--space-4);
-    flex-direction: column;
-    gap: var(--space-2);
-    box-shadow: var(--shadow-lg);
-  }
+/* Mobile Navigation (default behavior - below 768px) */
+.navbar-nav {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: var(--space-4);
+  flex-direction: column;
+  gap: var(--space-2);
+  box-shadow: var(--shadow-lg);
+}
 
-  .navbar-nav.show {
-    display: flex;
-  }
+.navbar-nav.show {
+  display: flex;
+}
 
-  .navbar-nav .nav-link {
-    width: 100%;
-    text-align: center;
-    padding: var(--space-3) var(--space-4);
-    border-radius: var(--radius-md);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  }
+.navbar-nav .nav-link {
+  width: 100%;
+  text-align: center;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
 
-  .navbar-nav .nav-link:last-child {
-    border-bottom: none;
-  }
+.navbar-nav .nav-link:last-child {
+  border-bottom: none;
+}
 
-  .navbar-nav .nav-link:hover {
-    background: rgba(255, 255, 255, 0.1);
-  }
-
-  .navbar-toggle {
-    display: block;
-  }
+.navbar-nav .nav-link:hover {
+  background: rgba(255, 255, 255, 0.1);
 }
 
 /* Desktop Navigation (1024px and above) */
