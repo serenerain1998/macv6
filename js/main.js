@@ -147,10 +147,67 @@
     // Update ARIA state
     elements.navbarToggle.setAttribute('aria-expanded', newState.toString());
     
-    // Toggle navbar classes
     if (elements.navbarNav) {
-      elements.navbarNav.classList.toggle('show');
+      if (newState) {
+        // Opening the menu
+        elements.navbarNav.classList.add('show');
+        animateMobileMenuOpen();
+      } else {
+        // Closing the menu
+        animateMobileMenuClose();
+      }
     }
+  }
+
+  function animateMobileMenuOpen() {
+    const navLinks = elements.navbarNav.querySelectorAll('.nav-link');
+    
+    // Reset any existing animations
+    navLinks.forEach(link => {
+      link.style.opacity = '0';
+      link.style.transform = 'translateY(-20px)';
+      link.style.transition = 'none';
+    });
+    
+    // Force reflow
+    elements.navbarNav.offsetHeight;
+    
+    // Animate each link with stagger
+    navLinks.forEach((link, index) => {
+      link.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+      
+      setTimeout(() => {
+        link.style.opacity = '1';
+        link.style.transform = 'translateY(0)';
+      }, index * 80); // 80ms stagger delay
+    });
+  }
+
+  function animateMobileMenuClose() {
+    const navLinks = elements.navbarNav.querySelectorAll('.nav-link');
+    
+    // Animate each link with reverse stagger
+    navLinks.forEach((link, index) => {
+      link.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+      
+      setTimeout(() => {
+        link.style.opacity = '0';
+        link.style.transform = 'translateY(-20px)';
+      }, index * 50); // Faster stagger for closing
+    });
+    
+    // Hide the navbar after animation completes
+    const totalDuration = navLinks.length * 50 + 300;
+    setTimeout(() => {
+      elements.navbarNav.classList.remove('show');
+      
+      // Reset styles
+      navLinks.forEach(link => {
+        link.style.opacity = '';
+        link.style.transform = '';
+        link.style.transition = '';
+      });
+    }, totalDuration);
   }
 
   function handleEscapeKey(event) {
