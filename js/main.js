@@ -38,6 +38,7 @@
       skipLink: document.querySelector('.skip-link'),
       mainContent: document.querySelector('#mainContent'),
       passwordModal: document.querySelector('.password-modal'),
+      passwordForm: document.querySelector('.password-form'),
       passwordInput: document.querySelector('#passwordInput'),
       submitPassword: document.querySelector('#submitPassword'),
       togglePassword: document.querySelector('.toggle-password'),
@@ -627,9 +628,17 @@
       elements.submitPassword.addEventListener('click', handlePasswordSubmit);
     }
     
+    if (elements.passwordForm) {
+      elements.passwordForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        handlePasswordSubmit();
+      });
+    }
+    
     if (elements.passwordInput) {
       elements.passwordInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
+          e.preventDefault();
           handlePasswordSubmit();
         }
       });
