@@ -219,7 +219,12 @@
       return;
     }
 
-    const heroSubtitle = document.querySelector('.hero-subtitle');
+    // Only initialize on the main page (index.html)
+    if (window.location.pathname !== '/' && !window.location.pathname.endsWith('index.html')) {
+      return;
+    }
+
+    const heroSubtitle = document.querySelector('#typed-subtitle');
     if (!heroSubtitle || prefersReducedMotion()) return;
 
     // Set a fixed height to prevent jumping
