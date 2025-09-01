@@ -1991,7 +1991,246 @@ img {
 }
 
 // =============================================================================
-// 13. ANIMATIONS
+// 13. RESPONSIVE DESIGN
+// =============================================================================
+
+// Extra Small Devices (phones, 480px and down)
+@include breakpoint(xs) {
+  .hero-section {
+    padding: spacing(8) spacing(4);
+    min-height: 80vh;
+  }
+  
+  .hero-title {
+    font-size: font-size('3xl');
+    margin-bottom: spacing(4);
+  }
+  
+  .hero-subtitle {
+    font-size: font-size(base);
+    margin-bottom: spacing(6);
+  }
+  
+  .hero-description {
+    font-size: font-size(sm);
+    margin-bottom: spacing(6);
+  }
+  
+  .hero-actions {
+    flex-direction: column;
+    gap: spacing(3);
+    
+    .btn-primary,
+    .btn-secondary {
+      width: 100%;
+      padding: spacing(3) spacing(4);
+      font-size: font-size(base);
+    }
+  }
+  
+  .hero-stats {
+    grid-template-columns: 1fr;
+    gap: spacing(3);
+  }
+  
+  .stat-item {
+    padding: spacing(3);
+  }
+  
+  .stat-number {
+    font-size: font-size('2xl');
+  }
+  
+  .stat-label {
+    font-size: font-size(xs);
+  }
+  
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: spacing(4);
+  }
+  
+  .project-card {
+    padding: spacing(4);
+    
+    h3 {
+      font-size: font-size(lg);
+    }
+    
+    p {
+      font-size: font-size(sm);
+    }
+  }
+  
+  .about-content {
+    grid-template-columns: 1fr;
+    gap: spacing(6);
+  }
+  
+  .skills-grid {
+    grid-template-columns: 1fr;
+    gap: spacing(4);
+  }
+  
+  .contact-content {
+    grid-template-columns: 1fr;
+    gap: spacing(6);
+  }
+  
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: spacing(6);
+    text-align: center;
+  }
+}
+
+// Small Devices (tablets, 481px to 768px)
+@include breakpoint(sm) {
+  .hero-section {
+    padding: spacing(12) spacing(6);
+  }
+  
+  .hero-title {
+    font-size: font-size('4xl');
+  }
+  
+  .hero-subtitle {
+    font-size: font-size(lg);
+  }
+  
+  .hero-description {
+    font-size: font-size(base);
+  }
+  
+  .hero-actions {
+    flex-direction: column;
+    gap: spacing(4);
+    
+    .btn-primary,
+    .btn-secondary {
+      min-width: 200px;
+    }
+  }
+  
+  .hero-stats {
+    grid-template-columns: repeat(2, 1fr);
+    gap: spacing(4);
+  }
+  
+  .projects-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: spacing(6);
+  }
+  
+  .skills-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: spacing(6);
+  }
+  
+  .footer-content {
+    grid-template-columns: repeat(2, 1fr);
+    gap: spacing(8);
+  }
+}
+
+// Medium Devices (tablets, 769px to 1024px)
+@include breakpoint(md) {
+  .hero-section {
+    padding: spacing(16) spacing(8);
+  }
+  
+  .hero-title {
+    font-size: font-size('5xl');
+  }
+  
+  .hero-subtitle {
+    font-size: font-size(xl);
+  }
+  
+  .hero-description {
+    font-size: font-size(lg);
+  }
+  
+  .hero-actions {
+    gap: spacing(6);
+  }
+  
+  .hero-stats {
+    grid-template-columns: repeat(3, 1fr);
+    gap: spacing(6);
+  }
+  
+  .about-content {
+    grid-template-columns: 1fr 1fr;
+    gap: spacing(12);
+  }
+  
+  .skills-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: spacing(8);
+  }
+  
+  .contact-content {
+    grid-template-columns: 1fr 1fr;
+    gap: spacing(12);
+  }
+  
+  .footer-content {
+    grid-template-columns: repeat(4, 1fr);
+    gap: spacing(8);
+  }
+}
+
+// Landscape Orientation Adjustments
+@media (max-height: 600px) and (orientation: landscape) {
+  .hero-section {
+    min-height: 100vh;
+    padding: spacing(8) spacing(6);
+  }
+  
+  .hero-title {
+    font-size: font-size('3xl');
+    margin-bottom: spacing(3);
+  }
+  
+  .hero-subtitle {
+    font-size: font-size(base);
+    margin-bottom: spacing(4);
+  }
+  
+  .hero-description {
+    font-size: font-size(sm);
+    margin-bottom: spacing(4);
+  }
+  
+  .hero-actions {
+    margin-bottom: spacing(6);
+  }
+  
+  .hero-stats {
+    grid-template-columns: repeat(3, 1fr);
+    gap: spacing(4);
+  }
+}
+
+// Reduced Motion Support
+@media (prefers-reduced-motion: reduce) {
+  .hero-section *,
+  .project-card,
+  .skill-category,
+  .contact-item,
+  .social-links a {
+    animation: none !important;
+    transition: none !important;
+  }
+  
+  .aurora {
+    animation: none !important;
+  }
+}
+
+// =============================================================================
+// 14. ANIMATIONS
 // =============================================================================
 
 @keyframes float {
