@@ -2030,7 +2030,7 @@ img {
   
   .hero-stats {
     grid-template-columns: 1fr;
-    gap: spacing(3);
+    gap: spacing(4);
   }
   
   .stat-item {
@@ -2114,7 +2114,7 @@ img {
   
   .hero-stats {
     grid-template-columns: repeat(2, 1fr);
-    gap: spacing(4);
+    gap: spacing(6);
   }
   
   .projects-grid {
@@ -2157,7 +2157,7 @@ img {
   
   .hero-stats {
     grid-template-columns: repeat(3, 1fr);
-    gap: spacing(6);
+    gap: spacing(8);
   }
   
   .about-content {
