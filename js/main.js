@@ -797,6 +797,204 @@
     }
   }
 
+  // ===== IMAGE SLIDER =====
+  
+  function initImageSlider() {
+    const sliderTrack = document.querySelector('.slider-track');
+    const sliderItems = document.querySelectorAll('.slider-item');
+    const dots = document.querySelectorAll('.dot');
+    const prevBtn = document.querySelector('.prev-btn');
+    const nextBtn = document.querySelector('.next-btn');
+    const modal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+    const modalClose = document.querySelector('.modal-close');
+    const modalPrevBtn = document.querySelector('.modal-btn.prev-btn');
+    const modalNextBtn = document.querySelector('.modal-btn.next-btn');
+    
+    if (!sliderTrack || !sliderItems.length) return;
+    
+    let currentIndex = 0;
+    let isAutoPlaying = true;
+    let autoPlayInterval;
+    let isDragging = false;
+    let startX = 0;
+    let currentTranslate = 0;
+    let prevTranslate = 0;
+    
+    const totalSlides = sliderItems.length;
+    
+    // Auto-play functionality
+    function startAutoPlay() {
+      if (autoPlayInterval) clearInterval(autoPlayInterval);
+      autoPlayInterval = setInterval(() => {
+        if (!isAutoPlaying) return;
+        nextSlide();
+      }, 4000);
+    }
+    
+    function stopAutoPlay() {
+      if (autoPlayInterval) {
+        clearInterval(autoPlayInterval);
+        autoPlayInterval = null;
+      }
+    }
+    
+    // Slide navigation
+    function goToSlide(index) {
+      if (index < 0) index = totalSlides - 1;
+      if (index >= totalSlides) index = 0;
+      
+      currentIndex = index;
+      updateSlider();
+      updateDots();
+    }
+    
+    function nextSlide() {
+      goToSlide(currentIndex + 1);
+    }
+    
+    function prevSlide() {
+      goToSlide(currentIndex - 1);
+    }
+    
+    function updateSlider() {
+      const translateX = -currentIndex * 100;
+      sliderTrack.style.transform = `translateX(${translateX}%)`;
+    }
+    
+    function updateDots() {
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentIndex);
+      });
+    }
+    
+    // Touch/Swipe functionality
+    function touchStart(e) {
+      isDragging = true;
+      startX = e.type === 'mousedown' ? e.pageX : e.touches[0].pageX;
+      prevTranslate = currentTranslate;
+      stopAutoPlay();
+    }
+    
+    function touchMove(e) {
+      if (!isDragging) return;
+      
+      e.preventDefault();
+      const currentX = e.type === 'mousemove' ? e.pageX : e.touches[0].pageX;
+      const diff = currentX - startX;
+      const translateX = (diff / sliderTrack.offsetWidth) * 100;
+      currentTranslate = prevTranslate + translateX;
+      
+      sliderTrack.style.transform = `translateX(${currentTranslate}%)`;
+    }
+    
+    function touchEnd() {
+      isDragging = false;
+      const movedBy = currentTranslate - prevTranslate;
+      
+      if (Math.abs(movedBy) > 20) {
+        if (movedBy < 0) {
+          nextSlide();
+        } else {
+          prevSlide();
+        }
+      } else {
+        updateSlider();
+      }
+      
+      startAutoPlay();
+    }
+    
+    // Modal functionality
+    function openModal(index) {
+      const imgSrc = sliderItems[index].querySelector('img').src;
+      const imgAlt = sliderItems[index].querySelector('img').alt;
+      
+      modalImage.src = imgSrc;
+      modalImage.alt = imgAlt;
+      modal.classList.add('show');
+      document.body.style.overflow = 'hidden';
+      
+      currentIndex = index;
+      updateDots();
+    }
+    
+    function closeModal() {
+      modal.classList.remove('show');
+      document.body.style.overflow = '';
+    }
+    
+    function modalNext() {
+      const nextIndex = (currentIndex + 1) % totalSlides;
+      openModal(nextIndex);
+    }
+    
+    function modalPrev() {
+      const prevIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+      openModal(prevIndex);
+    }
+    
+    // Event listeners
+    sliderItems.forEach((item, index) => {
+      item.addEventListener('click', () => openModal(index));
+      
+      // Touch events
+      item.addEventListener('touchstart', touchStart, { passive: false });
+      item.addEventListener('mousedown', touchStart);
+    });
+    
+    document.addEventListener('touchmove', touchMove, { passive: false });
+    document.addEventListener('mousemove', touchMove);
+    document.addEventListener('touchend', touchEnd);
+    document.addEventListener('mouseup', touchEnd);
+    
+    // Hover pause
+    sliderTrack.addEventListener('mouseenter', () => {
+      isAutoPlaying = false;
+      stopAutoPlay();
+    });
+    
+    sliderTrack.addEventListener('mouseleave', () => {
+      isAutoPlaying = true;
+      startAutoPlay();
+    });
+    
+    // Button controls
+    if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+    if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+    
+    // Dot navigation
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => goToSlide(index));
+    });
+    
+    // Modal controls
+    if (modalClose) modalClose.addEventListener('click', closeModal);
+    if (modalPrevBtn) modalPrevBtn.addEventListener('click', modalPrev);
+    if (modalNextBtn) modalNextBtn.addEventListener('click', modalNext);
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (modal.classList.contains('show')) {
+        if (e.key === 'Escape') closeModal();
+        if (e.key === 'ArrowLeft') modalPrev();
+        if (e.key === 'ArrowRight') modalNext();
+      } else {
+        if (e.key === 'ArrowLeft') prevSlide();
+        if (e.key === 'ArrowRight') nextSlide();
+      }
+    });
+    
+    // Modal overlay click to close
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+    
+    // Initialize
+    updateDots();
+    startAutoPlay();
+  }
+
   // ===== INITIALIZATION =====
   
   function init() {
@@ -822,6 +1020,7 @@
       initFormHandling();
       initPerformanceOptimizations();
       initAccessibilityEnhancements();
+      initImageSlider();
     }
     
     // Dispatch custom event when initialization is complete
