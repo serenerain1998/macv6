@@ -836,26 +836,36 @@
     // Manual scroll controls
     function scrollLeft() {
       pauseAutoScroll();
-      const currentScroll = sliderTrack.scrollLeft || 0;
+      const currentTransform = getComputedStyle(sliderTrack).transform;
+      const matrix = new DOMMatrix(currentTransform);
+      const currentX = matrix.m41;
       const itemWidth = 300 + 24; // item width + gap
-      sliderTrack.scrollTo({
-        left: currentScroll - itemWidth,
-        behavior: 'smooth'
-      });
+      
+      sliderTrack.style.transform = `translateX(${currentX + itemWidth}px)`;
+      sliderTrack.style.transition = 'transform 0.5s ease';
+      
       // Resume auto-scroll after manual interaction
-      setTimeout(startAutoScroll, 3000);
+      setTimeout(() => {
+        sliderTrack.style.transition = 'none';
+        startAutoScroll();
+      }, 3000);
     }
     
     function scrollRight() {
       pauseAutoScroll();
-      const currentScroll = sliderTrack.scrollLeft || 0;
+      const currentTransform = getComputedStyle(sliderTrack).transform;
+      const matrix = new DOMMatrix(currentTransform);
+      const currentX = matrix.m41;
       const itemWidth = 300 + 24; // item width + gap
-      sliderTrack.scrollTo({
-        left: currentScroll + itemWidth,
-        behavior: 'smooth'
-      });
+      
+      sliderTrack.style.transform = `translateX(${currentX - itemWidth}px)`;
+      sliderTrack.style.transition = 'transform 0.5s ease';
+      
       // Resume auto-scroll after manual interaction
-      setTimeout(startAutoScroll, 3000);
+      setTimeout(() => {
+        sliderTrack.style.transition = 'none';
+        startAutoScroll();
+      }, 3000);
     }
     
     // Modal functionality
@@ -922,56 +932,73 @@
     // Touch/swipe support for manual scrolling
     let isDragging = false;
     let startX = 0;
-    let initialScrollLeft = 0;
+    let initialTransformX = 0;
     
     sliderTrack.addEventListener('mousedown', (e) => {
       isDragging = true;
       pauseAutoScroll();
-      startX = e.pageX - sliderTrack.offsetLeft;
-      initialScrollLeft = sliderTrack.scrollLeft;
+      startX = e.pageX;
+      const currentTransform = getComputedStyle(sliderTrack).transform;
+      const matrix = new DOMMatrix(currentTransform);
+      initialTransformX = matrix.m41;
       sliderTrack.style.cursor = 'grabbing';
+      sliderTrack.style.transition = 'none';
     });
     
     sliderTrack.addEventListener('mousemove', (e) => {
       if (!isDragging) return;
       e.preventDefault();
-      const x = e.pageX - sliderTrack.offsetLeft;
-      const walk = (x - startX) * 2;
-      sliderTrack.scrollLeft = initialScrollLeft - walk;
+      const walk = (e.pageX - startX) * 2;
+      sliderTrack.style.transform = `translateX(${initialTransformX + walk}px)`;
     });
     
     sliderTrack.addEventListener('mouseup', () => {
       isDragging = false;
       sliderTrack.style.cursor = 'grab';
+      sliderTrack.style.transition = 'transform 0.3s ease';
       // Resume auto-scroll after manual interaction
-      setTimeout(startAutoScroll, 3000);
+      setTimeout(() => {
+        sliderTrack.style.transition = 'none';
+        startAutoScroll();
+      }, 3000);
     });
     
     sliderTrack.addEventListener('mouseleave', () => {
       isDragging = false;
       sliderTrack.style.cursor = 'grab';
+      sliderTrack.style.transition = 'transform 0.3s ease';
       // Resume auto-scroll after manual interaction
-      setTimeout(startAutoScroll, 3000);
+      setTimeout(() => {
+        sliderTrack.style.transition = 'none';
+        startAutoScroll();
+      }, 3000);
     });
     
     // Touch events for mobile
     sliderTrack.addEventListener('touchstart', (e) => {
       pauseAutoScroll();
-      startX = e.touches[0].pageX - sliderTrack.offsetLeft;
-      initialScrollLeft = sliderTrack.scrollLeft;
+      startX = e.touches[0].pageX;
+      const currentTransform = getComputedStyle(sliderTrack).transform;
+      const matrix = new DOMMatrix(currentTransform);
+      initialTransformX = matrix.m41;
+      sliderTrack.style.transition = 'none';
     });
     
     sliderTrack.addEventListener('touchmove', (e) => {
       if (!startX) return;
-      const x = e.touches[0].pageX - sliderTrack.offsetLeft;
-      const walk = (x - startX) * 2;
-      sliderTrack.scrollLeft = initialScrollLeft - walk;
+      e.preventDefault();
+      const walk = (e.touches[0].pageX - startX) * 2;
+      sliderTrack.style.transform = `translateX(${initialTransformX + walk}px)`;
     });
     
     sliderTrack.addEventListener('touchend', () => {
       startX = null;
+      sliderTrack.style.transition = 'transform 0.3s ease';
       // Resume auto-scroll after manual interaction
-      setTimeout(startAutoScroll, 3000);
+      setTimeout(() => {
+        sliderTrack.style.transition = 'none';
+        startAutoScroll();
+      }, 3000);
     });
     
     // Reset animation when it completes

@@ -1461,14 +1461,13 @@ body.is-scrolling .contact-section {
 .slider-track {
   display: flex;
   gap: var(--space-6);
-  overflow-x: auto;
-  overflow-y: hidden;
-  scroll-behavior: smooth;
+  overflow: hidden;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE and Edge */
   cursor: grab;
   padding: var(--space-4) 0;
   animation: autoScroll 60s linear infinite;
+  will-change: transform;
 }
 
 .slider-track::-webkit-scrollbar {
