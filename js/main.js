@@ -898,12 +898,12 @@
     // Touch/swipe support for manual scrolling
     let isDragging = false;
     let startX = 0;
-    let scrollLeft = 0;
+    let initialScrollLeft = 0;
     
     sliderTrack.addEventListener('mousedown', (e) => {
       isDragging = true;
       startX = e.pageX - sliderTrack.offsetLeft;
-      scrollLeft = sliderTrack.scrollLeft;
+      initialScrollLeft = sliderTrack.scrollLeft;
       sliderTrack.style.cursor = 'grabbing';
     });
     
@@ -912,7 +912,7 @@
       e.preventDefault();
       const x = e.pageX - sliderTrack.offsetLeft;
       const walk = (x - startX) * 2;
-      sliderTrack.scrollLeft = scrollLeft - walk;
+      sliderTrack.scrollLeft = initialScrollLeft - walk;
     });
     
     sliderTrack.addEventListener('mouseup', () => {
@@ -928,14 +928,14 @@
     // Touch events for mobile
     sliderTrack.addEventListener('touchstart', (e) => {
       startX = e.touches[0].pageX - sliderTrack.offsetLeft;
-      scrollLeft = sliderTrack.scrollLeft;
+      initialScrollLeft = sliderTrack.scrollLeft;
     });
     
     sliderTrack.addEventListener('touchmove', (e) => {
       if (!startX) return;
       const x = e.touches[0].pageX - sliderTrack.offsetLeft;
       const walk = (x - startX) * 2;
-      sliderTrack.scrollLeft = scrollLeft - walk;
+      sliderTrack.scrollLeft = initialScrollLeft - walk;
     });
     
     sliderTrack.addEventListener('touchend', () => {
