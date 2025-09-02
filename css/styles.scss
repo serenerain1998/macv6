@@ -2113,7 +2113,7 @@ img {
   }
   
   .hero-stats {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
     gap: spacing(6);
   }
   
