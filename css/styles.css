@@ -1682,7 +1682,7 @@ img {
     font-size: 1.125rem;
   }
   .hero-stats {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr;
   }
   .about-content {
     grid-template-columns: 1fr 1fr;
@@ -1695,6 +1695,11 @@ img {
   }
   .footer-content {
     grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media (min-width: 1024px) {
+  .hero-stats {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 @media (max-height: 600px) and (orientation: landscape) {

@@ -2439,8 +2439,8 @@ body.is-scrolling .contact-section {
   }
 }
 
-/* Medium Devices (tablets, 769px to 1024px) */
-@media (min-width: 769px) and (max-width: 1024px) {
+/* Large Devices (desktop, 1024px and above) */
+@media (min-width: 1024px) {
   /* Hero Section */
   .hero-section {
     padding: var(--space-16) var(--space-8);

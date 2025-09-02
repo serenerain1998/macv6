@@ -2156,7 +2156,7 @@ img {
   }
   
   .hero-stats {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr;
     gap: spacing(8);
   }
   
@@ -2177,6 +2177,14 @@ img {
   
   .footer-content {
     grid-template-columns: repeat(4, 1fr);
+    gap: spacing(8);
+  }
+}
+
+// Large Devices (desktop, 1024px and above)
+@include breakpoint(lg) {
+  .hero-stats {
+    grid-template-columns: repeat(3, 1fr);
     gap: spacing(8);
   }
 }
