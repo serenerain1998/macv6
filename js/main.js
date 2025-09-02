@@ -802,8 +802,6 @@
   function initImageSlider() {
     const sliderTrack = document.querySelector('.slider-track');
     const sliderItems = document.querySelectorAll('.slider-item');
-    const prevBtn = document.querySelector('.prev-btn');
-    const nextBtn = document.querySelector('.next-btn');
     const modal = document.getElementById('imageModal');
     const modalImage = document.getElementById('modalImage');
     const modalClose = document.querySelector('.modal-close');
@@ -833,40 +831,7 @@
       sliderTrack.style.animation = 'autoScroll 60s linear infinite';
     }
     
-    // Manual scroll controls
-    function scrollLeft() {
-      pauseAutoScroll();
-      const currentTransform = getComputedStyle(sliderTrack).transform;
-      const matrix = new DOMMatrix(currentTransform);
-      const currentX = matrix.m41;
-      const itemWidth = 300 + 24; // item width + gap
-      
-      sliderTrack.style.transform = `translateX(${currentX + itemWidth}px)`;
-      sliderTrack.style.transition = 'transform 0.5s ease';
-      
-      // Resume auto-scroll after manual interaction
-      setTimeout(() => {
-        sliderTrack.style.transition = 'none';
-        startAutoScroll();
-      }, 3000);
-    }
-    
-    function scrollRight() {
-      pauseAutoScroll();
-      const currentTransform = getComputedStyle(sliderTrack).transform;
-      const matrix = new DOMMatrix(currentTransform);
-      const currentX = matrix.m41;
-      const itemWidth = 300 + 24; // item width + gap
-      
-      sliderTrack.style.transform = `translateX(${currentX - itemWidth}px)`;
-      sliderTrack.style.transition = 'transform 0.5s ease';
-      
-      // Resume auto-scroll after manual interaction
-      setTimeout(() => {
-        sliderTrack.style.transition = 'none';
-        startAutoScroll();
-      }, 3000);
-    }
+
     
     // Modal functionality
     function openModal(index) {
@@ -903,10 +868,6 @@
       item.addEventListener('click', () => openModal(index));
     });
     
-    // Button controls
-    if (prevBtn) prevBtn.addEventListener('click', scrollLeft);
-    if (nextBtn) nextBtn.addEventListener('click', scrollRight);
-    
     // Modal controls
     if (modalClose) modalClose.addEventListener('click', closeModal);
     if (modalPrevBtn) modalPrevBtn.addEventListener('click', modalPrev);
@@ -918,9 +879,6 @@
         if (e.key === 'Escape') closeModal();
         if (e.key === 'ArrowLeft') modalPrev();
         if (e.key === 'ArrowRight') modalNext();
-      } else {
-        if (e.key === 'ArrowLeft') scrollLeft();
-        if (e.key === 'ArrowRight') scrollRight();
       }
     });
     
@@ -929,33 +887,56 @@
       if (e.target === modal) closeModal();
     });
     
-    // Touch/swipe support for manual scrolling
+    // Enhanced drag functionality
     let isDragging = false;
     let startX = 0;
     let initialTransformX = 0;
+    let dragVelocity = 0;
+    let lastDragTime = 0;
     
     sliderTrack.addEventListener('mousedown', (e) => {
       isDragging = true;
       pauseAutoScroll();
       startX = e.pageX;
+      lastDragTime = Date.now();
       const currentTransform = getComputedStyle(sliderTrack).transform;
       const matrix = new DOMMatrix(currentTransform);
       initialTransformX = matrix.m41;
       sliderTrack.style.cursor = 'grabbing';
       sliderTrack.style.transition = 'none';
+      sliderTrack.style.userSelect = 'none';
     });
     
     sliderTrack.addEventListener('mousemove', (e) => {
       if (!isDragging) return;
       e.preventDefault();
-      const walk = (e.pageX - startX) * 2;
+      const currentTime = Date.now();
+      const deltaTime = currentTime - lastDragTime;
+      const walk = (e.pageX - startX) * 1.5; // Increased sensitivity
+      
+      // Calculate velocity for momentum
+      if (deltaTime > 0) {
+        dragVelocity = walk / deltaTime;
+      }
+      
       sliderTrack.style.transform = `translateX(${initialTransformX + walk}px)`;
+      lastDragTime = currentTime;
     });
     
     sliderTrack.addEventListener('mouseup', () => {
       isDragging = false;
       sliderTrack.style.cursor = 'grab';
-      sliderTrack.style.transition = 'transform 0.3s ease';
+      sliderTrack.style.userSelect = 'auto';
+      
+      // Apply momentum effect
+      if (Math.abs(dragVelocity) > 0.5) {
+        const momentum = dragVelocity * 100;
+        sliderTrack.style.transform = `translateX(${initialTransformX + momentum}px)`;
+        sliderTrack.style.transition = 'transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+      } else {
+        sliderTrack.style.transition = 'transform 0.3s ease';
+      }
+      
       // Resume auto-scroll after manual interaction
       setTimeout(() => {
         sliderTrack.style.transition = 'none';
@@ -964,36 +945,60 @@
     });
     
     sliderTrack.addEventListener('mouseleave', () => {
-      isDragging = false;
-      sliderTrack.style.cursor = 'grab';
-      sliderTrack.style.transition = 'transform 0.3s ease';
-      // Resume auto-scroll after manual interaction
-      setTimeout(() => {
-        sliderTrack.style.transition = 'none';
-        startAutoScroll();
-      }, 3000);
+      if (isDragging) {
+        isDragging = false;
+        sliderTrack.style.cursor = 'grab';
+        sliderTrack.style.userSelect = 'auto';
+        sliderTrack.style.transition = 'transform 0.3s ease';
+        // Resume auto-scroll after manual interaction
+        setTimeout(() => {
+          sliderTrack.style.transition = 'none';
+          startAutoScroll();
+        }, 3000);
+      }
     });
     
     // Touch events for mobile
     sliderTrack.addEventListener('touchstart', (e) => {
       pauseAutoScroll();
       startX = e.touches[0].pageX;
+      lastDragTime = Date.now();
       const currentTransform = getComputedStyle(sliderTrack).transform;
       const matrix = new DOMMatrix(currentTransform);
       initialTransformX = matrix.m41;
       sliderTrack.style.transition = 'none';
+      sliderTrack.style.userSelect = 'none';
     });
     
     sliderTrack.addEventListener('touchmove', (e) => {
       if (!startX) return;
       e.preventDefault();
-      const walk = (e.touches[0].pageX - startX) * 2;
+      const currentTime = Date.now();
+      const deltaTime = currentTime - lastDragTime;
+      const walk = (e.touches[0].pageX - startX) * 1.5; // Increased sensitivity
+      
+      // Calculate velocity for momentum
+      if (deltaTime > 0) {
+        dragVelocity = walk / deltaTime;
+      }
+      
       sliderTrack.style.transform = `translateX(${initialTransformX + walk}px)`;
+      lastDragTime = currentTime;
     });
     
     sliderTrack.addEventListener('touchend', () => {
       startX = null;
-      sliderTrack.style.transition = 'transform 0.3s ease';
+      sliderTrack.style.userSelect = 'auto';
+      
+      // Apply momentum effect
+      if (Math.abs(dragVelocity) > 0.5) {
+        const momentum = dragVelocity * 100;
+        sliderTrack.style.transform = `translateX(${initialTransformX + momentum}px)`;
+        sliderTrack.style.transition = 'transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+      } else {
+        sliderTrack.style.transition = 'transform 0.3s ease';
+      }
+      
       // Resume auto-scroll after manual interaction
       setTimeout(() => {
         sliderTrack.style.transition = 'none';

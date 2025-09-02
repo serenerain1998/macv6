@@ -1549,63 +1549,32 @@ body.is-scrolling .contact-section {
   backdrop-filter: blur(10px);
 }
 
-.slider-controls {
+.drag-indicator {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-6);
-  padding: var(--space-6);
+  padding: var(--space-4);
   background: rgba(0, 0, 0, 0.1);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.slider-btn {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: white;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
-}
-
-.slider-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: scale(1.1);
-}
-
-.slider-btn:active {
-  transform: scale(0.95);
-}
-
-.slider-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.scroll-indicator {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.drag-indicator span {
   color: rgba(255, 255, 255, 0.7);
   font-size: 0.875rem;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-}
-
-.scroll-indicator span {
-  position: relative;
   padding: var(--space-2) var(--space-4);
   background: rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-full);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.drag-indicator span:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: scale(1.05);
 }
 
 /* Image Modal */
