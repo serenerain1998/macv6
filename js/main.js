@@ -35,7 +35,7 @@
       projectGrid: document.querySelector('.projects-grid'),
       sections: document.querySelectorAll('section[id]'),
       navLinks: document.querySelectorAll('.nav-link'),
-      skipLink: document.querySelector('.skip-link'),
+      // skipLink: document.querySelector('.skip-link'),
       mainContent: document.querySelector('#mainContent'),
       passwordModal: document.querySelector('.password-modal'),
       passwordForm: document.querySelector('.password-form'),
