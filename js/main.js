@@ -814,24 +814,48 @@
     
     let currentModalIndex = 0;
     const originalImages = 7; // Number of original images
+    let isAutoScrolling = true;
+    
+    // Auto-scroll functionality
+    function startAutoScroll() {
+      isAutoScrolling = true;
+      sliderTrack.style.animationPlayState = 'running';
+    }
+    
+    function pauseAutoScroll() {
+      isAutoScrolling = false;
+      sliderTrack.style.animationPlayState = 'paused';
+    }
+    
+    function resetAutoScroll() {
+      sliderTrack.style.animation = 'none';
+      sliderTrack.offsetHeight; // Trigger reflow
+      sliderTrack.style.animation = 'autoScroll 60s linear infinite';
+    }
     
     // Manual scroll controls
     function scrollLeft() {
+      pauseAutoScroll();
       const currentScroll = sliderTrack.scrollLeft || 0;
       const itemWidth = 300 + 24; // item width + gap
       sliderTrack.scrollTo({
         left: currentScroll - itemWidth,
         behavior: 'smooth'
       });
+      // Resume auto-scroll after manual interaction
+      setTimeout(startAutoScroll, 3000);
     }
     
     function scrollRight() {
+      pauseAutoScroll();
       const currentScroll = sliderTrack.scrollLeft || 0;
       const itemWidth = 300 + 24; // item width + gap
       sliderTrack.scrollTo({
         left: currentScroll + itemWidth,
         behavior: 'smooth'
       });
+      // Resume auto-scroll after manual interaction
+      setTimeout(startAutoScroll, 3000);
     }
     
     // Modal functionality
@@ -902,6 +926,7 @@
     
     sliderTrack.addEventListener('mousedown', (e) => {
       isDragging = true;
+      pauseAutoScroll();
       startX = e.pageX - sliderTrack.offsetLeft;
       initialScrollLeft = sliderTrack.scrollLeft;
       sliderTrack.style.cursor = 'grabbing';
@@ -918,15 +943,20 @@
     sliderTrack.addEventListener('mouseup', () => {
       isDragging = false;
       sliderTrack.style.cursor = 'grab';
+      // Resume auto-scroll after manual interaction
+      setTimeout(startAutoScroll, 3000);
     });
     
     sliderTrack.addEventListener('mouseleave', () => {
       isDragging = false;
       sliderTrack.style.cursor = 'grab';
+      // Resume auto-scroll after manual interaction
+      setTimeout(startAutoScroll, 3000);
     });
     
     // Touch events for mobile
     sliderTrack.addEventListener('touchstart', (e) => {
+      pauseAutoScroll();
       startX = e.touches[0].pageX - sliderTrack.offsetLeft;
       initialScrollLeft = sliderTrack.scrollLeft;
     });
@@ -940,7 +970,18 @@
     
     sliderTrack.addEventListener('touchend', () => {
       startX = null;
+      // Resume auto-scroll after manual interaction
+      setTimeout(startAutoScroll, 3000);
     });
+    
+    // Reset animation when it completes
+    sliderTrack.addEventListener('animationiteration', () => {
+      // Animation has completed one cycle, it will automatically restart
+      // due to infinite animation, but we can add any cleanup here if needed
+    });
+    
+    // Initialize auto-scroll
+    startAutoScroll();
   }
 
   // ===== INITIALIZATION =====

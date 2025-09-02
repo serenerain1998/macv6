@@ -1443,13 +1443,13 @@ body.is-scrolling .contact-section {
 
 .image-slider-container {
   position: relative;
-  max-width: 1200px;
+  /* max-width: 1200px; */
   margin: 0 auto;
   overflow: hidden;
   border-radius: var(--radius-2xl);
-  background: rgba(255, 255, 255, 0.05);
+  /* background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1); */
 }
 
 .image-slider {
@@ -1468,6 +1468,7 @@ body.is-scrolling .contact-section {
   -ms-overflow-style: none; /* IE and Edge */
   cursor: grab;
   padding: var(--space-4) 0;
+  animation: autoScroll 60s linear infinite;
 }
 
 .slider-track::-webkit-scrollbar {
@@ -1476,6 +1477,20 @@ body.is-scrolling .contact-section {
 
 .slider-track:active {
   cursor: grabbing;
+  animation-play-state: paused;
+}
+
+.slider-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes autoScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 .slider-item {
