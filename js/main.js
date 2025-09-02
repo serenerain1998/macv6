@@ -815,20 +815,35 @@
     let isAutoScrolling = true;
     
     // Auto-scroll functionality
+    let autoScrollInterval;
+    let scrollDirection = 1; // 1 for right, -1 for left
+    
     function startAutoScroll() {
       isAutoScrolling = true;
-      sliderTrack.style.animationPlayState = 'running';
+      if (autoScrollInterval) clearInterval(autoScrollInterval);
+      autoScrollInterval = setInterval(() => {
+        if (!isAutoScrolling) return;
+        
+        const maxScroll = sliderTrack.scrollWidth - sliderTrack.clientWidth;
+        const currentScroll = sliderTrack.scrollLeft;
+        
+        // Reverse direction when reaching the end
+        if (currentScroll >= maxScroll) {
+          scrollDirection = -1;
+        } else if (currentScroll <= 0) {
+          scrollDirection = 1;
+        }
+        
+        sliderTrack.scrollLeft += scrollDirection * 2; // Slow scroll speed
+      }, 50); // Update every 50ms for smooth movement
     }
     
     function pauseAutoScroll() {
       isAutoScrolling = false;
-      sliderTrack.style.animationPlayState = 'paused';
-    }
-    
-    function resetAutoScroll() {
-      sliderTrack.style.animation = 'none';
-      sliderTrack.offsetHeight; // Trigger reflow
-      sliderTrack.style.animation = 'autoScroll 60s linear infinite';
+      if (autoScrollInterval) {
+        clearInterval(autoScrollInterval);
+        autoScrollInterval = null;
+      }
     }
     
 
@@ -890,21 +905,24 @@
     // Enhanced drag functionality
     let isDragging = false;
     let startX = 0;
-    let initialTransformX = 0;
+    let startScrollLeft = 0;
     let dragVelocity = 0;
     let lastDragTime = 0;
+    
+    // Enable horizontal scrolling for drag
+    sliderTrack.style.overflowX = 'auto';
+    sliderTrack.style.scrollBehavior = 'auto';
     
     sliderTrack.addEventListener('mousedown', (e) => {
       isDragging = true;
       pauseAutoScroll();
       startX = e.pageX;
+      startScrollLeft = sliderTrack.scrollLeft;
       lastDragTime = Date.now();
-      const currentTransform = getComputedStyle(sliderTrack).transform;
-      const matrix = new DOMMatrix(currentTransform);
-      initialTransformX = matrix.m41;
+      
       sliderTrack.style.cursor = 'grabbing';
-      sliderTrack.style.transition = 'none';
       sliderTrack.style.userSelect = 'none';
+      sliderTrack.style.scrollBehavior = 'auto';
     });
     
     sliderTrack.addEventListener('mousemove', (e) => {
@@ -912,14 +930,14 @@
       e.preventDefault();
       const currentTime = Date.now();
       const deltaTime = currentTime - lastDragTime;
-      const walk = (e.pageX - startX) * 1.5; // Increased sensitivity
+      const walk = (e.pageX - startX) * 2; // Drag sensitivity
       
       // Calculate velocity for momentum
       if (deltaTime > 0) {
         dragVelocity = walk / deltaTime;
       }
       
-      sliderTrack.style.transform = `translateX(${initialTransformX + walk}px)`;
+      sliderTrack.scrollLeft = startScrollLeft - walk;
       lastDragTime = currentTime;
     });
     
@@ -930,16 +948,14 @@
       
       // Apply momentum effect
       if (Math.abs(dragVelocity) > 0.5) {
-        const momentum = dragVelocity * 100;
-        sliderTrack.style.transform = `translateX(${initialTransformX + momentum}px)`;
-        sliderTrack.style.transition = 'transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-      } else {
-        sliderTrack.style.transition = 'transform 0.3s ease';
+        const momentum = dragVelocity * 200;
+        sliderTrack.scrollLeft = sliderTrack.scrollLeft - momentum;
+        sliderTrack.style.scrollBehavior = 'smooth';
       }
       
       // Resume auto-scroll after manual interaction
       setTimeout(() => {
-        sliderTrack.style.transition = 'none';
+        sliderTrack.style.scrollBehavior = 'auto';
         startAutoScroll();
       }, 3000);
     });
@@ -949,10 +965,10 @@
         isDragging = false;
         sliderTrack.style.cursor = 'grab';
         sliderTrack.style.userSelect = 'auto';
-        sliderTrack.style.transition = 'transform 0.3s ease';
+        sliderTrack.style.scrollBehavior = 'smooth';
         // Resume auto-scroll after manual interaction
         setTimeout(() => {
-          sliderTrack.style.transition = 'none';
+          sliderTrack.style.scrollBehavior = 'auto';
           startAutoScroll();
         }, 3000);
       }
@@ -962,12 +978,11 @@
     sliderTrack.addEventListener('touchstart', (e) => {
       pauseAutoScroll();
       startX = e.touches[0].pageX;
+      startScrollLeft = sliderTrack.scrollLeft;
       lastDragTime = Date.now();
-      const currentTransform = getComputedStyle(sliderTrack).transform;
-      const matrix = new DOMMatrix(currentTransform);
-      initialTransformX = matrix.m41;
-      sliderTrack.style.transition = 'none';
+      
       sliderTrack.style.userSelect = 'none';
+      sliderTrack.style.scrollBehavior = 'auto';
     });
     
     sliderTrack.addEventListener('touchmove', (e) => {
@@ -975,14 +990,14 @@
       e.preventDefault();
       const currentTime = Date.now();
       const deltaTime = currentTime - lastDragTime;
-      const walk = (e.touches[0].pageX - startX) * 1.5; // Increased sensitivity
+      const walk = (e.touches[0].pageX - startX) * 2; // Drag sensitivity
       
       // Calculate velocity for momentum
       if (deltaTime > 0) {
         dragVelocity = walk / deltaTime;
       }
       
-      sliderTrack.style.transform = `translateX(${initialTransformX + walk}px)`;
+      sliderTrack.scrollLeft = startScrollLeft - walk;
       lastDragTime = currentTime;
     });
     
@@ -992,24 +1007,16 @@
       
       // Apply momentum effect
       if (Math.abs(dragVelocity) > 0.5) {
-        const momentum = dragVelocity * 100;
-        sliderTrack.style.transform = `translateX(${initialTransformX + momentum}px)`;
-        sliderTrack.style.transition = 'transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-      } else {
-        sliderTrack.style.transition = 'transform 0.3s ease';
+        const momentum = dragVelocity * 200;
+        sliderTrack.scrollLeft = sliderTrack.scrollLeft - momentum;
+        sliderTrack.style.scrollBehavior = 'smooth';
       }
       
       // Resume auto-scroll after manual interaction
       setTimeout(() => {
-        sliderTrack.style.transition = 'none';
+        sliderTrack.style.scrollBehavior = 'auto';
         startAutoScroll();
       }, 3000);
-    });
-    
-    // Reset animation when it completes
-    sliderTrack.addEventListener('animationiteration', () => {
-      // Animation has completed one cycle, it will automatically restart
-      // due to infinite animation, but we can add any cleanup here if needed
     });
     
     // Initialize auto-scroll

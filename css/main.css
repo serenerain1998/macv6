@@ -1461,13 +1461,14 @@ body.is-scrolling .contact-section {
 .slider-track {
   display: flex;
   gap: var(--space-6);
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE and Edge */
   cursor: grab;
   padding: var(--space-4) 0;
-  animation: autoScroll 60s linear infinite;
-  will-change: transform;
+  scroll-behavior: smooth;
+  will-change: scroll-position;
 }
 
 .slider-track::-webkit-scrollbar {
@@ -1476,20 +1477,10 @@ body.is-scrolling .contact-section {
 
 .slider-track:active {
   cursor: grabbing;
-  animation-play-state: paused;
 }
 
 .slider-track:hover {
-  animation-play-state: paused;
-}
-
-@keyframes autoScroll {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
+  cursor: grab;
 }
 
 .slider-item {
