@@ -1615,6 +1615,7 @@ body.is-scrolling .contact-section {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 50px;
   position: relative;
   overflow: hidden;
   padding-top: calc(var(--header-height) + var(--space-8));
@@ -1681,6 +1682,9 @@ body.is-scrolling .contact-section {
   max-width: 800px;
   margin: 0 auto;
   
+ 
+}
+.case-study-hero .hero-stats{
   @media screen and (max-width: 768px) {
     grid-template-columns: 1fr;
   }
@@ -2506,6 +2510,7 @@ body.is-scrolling .contact-section {
   .case-study-hero {
     padding: calc(var(--header-height) + var(--space-6)) var(--space-4) var(--space-8);
     min-height: 60vh;
+    margin-top: 50px;
   }
   
   .hero-title {
@@ -2523,6 +2528,8 @@ body.is-scrolling .contact-section {
   
   .project-meta span {
     font-size: var(--font-size-xs);
+    width: 60vw;
+        margin: auto;
   }
   
   .hero-stats {
