@@ -1500,15 +1500,25 @@ body.is-scrolling .contact-section {
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
 }
 
-.slider-item img {
+.slider-item img,
+.slider-item video {
   width: 100%;
   height: 200px;
   object-fit: cover;
   transition: transform 0.3s ease;
 }
 
-.slider-item:hover img {
+.slider-item:hover img,
+.slider-item:hover video {
   transform: scale(1.05);
+}
+
+.video-item {
+  position: relative;
+}
+
+.video-item video {
+  pointer-events: none;
 }
 
 
@@ -1546,7 +1556,6 @@ body.is-scrolling .contact-section {
   justify-content: center;
   padding: var(--space-4);
   background: rgba(0, 0, 0, 0.1);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .drag-indicator span {
@@ -1602,12 +1611,18 @@ body.is-scrolling .contact-section {
   z-index: 1;
 }
 
-.modal-content img {
+.modal-content img,
+.modal-content video {
   width: 100%;
   height: 100%;
   object-fit: contain;
   border-radius: var(--radius-xl);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.modal-content video {
+  background: #000;
+  display: none;
 }
 
 .modal-close {
@@ -1762,7 +1777,7 @@ body.is-scrolling .contact-section {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-2xl);
   padding: var(--space-12);
-  max-width: 500px;
+  max-width: 1024px;
   width: 90%;
   text-align: center;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);

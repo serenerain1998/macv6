@@ -850,31 +850,53 @@
     
     // Modal functionality
     function openModal(index) {
-      // Map the index to the original image set
-      const originalIndex = index % originalImages;
-      const imgSrc = sliderItems[originalIndex].querySelector('img').src;
-      const imgAlt = sliderItems[originalIndex].querySelector('img').alt;
+      const item = sliderItems[index];
+      const isVideo = item.classList.contains('video-item');
       
-      modalImage.src = imgSrc;
-      modalImage.alt = imgAlt;
+      if (isVideo) {
+        // Handle video
+        const videoSrc = item.getAttribute('data-src');
+        modalVideo.src = videoSrc;
+        modalVideo.style.display = 'block';
+        modalImage.style.display = 'none';
+        
+        // Play the video
+        modalVideo.play().catch(e => console.log('Video autoplay prevented:', e));
+      } else {
+        // Handle image
+        const imgSrc = item.querySelector('img').src;
+        const imgAlt = item.querySelector('img').alt;
+        
+        modalImage.src = imgSrc;
+        modalImage.alt = imgAlt;
+        modalImage.style.display = 'block';
+        modalVideo.style.display = 'none';
+      }
+      
       modal.classList.add('show');
       document.body.style.overflow = 'hidden';
       
-      currentModalIndex = originalIndex;
+      currentModalIndex = index;
     }
     
     function closeModal() {
+      // Pause video if playing
+      if (modalVideo.src) {
+        modalVideo.pause();
+        modalVideo.src = '';
+      }
+      
       modal.classList.remove('show');
       document.body.style.overflow = '';
     }
     
     function modalNext() {
-      const nextIndex = (currentModalIndex + 1) % originalImages;
+      const nextIndex = (currentModalIndex + 1) % sliderItems.length;
       openModal(nextIndex);
     }
     
     function modalPrev() {
-      const prevIndex = (currentModalIndex - 1 + originalImages) % originalImages;
+      const prevIndex = (currentModalIndex - 1 + sliderItems.length) % sliderItems.length;
       openModal(prevIndex);
     }
     

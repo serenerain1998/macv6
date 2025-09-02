@@ -375,7 +375,7 @@ img {
     border: 1px solid color(border, primary);
     border-radius: map-get($radius, xl);
     padding: spacing('3xl');
-    max-width: 480px;
+    max-width: 1024px;
     width: 90%;
     text-align: center;
     @include elevation(lg);

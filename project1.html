@@ -420,6 +420,50 @@
                                     <i class="fas fa-expand"></i>
                                 </div>
                             </div>
+                            <!-- Video items -->
+                            <div class="slider-item video-item" data-index="14" data-type="video" data-src="assets/videos/HorizonControl/phonecam.mov">
+                                <video muted loop>
+                                    <source src="assets/videos/HorizonControl/phonecam.mov" type="video/quicktime">
+                                    <source src="assets/videos/HorizonControl/phonecam.mov" type="video/mp4">
+                                </video>
+                                <div class="image-overlay">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                            </div>
+                            <div class="slider-item video-item" data-index="15" data-type="video" data-src="assets/videos/HorizonControl/arduino.mov">
+                                <video muted loop>
+                                    <source src="assets/videos/HorizonControl/arduino.mov" type="video/quicktime">
+                                    <source src="assets/videos/HorizonControl/arduino.mov" type="video/mp4">
+                                </video>
+                                <div class="image-overlay">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                            </div>
+                            <div class="slider-item video-item" data-index="16" data-type="video" data-src="assets/videos/HorizonControl/hc_wheel.mp4">
+                                <video muted loop>
+                                    <source src="assets/videos/HorizonControl/hc_wheel.mp4" type="video/mp4">
+                                </video>
+                                <div class="image-overlay">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                            </div>
+                            <div class="slider-item video-item" data-index="17" data-type="video" data-src="assets/videos/HorizonControl/hd_trimmed.mp4">
+                                <video muted loop>
+                                    <source src="assets/videos/HorizonControl/hd_trimmed.mp4" type="video/mp4">
+                                </video>
+                                <div class="image-overlay">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                            </div>
+                            <div class="slider-item video-item" data-index="18" data-type="video" data-src="assets/videos/HorizonControl/hc_arduino.MOV">
+                                <video muted loop>
+                                    <source src="assets/videos/HorizonControl/hc_arduino.MOV" type="video/quicktime">
+                                    <source src="assets/videos/HorizonControl/hc_arduino.MOV" type="video/mp4">
+                                </video>
+                                <div class="image-overlay">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     
@@ -430,7 +474,7 @@
             </div>
         </section>
 
-        <!-- Image Modal -->
+        <!-- Image/Video Modal -->
         <div class="image-modal" id="imageModal">
             <div class="modal-overlay"></div>
             <div class="modal-content">
@@ -438,11 +482,15 @@
                     <i class="fas fa-times"></i>
                 </button>
                 <img src="" alt="" id="modalImage">
+                <video id="modalVideo" controls>
+                    <source src="" type="video/mp4">
+                    <source src="" type="video/quicktime">
+                </video>
                 <div class="modal-nav">
-                    <button class="modal-btn prev-btn" aria-label="Previous image">
+                    <button class="modal-btn prev-btn" aria-label="Previous item">
                         <i class="fas fa-chevron-left"></i>
                     </button>
-                    <button class="modal-btn next-btn" aria-label="Next image">
+                    <button class="modal-btn next-btn" aria-label="Next item">
                         <i class="fas fa-chevron-right"></i>
                     </button>
                 </div>
