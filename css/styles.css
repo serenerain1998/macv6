@@ -530,7 +530,7 @@ img {
 }
 .hero-section .hero-stats {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  grid-template-columns: 1fr;
   gap: 1.5rem;
   margin: 0 auto;
 }
@@ -1695,11 +1695,6 @@ img {
   }
   .footer-content {
     grid-template-columns: repeat(4, 1fr);
-  }
-}
-@media (min-width: 1024px) {
-  .hero-stats {
-    grid-template-columns: repeat(3, 1fr);
   }
 }
 @media (max-height: 600px) and (orientation: landscape) {
