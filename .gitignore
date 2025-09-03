@@ -49,9 +49,10 @@ coverage/
 .yarn-integrity
 
 # Large video files (GitHub has 100MB limit)
-*.mp4
-*.mov
-*.MOV
+# Allow specific videos that are under 100MB
+# *.mp4
+# *.mov
+# *.MOV
 *.avi
 *.mkv
 *.wmv
