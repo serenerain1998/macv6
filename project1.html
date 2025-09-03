@@ -205,6 +205,95 @@
             </div>
         </section>
 
+        <!-- Video Mosaic Wall -->
+        <section class="video-mosaic">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <h2>Interactive Prototypes</h2>
+                    <p>Real-time demonstrations of the Horizon Control interface</p>
+                </div>
+                
+                <div class="mosaic-grid" data-aos="fade-up" data-aos-delay="100">
+                    <div class="mosaic-item large" data-video="assets/images/horizonControl/video/proto1.mp4">
+                        <div class="video-wrapper">
+                            <video muted loop>
+                                <source src="assets/images/horizonControl/video/proto1.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-overlay">
+                                <i class="fas fa-play"></i>
+                                <span>Main Interface Demo</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mosaic-item medium" data-video="assets/images/horizonControl/video/3dModel.mp4">
+                        <div class="video-wrapper">
+                            <video muted loop>
+                                <source src="assets/images/horizonControl/video/3dModel.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-overlay">
+                                <i class="fas fa-play"></i>
+                                <span>3D Model Integration</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mosaic-item small" data-video="assets/images/horizonControl/video/nano.mov">
+                        <div class="video-wrapper">
+                            <video muted loop>
+                                <source src="assets/images/horizonControl/video/nano.mov" type="video/quicktime">
+                                <source src="assets/images/horizonControl/video/nano.mov" type="video/mp4">
+                            </video>
+                            <div class="video-overlay">
+                                <i class="fas fa-play"></i>
+                                <span>Nano Controller</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mosaic-item medium" data-video="assets/images/horizonControl/video/proto2.mov">
+                        <div class="video-wrapper">
+                            <video muted loop>
+                                <source src="assets/images/horizonControl/video/proto2.mov" type="video/quicktime">
+                                <source src="assets/images/horizonControl/video/proto2.mov" type="video/mp4">
+                            </video>
+                            <div class="video-overlay">
+                                <i class="fas fa-play"></i>
+                                <span>Secondary Interface</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mosaic-item small" data-video="assets/images/horizonControl/video/proto3.mov">
+                        <div class="video-wrapper">
+                            <video muted loop>
+                                <source src="assets/images/horizonControl/video/proto3.mov" type="video/quicktime">
+                                <source src="assets/images/horizonControl/video/proto3.mov" type="video/mp4">
+                            </video>
+                            <div class="video-overlay">
+                                <i class="fas fa-play"></i>
+                                <span>Advanced Features</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Video Modal for Mosaic -->
+        <div class="video-modal" id="videoModal">
+            <div class="modal-overlay"></div>
+            <div class="modal-content">
+                <button class="modal-close" aria-label="Close modal">
+                    <i class="fas fa-times"></i>
+                </button>
+                <video id="modalVideo" controls>
+                    <source src="" type="video/mp4">
+                    <source src="" type="video/quicktime">
+                </video>
+            </div>
+        </div>
+
         <!-- Key Achievements & Impact -->
         <section class="achievements-impact">
             <div class="container">

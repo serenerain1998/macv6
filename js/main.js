@@ -1074,6 +1074,169 @@
     });
   }
 
+  // ===== MOSAIC WALL =====
+  
+  function initMosaicWall() {
+    const mosaicItems = document.querySelectorAll('.mosaic-item');
+    const videoModal = document.getElementById('videoModal');
+    const modalVideo = document.getElementById('modalVideo');
+    const modalClose = videoModal?.querySelector('.modal-close');
+    const modalOverlay = videoModal?.querySelector('.modal-overlay');
+
+    // GSAP animations for mosaic items
+    mosaicItems.forEach((item, index) => {
+      // Initial state
+      gsap.set(item, {
+        scale: 0.8,
+        opacity: 0,
+        y: 50
+      });
+
+      // Entrance animation
+      gsap.to(item, {
+        scale: 1,
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        delay: index * 0.1,
+        ease: "back.out(1.7)"
+      });
+
+      // Hover animations
+      const videoWrapper = item.querySelector('.video-wrapper');
+      const video = item.querySelector('video');
+      const overlay = item.querySelector('.video-overlay');
+      const playIcon = overlay?.querySelector('i');
+      const title = overlay?.querySelector('span');
+
+      // Mouse enter
+      item.addEventListener('mouseenter', () => {
+        gsap.to(item, {
+          scale: 1.05,
+          duration: 0.6,
+          ease: "power2.out"
+        });
+
+        gsap.to(video, {
+          scale: 1.1,
+          duration: 0.6,
+          ease: "power2.out"
+        });
+
+        gsap.to(overlay, {
+          opacity: 1,
+          duration: 0.4,
+          ease: "power2.out"
+        });
+
+        gsap.to(playIcon, {
+          scale: 1.2,
+          duration: 0.4,
+          ease: "back.out(1.7)"
+        });
+
+        gsap.to(title, {
+          y: 0,
+          duration: 0.4,
+          ease: "power2.out"
+        });
+      });
+
+      // Mouse leave
+      item.addEventListener('mouseleave', () => {
+        gsap.to(item, {
+          scale: 1,
+          duration: 0.6,
+          ease: "power2.out"
+        });
+
+        gsap.to(video, {
+          scale: 1,
+          duration: 0.6,
+          ease: "power2.out"
+        });
+
+        gsap.to(overlay, {
+          opacity: 0,
+          duration: 0.4,
+          ease: "power2.out"
+        });
+
+        gsap.to(playIcon, {
+          scale: 0.8,
+          duration: 0.4,
+          ease: "power2.out"
+        });
+
+        gsap.to(title, {
+          y: 20,
+          duration: 0.4,
+          ease: "power2.out"
+        });
+      });
+
+      // Click to open modal
+      item.addEventListener('click', () => {
+        const videoSrc = item.getAttribute('data-video');
+        if (videoSrc && modalVideo) {
+          modalVideo.src = videoSrc;
+          modalVideo.load();
+          
+          // Show modal with animation
+          gsap.set(videoModal, { display: 'flex' });
+          gsap.fromTo(videoModal, 
+            { opacity: 0 },
+            { opacity: 1, duration: 0.3, ease: "power2.out" }
+          );
+          
+          gsap.fromTo(modalVideo, 
+            { scale: 0.8, opacity: 0 },
+            { scale: 1, opacity: 1, duration: 0.4, delay: 0.1, ease: "back.out(1.7)" }
+          );
+        }
+      });
+    });
+
+    // Modal close functionality
+    if (modalClose) {
+      modalClose.addEventListener('click', closeVideoModal);
+    }
+
+    if (modalOverlay) {
+      modalOverlay.addEventListener('click', closeVideoModal);
+    }
+
+    // Close modal on escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && videoModal.style.display === 'flex') {
+        closeVideoModal();
+      }
+    });
+
+    function closeVideoModal() {
+      gsap.to(modalVideo, {
+        scale: 0.8,
+        opacity: 0,
+        duration: 0.3,
+        ease: "power2.in"
+      });
+
+      gsap.to(videoModal, {
+        opacity: 0,
+        duration: 0.3,
+        delay: 0.1,
+        ease: "power2.in",
+        onComplete: () => {
+          videoModal.style.display = 'none';
+          if (modalVideo) {
+            modalVideo.pause();
+            modalVideo.src = '';
+          }
+        }
+      });
+    }
+  }
+
   // ===== INITIALIZATION =====
   
   function init() {
@@ -1101,6 +1264,7 @@
       initAccessibilityEnhancements();
       initImageSlider();
       initVideoAutoplay();
+      initMosaicWall();
     }
     
     // Dispatch custom event when initialization is complete
