@@ -95,62 +95,86 @@
 
     const tl = gsap.timeline();
     
-    tl.from('.hero-title', {
-      opacity: 0,
-      y: 50,
-      duration: 1,
-      ease: "power3.out"
-    })
-    .from('.hero-subtitle', {
-      opacity: 0,
-      y: 30,
-      duration: 0.8,
-      ease: "power2.out"
-    }, "-=0.5")
-    .from('.hero-description', {
-      opacity: 0,
-      y: 30,
-      duration: 0.8,
-      ease: "power2.out"
-    }, "-=0.3")
-    .from('.hero-actions', {
-      opacity: 0,
-      y: 30,
-      duration: 0.8,
-      ease: "power2.out"
-    }, "-=0.3")
-    .from('.hero-stats', {
-      opacity: 0,
-      y: 30,
-      duration: 0.8,
-      ease: "power2.out"
-    }, "-=0.3");
+    // Only animate elements that exist
+    const heroTitle = document.querySelector('.hero-title');
+    const heroSubtitle = document.querySelector('.hero-subtitle');
+    const heroDescription = document.querySelector('.hero-description');
+    const heroActions = document.querySelector('.hero-actions');
+    const heroStats = document.querySelector('.hero-stats');
+    
+    if (heroTitle) {
+      tl.from(heroTitle, {
+        opacity: 0,
+        y: 50,
+        duration: 1,
+        ease: "power3.out"
+      });
+    }
+    
+    if (heroSubtitle) {
+      tl.from(heroSubtitle, {
+        opacity: 0,
+        y: 30,
+        duration: 0.8,
+        ease: "power2.out"
+      }, "-=0.5");
+    }
+    
+    if (heroDescription) {
+      tl.from(heroDescription, {
+        opacity: 0,
+        y: 30,
+        duration: 0.8,
+        ease: "power2.out"
+      }, "-=0.3");
+    }
+    
+    if (heroActions) {
+      tl.from(heroActions, {
+        opacity: 0,
+        y: 30,
+        duration: 0.8,
+        ease: "power2.out"
+      }, "-=0.3");
+    }
+    
+    if (heroStats) {
+      tl.from(heroStats, {
+        opacity: 0,
+        y: 30,
+        duration: 0.8,
+        ease: "power2.out"
+      }, "-=0.3");
+    }
   }
 
   function initScrollAnimations() {
     if (prefersReducedMotion()) return;
 
     // Project cards animation
-    gsap.utils.toArray('.project-card').forEach((card, index) => {
-      gsap.fromTo(card, {
-        opacity: 0,
-        y: 60,
-        scale: 0.95
-      }, {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        duration: 0.8,
-        delay: index * CONFIG.staggerDelay,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: card,
-          start: "top 85%",
-          end: "bottom 15%",
-          toggleActions: "play none none reverse"
-        }
+    const projectCards = document.querySelectorAll('.project-card');
+    if (projectCards.length > 0) {
+      gsap.utils.toArray('.project-card').forEach((card, index) => {
+        gsap.fromTo(card, {
+          opacity: 0,
+          y: 60,
+          scale: 0.95
+        }, {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.8,
+          delay: index * CONFIG.staggerDelay,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: card,
+            start: "top 85%",
+            end: "bottom 15%",
+            toggleActions: "play none none reverse"
+          }
+        });
       });
-    });
+    }
 
     // Section headers animation
     gsap.utils.toArray('.section-header').forEach(header => {
