@@ -102,13 +102,16 @@ img {
   background: #111111;
   border: 1px solid #2d2d2d;
   border-radius: 16px;
-  padding: 4rem;
-  max-width: 1024px;
+  padding: 3rem 2rem;
+  max-width: 480px;
   width: 90%;
   text-align: center;
-  box-shadow: "0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22)";
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22)"
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .password-modal .modal-content::before {
   content: "";
@@ -150,9 +153,17 @@ img {
   font-size: 1.125rem;
   line-height: 1.75;
 }
+.password-modal .password-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+}
+
 .password-modal .password-form .input-group {
   position: relative;
   margin-bottom: 1.5rem;
+  width: 100%;
 }
 .password-modal .password-form .input-group .password-input {
   width: 100%;
@@ -193,7 +204,7 @@ img {
   font-size: 18px;
 }
 .password-modal .password-form .submit-btn {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   padding: 1rem 1.5rem;
@@ -208,8 +219,8 @@ img {
   background: linear-gradient(135deg, #6366f1, #3b82f6);
   color: #000000;
   font-size: 1.125rem;
-  padding: 1rem 1rem;
   gap: 1rem;
+  margin-bottom: 1rem;
 }
 .password-modal .password-form .submit-btn:focus {
   outline: 2px solid #6366f1;
@@ -235,6 +246,8 @@ img {
   margin-top: 1rem;
   font-size: 0.875rem;
   display: none;
+  width: 100%;
+  text-align: center;
 }
 .password-modal .error-message.show {
   display: block;
@@ -245,6 +258,8 @@ img {
   background: #1a1a1a;
   border-radius: 8px;
   border-left: 3px solid #6366f1;
+  width: 100%;
+  text-align: center;
 }
 .password-modal .privacy-notice p {
   font-size: 0.875rem;
