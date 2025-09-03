@@ -1346,8 +1346,10 @@
     }
     
     function closeModal() {
+      console.log('closeModal function called');
       modal.classList.remove('show');
       document.body.style.overflow = '';
+      console.log('Modal closed successfully');
     }
     
     function nextImage() {
@@ -1372,7 +1374,15 @@
       });
     });
     
-    if (modalClose) modalClose.addEventListener('click', closeModal);
+    if (modalClose) {
+      console.log('Close button found:', modalClose);
+      modalClose.addEventListener('click', () => {
+        console.log('Close button clicked');
+        closeModal();
+      });
+    } else {
+      console.log('Close button NOT found');
+    }
     if (prevBtn) {
       console.log('Previous button found:', prevBtn);
       prevBtn.addEventListener('click', () => {
