@@ -850,12 +850,19 @@
     
     // Modal functionality
     function openModal(index) {
+      console.log('Opening modal for index:', index);
       const item = sliderItems[index];
       const isVideo = item.classList.contains('video-item');
+      
+      console.log('Is video:', isVideo);
+      console.log('Modal element:', modal);
+      console.log('Modal image element:', modalImage);
+      console.log('Modal video element:', modalVideo);
       
       if (isVideo) {
         // Handle video
         const videoSrc = item.getAttribute('data-src');
+        console.log('Video src:', videoSrc);
         modalVideo.src = videoSrc;
         modalVideo.style.display = 'block';
         modalImage.style.display = 'none';
@@ -866,6 +873,7 @@
         // Handle image
         const imgSrc = item.querySelector('img').src;
         const imgAlt = item.querySelector('img').alt;
+        console.log('Image src:', imgSrc);
         
         modalImage.src = imgSrc;
         modalImage.alt = imgAlt;
@@ -875,6 +883,8 @@
       
       modal.classList.add('show');
       document.body.style.overflow = 'hidden';
+      
+      console.log('Modal classes after adding show:', modal.className);
       
       currentModalIndex = index;
     }
@@ -902,7 +912,10 @@
     
     // Event listeners
     sliderItems.forEach((item, index) => {
-      item.addEventListener('click', () => openModal(index));
+      item.addEventListener('click', () => {
+        console.log('Slider item clicked:', index);
+        openModal(index);
+      });
     });
     
     // Modal controls
