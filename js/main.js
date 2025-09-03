@@ -1294,7 +1294,11 @@
   // ===== GALLERY MODAL =====
   
   function initGalleryModal() {
+    // Check for both gallery items (project2) and slider items (project3)
     const galleryItems = document.querySelectorAll('.gallery-item');
+    const sliderItems = document.querySelectorAll('.slider-item');
+    const items = galleryItems.length > 0 ? galleryItems : sliderItems;
+    
     const modal = document.getElementById('imageModal');
     const modalImage = document.getElementById('modalImage');
     const modalTitle = document.getElementById('modalTitle');
@@ -1305,6 +1309,8 @@
     
     console.log('Gallery Modal Init:', {
       galleryItems: galleryItems.length,
+      sliderItems: sliderItems.length,
+      totalItems: items.length,
       modal: !!modal,
       modalImage: !!modalImage,
       modalClose: !!modalClose,
@@ -1312,13 +1318,13 @@
       nextBtn: !!nextBtn
     });
     
-    if (!galleryItems.length || !modal) return;
+    if (!items.length || !modal) return;
     
     let currentIndex = 0;
-    const images = Array.from(galleryItems).map(item => ({
-      src: item.getAttribute('data-image'),
-      title: item.getAttribute('data-title'),
-      description: item.getAttribute('data-description')
+    const images = Array.from(items).map(item => ({
+      src: item.getAttribute('data-image') || item.querySelector('img')?.src || item.querySelector('video')?.src,
+      title: item.getAttribute('data-title') || item.querySelector('img')?.alt || 'Project Image',
+      description: item.getAttribute('data-description') || 'Project image from portfolio'
     }));
     
     function openModal(index) {
@@ -1359,9 +1365,9 @@
     }
     
     // Event listeners
-    galleryItems.forEach((item, index) => {
+    items.forEach((item, index) => {
       item.addEventListener('click', () => {
-        console.log('Gallery item clicked:', index);
+        console.log('Item clicked:', index);
         openModal(index);
       });
     });
