@@ -1635,10 +1635,22 @@ body.is-scrolling .contact-section {
   max-height: 80vh;
   border-radius: var(--radius-lg);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  position: relative;
+  z-index: 10001;
+}
+
+.modal-content video.show {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 .modal-content video[style*="display: block"] {
   display: block !important;
+  position: relative !important;
+  z-index: 10001 !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 .modal-close {

@@ -1451,9 +1451,16 @@
           // Show video, hide image
           modalImage.style.display = 'none';
           modalVideo.style.display = 'block';
+          modalVideo.classList.add('show');
           
           console.log('Modal video display style:', modalVideo.style.display);
           console.log('Modal video computed style:', window.getComputedStyle(modalVideo).display);
+          console.log('Modal video dimensions:', {
+            width: modalVideo.offsetWidth,
+            height: modalVideo.offsetHeight,
+            clientWidth: modalVideo.clientWidth,
+            clientHeight: modalVideo.clientHeight
+          });
           
           // Update video source
           const sources = modalVideo.querySelectorAll('source');
@@ -1469,6 +1476,13 @@
           // Show modal
           modal.classList.add('show');
           document.body.style.overflow = 'hidden';
+          
+          console.log('Modal content dimensions:', {
+            modalWidth: modal.offsetWidth,
+            modalHeight: modal.offsetHeight,
+            contentWidth: modal.querySelector('.modal-content').offsetWidth,
+            contentHeight: modal.querySelector('.modal-content').offsetHeight
+          });
           
           // Play video with audio
           setTimeout(() => {
