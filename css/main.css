@@ -2352,6 +2352,10 @@ body.is-scrolling .contact-section {
   max-height: 100%;
   border-radius: var(--radius-xl);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  display: block;
+  position: relative;
+  z-index: 10002;
+  background: #000;
 }
 
 /* Responsive Design */

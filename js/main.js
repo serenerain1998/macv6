@@ -1207,16 +1207,19 @@
             { opacity: 1, duration: 0.3, ease: "power2.out" }
           );
           
-          // Simple approach - just show the video without complex animations
-          modalVideo.style.opacity = '0';
-          modalVideo.style.transform = 'scale(0.8)';
+          // Force video to be visible immediately for testing
+          modalVideo.style.opacity = '1';
+          modalVideo.style.transform = 'scale(1)';
+          modalVideo.style.transition = 'none';
           
-          // Fade in the video
-          setTimeout(() => {
-            modalVideo.style.transition = 'all 0.4s ease';
-            modalVideo.style.opacity = '1';
-            modalVideo.style.transform = 'scale(1)';
-          }, 100);
+          // Debug: Check if video is actually loaded
+          console.log('Video readyState:', modalVideo.readyState);
+          console.log('Video currentSrc:', modalVideo.currentSrc);
+          console.log('Video videoWidth:', modalVideo.videoWidth);
+          console.log('Video videoHeight:', modalVideo.videoHeight);
+          console.log('Video display:', getComputedStyle(modalVideo).display);
+          console.log('Video visibility:', getComputedStyle(modalVideo).visibility);
+          console.log('Video opacity:', getComputedStyle(modalVideo).opacity);
           
           // Play the video after a short delay
           setTimeout(() => {
