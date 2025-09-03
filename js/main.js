@@ -1179,15 +1179,26 @@
       item.addEventListener('click', () => {
         const videoSrc = item.getAttribute('data-video');
         console.log('Opening modal with video:', videoSrc);
+        console.log('Modal video element:', modalVideo);
+        
         if (videoSrc && modalVideo) {
           // Update source elements
           const sources = modalVideo.querySelectorAll('source');
-          sources.forEach(source => {
+          console.log('Found source elements:', sources.length);
+          
+          sources.forEach((source, index) => {
+            console.log(`Setting source ${index} to:`, videoSrc);
             source.src = videoSrc;
           });
           
           // Load the video
           modalVideo.load();
+          
+          // Add event listeners for debugging
+          modalVideo.addEventListener('loadstart', () => console.log('Video loadstart'));
+          modalVideo.addEventListener('loadeddata', () => console.log('Video loadeddata'));
+          modalVideo.addEventListener('canplay', () => console.log('Video canplay'));
+          modalVideo.addEventListener('error', (e) => console.log('Video error:', e));
           
           // Show modal with animation
           gsap.set(videoModal, { display: 'flex' });
@@ -1203,10 +1214,15 @@
           
           // Play the video after a short delay
           setTimeout(() => {
+            console.log('Attempting to play video...');
             modalVideo.play().catch(error => {
               console.log('Modal video play failed:', error);
             });
           }, 500);
+        } else {
+          console.log('Missing videoSrc or modalVideo element');
+          console.log('videoSrc:', videoSrc);
+          console.log('modalVideo:', modalVideo);
         }
       });
     });
