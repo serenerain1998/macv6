@@ -1658,7 +1658,7 @@ body.is-scrolling .contact-section {
   transform: scale(1.1);
 }
 
-.modal-nav {
+.modal-navigation {
   position: absolute;
   top: 50%;
   left: 0;
@@ -1668,9 +1668,10 @@ body.is-scrolling .contact-section {
   justify-content: space-between;
   padding: 0 var(--space-4);
   pointer-events: none;
+  z-index: 10002;
 }
 
-.modal-btn {
+.nav-btn {
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: white;
@@ -2722,6 +2723,8 @@ body.is-scrolling .contact-section {
   border-radius: var(--radius-xl);
   overflow: hidden;
   transition: all var(--transition-normal);
+  position: relative;
+  cursor: pointer;
 }
 
 .gallery-item:hover {

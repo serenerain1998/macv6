@@ -1303,6 +1303,15 @@
     const prevBtn = document.querySelector('.nav-btn.prev-btn');
     const nextBtn = document.querySelector('.nav-btn.next-btn');
     
+    console.log('Gallery Modal Init:', {
+      galleryItems: galleryItems.length,
+      modal: !!modal,
+      modalImage: !!modalImage,
+      modalClose: !!modalClose,
+      prevBtn: !!prevBtn,
+      nextBtn: !!nextBtn
+    });
+    
     if (!galleryItems.length || !modal) return;
     
     let currentIndex = 0;
@@ -1342,12 +1351,21 @@
     
     // Event listeners
     galleryItems.forEach((item, index) => {
-      item.addEventListener('click', () => openModal(index));
+      item.addEventListener('click', () => {
+        console.log('Gallery item clicked:', index);
+        openModal(index);
+      });
     });
     
     if (modalClose) modalClose.addEventListener('click', closeModal);
-    if (prevBtn) prevBtn.addEventListener('click', prevImage);
-    if (nextBtn) nextBtn.addEventListener('click', nextImage);
+    if (prevBtn) prevBtn.addEventListener('click', () => {
+      console.log('Previous button clicked');
+      prevImage();
+    });
+    if (nextBtn) nextBtn.addEventListener('click', () => {
+      console.log('Next button clicked');
+      nextImage();
+    });
     
     // Keyboard navigation
     document.addEventListener('keydown', (e) => {
