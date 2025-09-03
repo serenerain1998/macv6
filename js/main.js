@@ -1441,13 +1441,19 @@
         console.log('Clickable video clicked:', {
           videoSrc,
           videoTitle,
-          videoDescription
+          videoDescription,
+          modalVideo: !!modalVideo,
+          modalVideoElement: modalVideo
         });
         
         if (videoSrc && modalVideo) {
+          console.log('Setting up modal video display');
           // Show video, hide image
           modalImage.style.display = 'none';
           modalVideo.style.display = 'block';
+          
+          console.log('Modal video display style:', modalVideo.style.display);
+          console.log('Modal video computed style:', window.getComputedStyle(modalVideo).display);
           
           // Update video source
           const sources = modalVideo.querySelectorAll('source');
