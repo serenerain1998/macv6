@@ -381,6 +381,7 @@ img {
     @include elevation(lg);
     position: relative;
     overflow: hidden;
+   
     
     &::before {
       content: '';

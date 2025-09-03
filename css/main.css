@@ -2322,6 +2322,7 @@ body.is-scrolling .contact-section {
   border: none;
   padding: 0;
   text-align: center;
+  gap: 3em;
 }
 
 .video-modal .modal-close {
