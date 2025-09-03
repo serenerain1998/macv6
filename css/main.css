@@ -2346,7 +2346,8 @@ body.is-scrolling .contact-section {
   transform: scale(1.1);
 }
 
-.video-modal video {
+.video-modal video,
+.video-modal img {
   width: 100%;
   height: auto;
   max-width: 100%;
@@ -2358,6 +2359,7 @@ body.is-scrolling .contact-section {
   z-index: 10002;
   background: #000;
   margin-bottom: var(--space-6);
+  object-fit: contain;
 }
 
 .video-modal .video-description {

@@ -1079,7 +1079,7 @@
   function initMosaicWall() {
     const mosaicItems = document.querySelectorAll('.mosaic-item');
     const videoModal = document.getElementById('videoModal');
-    const modalVideo = document.getElementById('modalVideo');
+    const modalImage = document.getElementById('modalImage');
     const modalClose = videoModal?.querySelector('.modal-close');
     const modalOverlay = videoModal?.querySelector('.modal-overlay');
 
@@ -1104,7 +1104,7 @@
 
       // Hover animations
       const videoWrapper = item.querySelector('.video-wrapper');
-      const video = item.querySelector('video');
+      const image = item.querySelector('img');
       const overlay = item.querySelector('.video-overlay');
       const playIcon = overlay?.querySelector('i');
       const title = overlay?.querySelector('span');
@@ -1117,7 +1117,7 @@
           ease: "power2.out"
         });
 
-        gsap.to(video, {
+        gsap.to(image, {
           scale: 1.1,
           duration: 0.6,
           ease: "power2.out"
@@ -1150,7 +1150,7 @@
           ease: "power2.out"
         });
 
-        gsap.to(video, {
+        gsap.to(image, {
           scale: 1,
           duration: 0.6,
           ease: "power2.out"
@@ -1177,43 +1177,27 @@
 
       // Click to open modal
       item.addEventListener('click', () => {
-        const videoSrc = item.getAttribute('data-video');
-        const videoTitle = item.getAttribute('data-title');
-        const videoDescription = item.getAttribute('data-description');
+        const imageSrc = item.getAttribute('data-video'); // Still using data-video for consistency
+        const imageTitle = item.getAttribute('data-title');
+        const imageDescription = item.getAttribute('data-description');
         
-        console.log('Opening modal with video:', videoSrc);
-        console.log('Modal video element:', modalVideo);
+        console.log('Opening modal with image:', imageSrc);
         
-        if (videoSrc && modalVideo) {
-          // Update source elements
-          const sources = modalVideo.querySelectorAll('source');
-          console.log('Found source elements:', sources.length);
+        if (imageSrc && modalImage) {
+          // Update image source
+          modalImage.src = imageSrc;
           
-          sources.forEach((source, index) => {
-            console.log(`Setting source ${index} to:`, videoSrc);
-            source.src = videoSrc;
-          });
-          
-          // Update video description
+          // Update image description
           const titleElement = document.getElementById('videoTitle');
           const descriptionElement = document.getElementById('videoDescription');
           
-          if (titleElement && videoTitle) {
-            titleElement.textContent = videoTitle;
+          if (titleElement && imageTitle) {
+            titleElement.textContent = imageTitle;
           }
           
-          if (descriptionElement && videoDescription) {
-            descriptionElement.textContent = videoDescription;
+          if (descriptionElement && imageDescription) {
+            descriptionElement.textContent = imageDescription;
           }
-          
-          // Load the video
-          modalVideo.load();
-          
-          // Add event listeners for debugging
-          modalVideo.addEventListener('loadstart', () => console.log('Video loadstart'));
-          modalVideo.addEventListener('loadeddata', () => console.log('Video loadeddata'));
-          modalVideo.addEventListener('canplay', () => console.log('Video canplay'));
-          modalVideo.addEventListener('error', (e) => console.log('Video error:', e));
           
           // Show modal with animation
           gsap.set(videoModal, { display: 'flex' });
@@ -1222,31 +1206,16 @@
             { opacity: 1, duration: 0.3, ease: "power2.out" }
           );
           
-          // Force video to be visible immediately for testing
-          modalVideo.style.opacity = '1';
-          modalVideo.style.transform = 'scale(1)';
-          modalVideo.style.transition = 'none';
+          // Force image to be visible immediately
+          modalImage.style.opacity = '1';
+          modalImage.style.transform = 'scale(1)';
+          modalImage.style.transition = 'none';
           
-          // Debug: Check if video is actually loaded
-          console.log('Video readyState:', modalVideo.readyState);
-          console.log('Video currentSrc:', modalVideo.currentSrc);
-          console.log('Video videoWidth:', modalVideo.videoWidth);
-          console.log('Video videoHeight:', modalVideo.videoHeight);
-          console.log('Video display:', getComputedStyle(modalVideo).display);
-          console.log('Video visibility:', getComputedStyle(modalVideo).visibility);
-          console.log('Video opacity:', getComputedStyle(modalVideo).opacity);
-          
-          // Play the video after a short delay
-          setTimeout(() => {
-            console.log('Attempting to play video...');
-            modalVideo.play().catch(error => {
-              console.log('Modal video play failed:', error);
-            });
-          }, 500);
+          console.log('Image should now be visible');
         } else {
-          console.log('Missing videoSrc or modalVideo element');
-          console.log('videoSrc:', videoSrc);
-          console.log('modalVideo:', modalVideo);
+          console.log('Missing imageSrc or modalImage element');
+          console.log('imageSrc:', imageSrc);
+          console.log('modalImage:', modalImage);
         }
       });
     });
@@ -1269,9 +1238,9 @@
 
     function closeVideoModal() {
       // Simple fade out animation
-      modalVideo.style.transition = 'all 0.3s ease';
-      modalVideo.style.opacity = '0';
-      modalVideo.style.transform = 'scale(0.8)';
+      modalImage.style.transition = 'all 0.3s ease';
+      modalImage.style.opacity = '0';
+      modalImage.style.transform = 'scale(0.8)';
 
       gsap.to(videoModal, {
         opacity: 0,
@@ -1280,18 +1249,12 @@
         ease: "power2.in",
         onComplete: () => {
           videoModal.style.display = 'none';
-          if (modalVideo) {
-            modalVideo.pause();
-            // Clear source elements
-            const sources = modalVideo.querySelectorAll('source');
-            sources.forEach(source => {
-              source.src = '';
-            });
-            modalVideo.load();
-            // Reset video styles
-            modalVideo.style.opacity = '';
-            modalVideo.style.transform = '';
-            modalVideo.style.transition = '';
+          if (modalImage) {
+            // Reset image styles
+            modalImage.style.opacity = '';
+            modalImage.style.transform = '';
+            modalImage.style.transition = '';
+            modalImage.src = '';
           }
         }
       });
