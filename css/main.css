@@ -3345,6 +3345,18 @@ body.is-scrolling .contact-section {
   transform: scale(1.05);
 }
 
+.gallery-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  transition: transform 0.3s ease;
+}
+
+.gallery-item:hover .gallery-video {
+  transform: scale(1.05);
+}
+
 /* Modal Navigation */
 .modal-navigation {
   position: absolute;

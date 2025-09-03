@@ -1342,7 +1342,8 @@
     const images = Array.from(items).map(item => ({
       src: item.getAttribute('data-image') || item.querySelector('img')?.src || item.querySelector('video')?.src,
       title: item.getAttribute('data-title') || item.querySelector('img')?.alt || 'Project Image',
-      description: item.getAttribute('data-description') || 'Project image from portfolio'
+      description: item.getAttribute('data-description') || 'Project image from portfolio',
+      type: item.getAttribute('data-video') ? 'video' : 'image'
     }));
     
     function openModal(index) {
@@ -1352,8 +1353,33 @@
       
       console.log('Image data:', image);
       
-      modalImage.src = image.src;
-      modalImage.alt = image.title;
+      if (image.type === 'video') {
+        // Show video, hide image
+        modalImage.style.display = 'none';
+        modalVideo.style.display = 'block';
+        
+        // Update video source
+        const sources = modalVideo.querySelectorAll('source');
+        sources.forEach(source => {
+          source.src = image.src;
+        });
+        modalVideo.load();
+        
+        // Play video
+        setTimeout(() => {
+          modalVideo.play().catch(error => {
+            console.log('Video play failed:', error);
+          });
+        }, 100);
+      } else {
+        // Show image, hide video
+        modalImage.style.display = 'block';
+        modalVideo.style.display = 'none';
+        
+        modalImage.src = image.src;
+        modalImage.alt = image.title;
+      }
+      
       if (modalTitle) modalTitle.textContent = image.title;
       if (modalDescription) modalDescription.textContent = image.description;
       
@@ -1365,6 +1391,18 @@
     
     function closeModal() {
       console.log('closeModal function called');
+      
+      // Pause video if playing
+      if (modalVideo) {
+        modalVideo.pause();
+        // Clear video source
+        const sources = modalVideo.querySelectorAll('source');
+        sources.forEach(source => {
+          source.src = '';
+        });
+        modalVideo.load();
+      }
+      
       modal.classList.remove('show');
       document.body.style.overflow = '';
       console.log('Modal closed successfully');
