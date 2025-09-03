@@ -1207,10 +1207,16 @@
             { opacity: 1, duration: 0.3, ease: "power2.out" }
           );
           
-          gsap.fromTo(modalVideo, 
-            { scale: 0.8, opacity: 0 },
-            { scale: 1, opacity: 1, duration: 0.4, delay: 0.1, ease: "back.out(1.7)" }
-          );
+          // Simple approach - just show the video without complex animations
+          modalVideo.style.opacity = '0';
+          modalVideo.style.transform = 'scale(0.8)';
+          
+          // Fade in the video
+          setTimeout(() => {
+            modalVideo.style.transition = 'all 0.4s ease';
+            modalVideo.style.opacity = '1';
+            modalVideo.style.transform = 'scale(1)';
+          }, 100);
           
           // Play the video after a short delay
           setTimeout(() => {
@@ -1244,12 +1250,10 @@
     });
 
     function closeVideoModal() {
-      gsap.to(modalVideo, {
-        scale: 0.8,
-        opacity: 0,
-        duration: 0.3,
-        ease: "power2.in"
-      });
+      // Simple fade out animation
+      modalVideo.style.transition = 'all 0.3s ease';
+      modalVideo.style.opacity = '0';
+      modalVideo.style.transform = 'scale(0.8)';
 
       gsap.to(videoModal, {
         opacity: 0,
@@ -1266,6 +1270,10 @@
               source.src = '';
             });
             modalVideo.load();
+            // Reset video styles
+            modalVideo.style.opacity = '';
+            modalVideo.style.transform = '';
+            modalVideo.style.transition = '';
           }
         }
       });
