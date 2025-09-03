@@ -1339,6 +1339,15 @@
       nextBtn: !!nextBtn
     });
     
+    // Debug modal structure
+    if (modal) {
+      console.log('Modal HTML structure:', modal.innerHTML);
+      console.log('Modal video element found:', !!modal.querySelector('#modalVideo'));
+      console.log('Modal image element found:', !!modal.querySelector('#modalImage'));
+    } else {
+      console.log('ERROR: Modal not found!');
+    }
+    
     if (!items.length || !modal) return;
     
     let currentIndex = 0;
@@ -1453,14 +1462,21 @@
         if (videoSrc && modalVideo) {
           console.log('Setting up modal video display');
           
-          // Check if video element is actually in DOM
-          const videoInDOM = document.getElementById('modalVideo');
-          console.log('Video element in DOM check:', {
-            found: !!videoInDOM,
-            element: videoInDOM,
-            parent: videoInDOM ? videoInDOM.parentElement : null,
-            parentClass: videoInDOM ? videoInDOM.parentElement.className : null
-          });
+              // Check if video element is actually in DOM
+    const videoInDOM = document.getElementById('modalVideo');
+    console.log('Video element in DOM check:', {
+      found: !!videoInDOM,
+      element: videoInDOM,
+      parent: videoInDOM ? videoInDOM.parentElement : null,
+      parentClass: videoInDOM ? videoInDOM.parentElement.className : null
+    });
+    
+    // Check if modal exists in DOM
+    const modalInDOM = document.getElementById('imageModal');
+    console.log('Modal in DOM check:', {
+      found: !!modalInDOM,
+      modalHTML: modalInDOM ? modalInDOM.outerHTML.substring(0, 300) + '...' : 'NOT FOUND'
+    });
           // Show video, hide image
           modalImage.style.display = 'none';
           modalVideo.style.display = 'block';
