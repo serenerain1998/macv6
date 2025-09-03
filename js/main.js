@@ -1303,9 +1303,9 @@
     const modalImage = document.getElementById('modalImage');
     const modalTitle = document.getElementById('modalTitle');
     const modalDescription = document.getElementById('modalDescription');
-    const modalClose = document.querySelector('.modal-close');
-    const prevBtn = document.querySelector('.nav-btn.prev-btn');
-    const nextBtn = document.querySelector('.nav-btn.next-btn');
+    const modalClose = modal.querySelector('.modal-close');
+    const prevBtn = modal.querySelector('.nav-btn.prev-btn');
+    const nextBtn = modal.querySelector('.nav-btn.next-btn');
     
     console.log('Gallery Modal Init:', {
       galleryItems: galleryItems.length,
