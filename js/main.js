@@ -1095,6 +1095,14 @@
     const modalVideo = document.getElementById('modalVideo');
     const modalClose = videoModal?.querySelector('.modal-close');
     const modalOverlay = videoModal?.querySelector('.modal-overlay');
+    
+    console.log('Mosaic Wall Init:', {
+      mosaicItems: mosaicItems.length,
+      videoModal: !!videoModal,
+      modalVideo: !!modalVideo,
+      modalClose: !!modalClose,
+      modalOverlay: !!modalOverlay
+    });
 
     // GSAP animations for mosaic items
     mosaicItems.forEach((item, index) => {
@@ -1194,7 +1202,13 @@
         const videoTitle = item.getAttribute('data-title');
         const videoDescription = item.getAttribute('data-description');
         
-        console.log('Opening modal with video:', videoSrc);
+        console.log('Mosaic item clicked:', {
+          videoSrc,
+          videoTitle,
+          videoDescription,
+          modalVideo: !!modalVideo,
+          videoModal: !!videoModal
+        });
         
         if (videoSrc && modalVideo) {
           // Update source elements
@@ -1217,6 +1231,7 @@
           
           // Load the video
           modalVideo.load();
+          console.log('Video loaded, modal display set to flex');
           
           // Show modal with animation
           gsap.set(videoModal, { display: 'flex' });
@@ -1232,7 +1247,10 @@
           
           // Play the video after a short delay
           setTimeout(() => {
-            modalVideo.play().catch(error => {
+            console.log('Attempting to play video...');
+            modalVideo.play().then(() => {
+              console.log('Video playing successfully');
+            }).catch(error => {
               console.log('Modal video play failed:', error);
             });
           }, 500);
