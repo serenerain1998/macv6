@@ -1320,6 +1320,7 @@
     
     const modal = document.getElementById('imageModal');
     const modalImage = document.getElementById('modalImage');
+    const modalVideo = document.getElementById('modalVideo');
     const modalTitle = document.getElementById('modalTitle');
     const modalDescription = document.getElementById('modalDescription');
     const modalClose = modal.querySelector('.modal-close');
@@ -1332,6 +1333,7 @@
       totalItems: items.length,
       modal: !!modal,
       modalImage: !!modalImage,
+      modalVideo: !!modalVideo,
       modalClose: !!modalClose,
       prevBtn: !!prevBtn,
       nextBtn: !!nextBtn
@@ -1443,11 +1445,22 @@
           videoTitle,
           videoDescription,
           modalVideo: !!modalVideo,
-          modalVideoElement: modalVideo
+          modalVideoElement: modalVideo,
+          modalVideoInDOM: document.getElementById('modalVideo'),
+          modalVideoParent: modalVideo ? modalVideo.parentElement : null
         });
         
         if (videoSrc && modalVideo) {
           console.log('Setting up modal video display');
+          
+          // Check if video element is actually in DOM
+          const videoInDOM = document.getElementById('modalVideo');
+          console.log('Video element in DOM check:', {
+            found: !!videoInDOM,
+            element: videoInDOM,
+            parent: videoInDOM ? videoInDOM.parentElement : null,
+            parentClass: videoInDOM ? videoInDOM.parentElement.className : null
+          });
           // Show video, hide image
           modalImage.style.display = 'none';
           modalVideo.style.display = 'block';
