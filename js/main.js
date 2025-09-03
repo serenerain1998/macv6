@@ -1178,6 +1178,9 @@
       // Click to open modal
       item.addEventListener('click', () => {
         const videoSrc = item.getAttribute('data-video');
+        const videoTitle = item.getAttribute('data-title');
+        const videoDescription = item.getAttribute('data-description');
+        
         console.log('Opening modal with video:', videoSrc);
         console.log('Modal video element:', modalVideo);
         
@@ -1190,6 +1193,18 @@
             console.log(`Setting source ${index} to:`, videoSrc);
             source.src = videoSrc;
           });
+          
+          // Update video description
+          const titleElement = document.getElementById('videoTitle');
+          const descriptionElement = document.getElementById('videoDescription');
+          
+          if (titleElement && videoTitle) {
+            titleElement.textContent = videoTitle;
+          }
+          
+          if (descriptionElement && videoDescription) {
+            descriptionElement.textContent = videoDescription;
+          }
           
           // Load the video
           modalVideo.load();
