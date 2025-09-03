@@ -1045,6 +1045,35 @@
     startAutoScroll();
   }
 
+  // ===== VIDEO AUTOPLAY =====
+  
+  function initVideoAutoplay() {
+    // Create Intersection Observer for video autoplay
+    const videoObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const video = entry.target;
+        if (entry.isIntersecting) {
+          // Video is in view, play it
+          video.play().catch(error => {
+            console.log('Video autoplay failed:', error);
+          });
+        } else {
+          // Video is out of view, pause it
+          video.pause();
+        }
+      });
+    }, {
+      threshold: 0.5, // Trigger when 50% of video is visible
+      rootMargin: '0px'
+    });
+
+    // Observe all videos in the project
+    const videos = document.querySelectorAll('video');
+    videos.forEach(video => {
+      videoObserver.observe(video);
+    });
+  }
+
   // ===== INITIALIZATION =====
   
   function init() {
@@ -1071,6 +1100,7 @@
       initPerformanceOptimizations();
       initAccessibilityEnhancements();
       initImageSlider();
+      initVideoAutoplay();
     }
     
     // Dispatch custom event when initialization is complete
