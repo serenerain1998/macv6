@@ -1315,6 +1315,7 @@
     // Check for both gallery items (project2) and slider items (project3)
     const galleryItems = document.querySelectorAll('.gallery-item');
     const sliderItems = document.querySelectorAll('.slider-item');
+    const clickableVideos = document.querySelectorAll('.clickable-video');
     const items = galleryItems.length > 0 ? galleryItems : sliderItems;
     
     const modal = document.getElementById('imageModal');
@@ -1427,6 +1428,51 @@
       item.addEventListener('click', () => {
         console.log('Item clicked:', index);
         openModal(index);
+      });
+    });
+    
+    // Clickable video event listeners
+    clickableVideos.forEach((videoContainer) => {
+      videoContainer.addEventListener('click', () => {
+        const videoSrc = videoContainer.getAttribute('data-video');
+        const videoTitle = videoContainer.getAttribute('data-title');
+        const videoDescription = videoContainer.getAttribute('data-description');
+        
+        console.log('Clickable video clicked:', {
+          videoSrc,
+          videoTitle,
+          videoDescription
+        });
+        
+        if (videoSrc && modalVideo) {
+          // Show video, hide image
+          modalImage.style.display = 'none';
+          modalVideo.style.display = 'block';
+          
+          // Update video source
+          const sources = modalVideo.querySelectorAll('source');
+          sources.forEach(source => {
+            source.src = videoSrc;
+          });
+          modalVideo.load();
+          
+          // Update title and description
+          if (modalTitle) modalTitle.textContent = videoTitle;
+          if (modalDescription) modalDescription.textContent = videoDescription;
+          
+          // Show modal
+          modal.classList.add('show');
+          document.body.style.overflow = 'hidden';
+          
+          // Play video with audio
+          setTimeout(() => {
+            modalVideo.play().then(() => {
+              console.log('Modal video playing with audio');
+            }).catch(error => {
+              console.log('Modal video play failed:', error);
+            });
+          }, 100);
+        }
       });
     });
     
