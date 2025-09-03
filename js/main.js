@@ -1178,8 +1178,15 @@
       // Click to open modal
       item.addEventListener('click', () => {
         const videoSrc = item.getAttribute('data-video');
+        console.log('Opening modal with video:', videoSrc);
         if (videoSrc && modalVideo) {
-          modalVideo.src = videoSrc;
+          // Update source elements
+          const sources = modalVideo.querySelectorAll('source');
+          sources.forEach(source => {
+            source.src = videoSrc;
+          });
+          
+          // Load the video
           modalVideo.load();
           
           // Show modal with animation
@@ -1193,6 +1200,13 @@
             { scale: 0.8, opacity: 0 },
             { scale: 1, opacity: 1, duration: 0.4, delay: 0.1, ease: "back.out(1.7)" }
           );
+          
+          // Play the video after a short delay
+          setTimeout(() => {
+            modalVideo.play().catch(error => {
+              console.log('Modal video play failed:', error);
+            });
+          }, 500);
         }
       });
     });
@@ -1230,7 +1244,12 @@
           videoModal.style.display = 'none';
           if (modalVideo) {
             modalVideo.pause();
-            modalVideo.src = '';
+            // Clear source elements
+            const sources = modalVideo.querySelectorAll('source');
+            sources.forEach(source => {
+              source.src = '';
+            });
+            modalVideo.load();
           }
         }
       });
