@@ -332,36 +332,47 @@
                 </div>
                 
                 <div class="gallery-grid">
-                    <div class="gallery-item" data-aos="fade-up" data-aos-delay="100">
-                        <div class="gallery-placeholder">
-                            <i class="fas fa-desktop"></i>
-                            <p>Dashboard Interface</p>
+                    <div class="gallery-item" data-aos="fade-up" data-aos-delay="100" data-image="assets/images/adf/adf2.png" data-title="Dashboard Interface" data-description="Main dashboard interface showing campaign overview and key metrics">
+                        <img src="assets/images/adf/adf2.png" alt="Dashboard Interface" class="gallery-image">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-eye"></i>
+                            <span>View</span>
                         </div>
                     </div>
                     
-                    <div class="gallery-item" data-aos="fade-up" data-aos-delay="200">
-                        <div class="gallery-placeholder">
-                            <i class="fas fa-chart-line"></i>
-                            <p>Analytics Dashboard</p>
-                        </div>
-                    </div>
-                    
-                    <div class="gallery-item" data-aos="fade-up" data-aos-delay="300">
-                        <div class="gallery-placeholder">
-                            <i class="fas fa-bullseye"></i>
-                            <p>Targeting Interface</p>
-                        </div>
-                    </div>
-                    
-                    <div class="gallery-item" data-aos="fade-up" data-aos-delay="400">
-                        <div class="gallery-placeholder">
-                            <i class="fas fa-cogs"></i>
-                            <p>Campaign Management</p>
+                    <div class="gallery-item" data-aos="fade-up" data-aos-delay="200" data-image="assets/images/adf/ad_injection.png" data-title="Analytics Dashboard" data-description="Advanced analytics dashboard with real-time performance metrics and insights">
+                        <img src="assets/images/adf/ad_injection.png" alt="Analytics Dashboard" class="gallery-image">
+                        <div class="gallery-overlay">
+                            <i class="fas fa-eye"></i>
+                            <span>View</span>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
+
+        <!-- Image Modal with Navigation -->
+        <div class="image-modal" id="imageModal">
+            <div class="modal-overlay"></div>
+            <div class="modal-content">
+                <button class="modal-close" aria-label="Close modal">
+                    <i class="fas fa-times"></i>
+                </button>
+                <img id="modalImage" src="" alt="Project Image">
+                <div class="modal-navigation">
+                    <button class="nav-btn prev-btn" aria-label="Previous image">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="nav-btn next-btn" aria-label="Next image">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+                <div class="modal-info">
+                    <h3 id="modalTitle">Image Title</h3>
+                    <p id="modalDescription">Image description will appear here...</p>
+                </div>
+            </div>
+        </div>
 
         <!-- Next Project -->
         <section class="next-project">
