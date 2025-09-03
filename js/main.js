@@ -1451,6 +1451,10 @@
           // Show video, hide image
           modalImage.style.display = 'none';
           modalVideo.style.display = 'block';
+          modalVideo.style.visibility = 'visible';
+          modalVideo.style.opacity = '1';
+          modalVideo.style.position = 'relative';
+          modalVideo.style.zIndex = '10001';
           modalVideo.classList.add('show');
           
           console.log('Modal video display style:', modalVideo.style.display);
@@ -1469,6 +1473,27 @@
           });
           modalVideo.load();
           
+          console.log('Video element after load:', {
+            readyState: modalVideo.readyState,
+            currentSrc: modalVideo.currentSrc,
+            videoWidth: modalVideo.videoWidth,
+            videoHeight: modalVideo.videoHeight,
+            style: {
+              display: modalVideo.style.display,
+              visibility: modalVideo.style.visibility,
+              opacity: modalVideo.style.opacity,
+              position: modalVideo.style.position,
+              zIndex: modalVideo.style.zIndex
+            },
+            computedStyle: {
+              display: window.getComputedStyle(modalVideo).display,
+              visibility: window.getComputedStyle(modalVideo).visibility,
+              opacity: window.getComputedStyle(modalVideo).opacity,
+              position: window.getComputedStyle(modalVideo).position,
+              zIndex: window.getComputedStyle(modalVideo).zIndex
+            }
+          });
+          
           // Update title and description
           if (modalTitle) modalTitle.textContent = videoTitle;
           if (modalDescription) modalDescription.textContent = videoDescription;
@@ -1486,6 +1511,16 @@
           
           // Play video with audio
           setTimeout(() => {
+            // Check if video is actually visible in DOM
+            const videoRect = modalVideo.getBoundingClientRect();
+            console.log('Video bounding rect:', {
+              top: videoRect.top,
+              left: videoRect.left,
+              width: videoRect.width,
+              height: videoRect.height,
+              visible: videoRect.width > 0 && videoRect.height > 0
+            });
+            
             modalVideo.play().then(() => {
               console.log('Modal video playing with audio');
             }).catch(error => {

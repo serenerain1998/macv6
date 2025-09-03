@@ -1643,6 +1643,13 @@ body.is-scrolling .contact-section {
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
+  position: relative !important;
+  z-index: 10001 !important;
+  width: 100% !important;
+  height: auto !important;
+  max-width: 100% !important;
+  max-height: 80vh !important;
+  background: #000 !important;
 }
 
 .modal-content video[style*="display: block"] {
