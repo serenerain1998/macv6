@@ -1336,8 +1336,8 @@
       
       modalImage.src = image.src;
       modalImage.alt = image.title;
-      modalTitle.textContent = image.title;
-      modalDescription.textContent = image.description;
+      if (modalTitle) modalTitle.textContent = image.title;
+      if (modalDescription) modalDescription.textContent = image.description;
       
       modal.classList.add('show');
       document.body.style.overflow = 'hidden';
