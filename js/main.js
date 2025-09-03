@@ -1322,8 +1322,11 @@
     }));
     
     function openModal(index) {
+      console.log('Opening modal for index:', index, 'Total images:', images.length);
       currentIndex = index;
       const image = images[index];
+      
+      console.log('Image data:', image);
       
       modalImage.src = image.src;
       modalImage.alt = image.title;
@@ -1332,6 +1335,8 @@
       
       modal.classList.add('show');
       document.body.style.overflow = 'hidden';
+      
+      console.log('Modal opened successfully');
     }
     
     function closeModal() {
@@ -1340,12 +1345,16 @@
     }
     
     function nextImage() {
+      console.log('Next image called, current index:', currentIndex);
       currentIndex = (currentIndex + 1) % images.length;
+      console.log('New index:', currentIndex);
       openModal(currentIndex);
     }
     
     function prevImage() {
+      console.log('Previous image called, current index:', currentIndex);
       currentIndex = (currentIndex - 1 + images.length) % images.length;
+      console.log('New index:', currentIndex);
       openModal(currentIndex);
     }
     
@@ -1358,14 +1367,24 @@
     });
     
     if (modalClose) modalClose.addEventListener('click', closeModal);
-    if (prevBtn) prevBtn.addEventListener('click', () => {
-      console.log('Previous button clicked');
-      prevImage();
-    });
-    if (nextBtn) nextBtn.addEventListener('click', () => {
-      console.log('Next button clicked');
-      nextImage();
-    });
+    if (prevBtn) {
+      console.log('Previous button found:', prevBtn);
+      prevBtn.addEventListener('click', () => {
+        console.log('Previous button clicked');
+        prevImage();
+      });
+    } else {
+      console.log('Previous button NOT found');
+    }
+    if (nextBtn) {
+      console.log('Next button found:', nextBtn);
+      nextBtn.addEventListener('click', () => {
+        console.log('Next button clicked');
+        nextImage();
+      });
+    } else {
+      console.log('Next button NOT found');
+    }
     
     // Keyboard navigation
     document.addEventListener('keydown', (e) => {
