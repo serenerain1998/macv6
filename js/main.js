@@ -1352,7 +1352,7 @@
     
     let currentIndex = 0;
     const images = Array.from(items).map(item => ({
-      src: item.getAttribute('data-image') || item.querySelector('img')?.src || item.querySelector('video')?.src,
+      src: item.getAttribute('data-image') || item.getAttribute('data-video') || item.querySelector('img')?.src || item.querySelector('video source')?.src,
       title: item.getAttribute('data-title') || item.querySelector('img')?.alt || 'Project Image',
       description: item.getAttribute('data-description') || 'Project image from portfolio',
       type: item.getAttribute('data-video') ? 'video' : 'image'
@@ -1364,22 +1364,30 @@
       const image = images[index];
       
       console.log('Image data:', image);
+      console.log('Modal video element:', modalVideo);
+      console.log('Modal image element:', modalImage);
       
       if (image.type === 'video') {
+        console.log('Handling video in modal:', image.src);
         // Show video, hide image
         modalImage.style.display = 'none';
         modalVideo.style.display = 'block';
         
         // Update video source
         const sources = modalVideo.querySelectorAll('source');
+        console.log('Video sources found:', sources.length);
         sources.forEach(source => {
           source.src = image.src;
+          console.log('Set source src to:', image.src);
         });
         modalVideo.load();
         
         // Play video
         setTimeout(() => {
-          modalVideo.play().catch(error => {
+          console.log('Attempting to play video...');
+          modalVideo.play().then(() => {
+            console.log('Video playing successfully in modal');
+          }).catch(error => {
             console.log('Video play failed:', error);
           });
         }, 100);
