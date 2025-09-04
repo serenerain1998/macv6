@@ -918,6 +918,9 @@
     // Use the local server endpoint
     const endpoint = '/api/password-request';
     
+    console.log('Sending request to:', endpoint);
+    console.log('Request data:', data);
+    
     try {
       const response = await fetch(endpoint, {
         method: 'POST',
@@ -927,8 +930,15 @@
         body: JSON.stringify(data)
       });
       
-      return await response.json();
+      console.log('Response status:', response.status);
+      console.log('Response headers:', response.headers);
+      
+      const result = await response.json();
+      console.log('Response data:', result);
+      
+      return result;
     } catch (error) {
+      console.error('Fetch error:', error);
       // For demo purposes, simulate success
       console.log('Password request data:', data);
       return { success: true, message: 'Request sent successfully' };

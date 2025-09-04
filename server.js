@@ -148,11 +148,14 @@ async function sendDeclineEmail(requestData) {
 
 // API Routes
 app.post('/api/password-request', async (req, res) => {
+  console.log('Received password request:', req.body);
+  
   try {
     const requestData = req.body;
     
     // Validate required fields
     if (!requestData.name || !requestData.email || !requestData.reason) {
+      console.log('Missing required fields:', { name: !!requestData.name, email: !!requestData.email, reason: !!requestData.reason });
       return res.status(400).json({ 
         success: false, 
         message: 'Missing required fields' 
@@ -170,14 +173,19 @@ app.post('/api/password-request', async (req, res) => {
     });
 
     // Send approval request email to you
+    console.log('Sending approval email for request ID:', requestId);
     const approvalEmailSent = await sendApprovalRequestEmail(requestData, requestId);
 
+    console.log('Approval email sent:', approvalEmailSent);
+
     if (approvalEmailSent) {
+      console.log('Sending success response');
       res.json({ 
         success: true, 
         message: 'Request submitted successfully. You will be notified of the decision.' 
       });
     } else {
+      console.log('Sending failure response');
       res.json({ 
         success: false, 
         message: 'Request received but email delivery failed' 
