@@ -722,9 +722,6 @@
     
       // Initialize request password functionality
   initRequestPassword();
-  
-  // Initialize security measures (only on production)
-  initSecurityMeasures();
   }
 
   async function handlePasswordSubmit() {
@@ -1012,44 +1009,7 @@
     alert(message);
   }
 
-  function initSecurityMeasures() {
-    // Only apply security measures on production (not localhost)
-    if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
-      // Disable right-click context menu
-      document.addEventListener('contextmenu', function(e) {
-        e.preventDefault();
-        return false;
-      });
 
-      // Disable F12 key and common developer shortcuts
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'F12' || 
-            (e.ctrlKey && e.shiftKey && e.key === 'I') || 
-            (e.ctrlKey && e.shiftKey && e.key === 'J') || 
-            (e.ctrlKey && e.key === 'U') ||
-            (e.ctrlKey && e.shiftKey && e.key === 'C')) {
-          e.preventDefault();
-          return false;
-        }
-      });
-
-      // Disable text selection (but allow it on form inputs)
-      document.addEventListener('selectstart', function(e) {
-        if (!e.target.matches('input, textarea, [contenteditable]')) {
-          e.preventDefault();
-          return false;
-        }
-      });
-
-      // Disable drag and drop (but allow it on form inputs)
-      document.addEventListener('dragstart', function(e) {
-        if (!e.target.matches('input, textarea, [contenteditable]')) {
-          e.preventDefault();
-          return false;
-        }
-      });
-    }
-  }
 
   function showPasswordModal() {
     if (elements.passwordModal) {
