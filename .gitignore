@@ -53,6 +53,7 @@ coverage/
 *.mp4
 *.mov
 *.MOV
+data/
 *.avi
 *.mkv
 *.wmv

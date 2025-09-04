@@ -3,6 +3,17 @@ const cors = require('cors');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 const path = require('path');
+const fs = require('fs');
+
+// File paths for persistent storage
+const REQUESTS_FILE = path.join(__dirname, 'data', 'pending-requests.json');
+const PASSWORDS_FILE = path.join(__dirname, 'data', 'temporary-passwords.json');
+
+// Ensure data directory exists
+const dataDir = path.join(__dirname, 'data');
+if (!fs.existsSync(dataDir)) {
+  fs.mkdirSync(dataDir, { recursive: true });
+}
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -12,9 +23,32 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static('.'));
 
-// Store pending requests and temporary passwords (in production, use a database)
-const pendingRequests = new Map();
-const temporaryPasswords = new Map();
+// File storage functions
+function loadData(filePath) {
+  try {
+    if (fs.existsSync(filePath)) {
+      const data = fs.readFileSync(filePath, 'utf8');
+      return JSON.parse(data);
+    }
+  } catch (error) {
+    console.error(`Error loading data from ${filePath}:`, error);
+  }
+  return {};
+}
+
+function saveData(filePath, data) {
+  try {
+    fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+    return true;
+  } catch (error) {
+    console.error(`Error saving data to ${filePath}:`, error);
+    return false;
+  }
+}
+
+// Load existing data
+let pendingRequests = loadData(REQUESTS_FILE);
+let temporaryPasswords = loadData(PASSWORDS_FILE);
 
 // Email configuration
 console.log('Email password set:', !!process.env.EMAIL_PASSWORD);
@@ -167,11 +201,14 @@ app.post('/api/password-request', async (req, res) => {
     const requestId = crypto.randomBytes(16).toString('hex');
     
     // Store pending request
-    pendingRequests.set(requestId, {
+    pendingRequests[requestId] = {
       ...requestData,
       status: 'pending',
       createdAt: Date.now()
-    });
+    };
+    
+    // Save to file
+    saveData(REQUESTS_FILE, pendingRequests);
 
     // Send approval request email to you
     console.log('Sending approval email for request ID:', requestId);
@@ -207,11 +244,13 @@ app.get('/api/approve-request/:requestId', async (req, res) => {
   try {
     const { requestId } = req.params;
     console.log('Approval request for ID:', requestId);
-    console.log('Available request IDs:', Array.from(pendingRequests.keys()));
+    console.log('Available request IDs:', Object.keys(pendingRequests));
     
-    const requestData = pendingRequests.get(requestId);
+    const requestData = pendingRequests[requestId];
     
     if (!requestData) {
+      console.log('Request not found for ID:', requestId);
+      console.log('Available requests:', Object.keys(pendingRequests));
       return res.status(404).json({ 
         success: false, 
         message: 'Request not found' 
@@ -230,19 +269,23 @@ app.get('/api/approve-request/:requestId', async (req, res) => {
     const expiresAt = Date.now() + (72 * 60 * 60 * 1000); // 72 hours
 
     // Store temporary password
-    temporaryPasswords.set(temporaryPassword, {
+    temporaryPasswords[temporaryPassword] = {
       email: requestData.email,
       expiresAt: expiresAt,
       requestData: requestData
-    });
+    };
 
     // Update request status
-    pendingRequests.set(requestId, {
+    pendingRequests[requestId] = {
       ...requestData,
       status: 'approved',
       approvedAt: Date.now(),
       temporaryPassword: temporaryPassword
-    });
+    };
+    
+    // Save to files
+    saveData(PASSWORDS_FILE, temporaryPasswords);
+    saveData(REQUESTS_FILE, pendingRequests);
 
     // Send password email to requester
     const passwordSent = await sendPasswordEmail(requestData, temporaryPassword);
@@ -289,7 +332,7 @@ app.get('/api/approve-request/:requestId', async (req, res) => {
 app.get('/api/decline-request/:requestId', async (req, res) => {
   try {
     const { requestId } = req.params;
-    const requestData = pendingRequests.get(requestId);
+    const requestData = pendingRequests[requestId];
     
     if (!requestData) {
       return res.status(404).json({ 
@@ -306,11 +349,14 @@ app.get('/api/decline-request/:requestId', async (req, res) => {
     }
 
     // Update request status
-    pendingRequests.set(requestId, {
+    pendingRequests[requestId] = {
       ...requestData,
       status: 'declined',
       declinedAt: Date.now()
-    });
+    };
+    
+    // Save to file
+    saveData(REQUESTS_FILE, pendingRequests);
 
     // Send decline email to requester
     const declineEmailSent = await sendDeclineEmail(requestData);
@@ -358,7 +404,7 @@ app.post('/api/verify-password', (req, res) => {
   const { password } = req.body;
   
   console.log('Password verification request for:', password);
-  console.log('Available temporary passwords:', Array.from(temporaryPasswords.keys()));
+  console.log('Available temporary passwords:', Object.keys(temporaryPasswords));
   
   if (!password) {
     return res.status(400).json({ 
@@ -367,7 +413,7 @@ app.post('/api/verify-password', (req, res) => {
     });
   }
 
-  const passwordData = temporaryPasswords.get(password);
+  const passwordData = temporaryPasswords[password];
   
   if (!passwordData) {
     console.log('Password not found in temporary passwords');
@@ -379,7 +425,8 @@ app.post('/api/verify-password', (req, res) => {
 
   if (Date.now() > passwordData.expiresAt) {
     console.log('Password expired');
-    temporaryPasswords.delete(password);
+    delete temporaryPasswords[password];
+    saveData(PASSWORDS_FILE, temporaryPasswords);
     return res.json({ 
       success: false, 
       message: 'Password expired' 
@@ -396,20 +443,29 @@ app.post('/api/verify-password', (req, res) => {
 // Clean up expired passwords and old pending requests (run every hour)
 setInterval(() => {
   const now = Date.now();
+  let changed = false;
   
   // Clean up expired passwords
-  for (const [password, data] of temporaryPasswords.entries()) {
-    if (now > data.expiresAt) {
-      temporaryPasswords.delete(password);
+  for (const password in temporaryPasswords) {
+    if (now > temporaryPasswords[password].expiresAt) {
+      delete temporaryPasswords[password];
+      changed = true;
     }
   }
   
   // Clean up old pending requests (older than 7 days)
   const sevenDaysAgo = now - (7 * 24 * 60 * 60 * 1000);
-  for (const [requestId, data] of pendingRequests.entries()) {
-    if (data.createdAt < sevenDaysAgo) {
-      pendingRequests.delete(requestId);
+  for (const requestId in pendingRequests) {
+    if (pendingRequests[requestId].createdAt < sevenDaysAgo) {
+      delete pendingRequests[requestId];
+      changed = true;
     }
+  }
+  
+  // Save changes to files
+  if (changed) {
+    saveData(PASSWORDS_FILE, temporaryPasswords);
+    saveData(REQUESTS_FILE, pendingRequests);
   }
 }, 60 * 60 * 1000);
 
