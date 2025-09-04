@@ -1021,62 +1021,33 @@
         return false;
       });
 
-      // Disable F12 key
+      // Disable F12 key and common developer shortcuts
       document.addEventListener('keydown', function(e) {
-        if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || 
-            (e.ctrlKey && e.shiftKey && e.key === 'J') || (e.ctrlKey && e.key === 'U')) {
+        if (e.key === 'F12' || 
+            (e.ctrlKey && e.shiftKey && e.key === 'I') || 
+            (e.ctrlKey && e.shiftKey && e.key === 'J') || 
+            (e.ctrlKey && e.key === 'U') ||
+            (e.ctrlKey && e.shiftKey && e.key === 'C')) {
           e.preventDefault();
           return false;
         }
       });
 
-      // Disable developer tools shortcuts
-      document.addEventListener('keydown', function(e) {
-        // Ctrl+Shift+I (Developer Tools)
-        if (e.ctrlKey && e.shiftKey && e.key === 'I') {
-          e.preventDefault();
-          return false;
-        }
-        // Ctrl+Shift+J (Console)
-        if (e.ctrlKey && e.shiftKey && e.key === 'J') {
-          e.preventDefault();
-          return false;
-        }
-        // Ctrl+U (View Source)
-        if (e.ctrlKey && e.key === 'u') {
-          e.preventDefault();
-          return false;
-        }
-        // Ctrl+Shift+C (Inspect Element)
-        if (e.ctrlKey && e.shiftKey && e.key === 'C') {
-          e.preventDefault();
-          return false;
-        }
-      });
-
-      // Disable text selection
+      // Disable text selection (but allow it on form inputs)
       document.addEventListener('selectstart', function(e) {
-        e.preventDefault();
-        return false;
+        if (!e.target.matches('input, textarea, [contenteditable]')) {
+          e.preventDefault();
+          return false;
+        }
       });
 
-      // Disable drag and drop
+      // Disable drag and drop (but allow it on form inputs)
       document.addEventListener('dragstart', function(e) {
-        e.preventDefault();
-        return false;
+        if (!e.target.matches('input, textarea, [contenteditable]')) {
+          e.preventDefault();
+          return false;
+        }
       });
-
-      // Additional protection against developer tools
-      setInterval(function() {
-        const devtools = /./;
-        devtools.toString = function() {
-          this.opened = true;
-        }
-        console.log('%c', devtools);
-        if (devtools.opened) {
-          document.body.innerHTML = 'Developer tools are not allowed on this site.';
-        }
-      }, 1000);
     }
   }
 
