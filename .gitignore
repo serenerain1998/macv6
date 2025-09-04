@@ -50,9 +50,9 @@ coverage/
 
 # Large video files (GitHub has 100MB limit)
 # Allow specific videos that are under 100MB
-# *.mp4
-# *.mov
-# *.MOV
+*.mp4
+*.mov
+*.MOV
 *.avi
 *.mkv
 *.wmv

@@ -1,31 +1,21 @@
 {
-  "name": "melissa-casole-portfolio",
+  "name": "portfolio-password-service",
   "version": "1.0.0",
-  "description": "UX/UI Portfolio website with password protection and dark theme",
-  "main": "index.html",
+  "description": "Password request service for portfolio access",
+  "main": "server.js",
   "scripts": {
-    "build": "sass css/styles.scss css/styles.css",
-    "watch": "sass --watch css/styles.scss css/styles.css",
-    "dev": "sass --watch css/styles.scss css/styles.css --style expanded",
-    "build:compressed": "sass css/styles.scss css/styles.css --style compressed"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
-  "keywords": [
-    "portfolio",
-    "ux",
-    "ui",
-    "design",
-    "scss",
-    "jquery",
-    "gsap"
-  ],
-  "author": "Melissa Casole",
-  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "nodemailer": "^6.9.7"
+  },
   "devDependencies": {
-    "sass": "^1.69.0"
+    "nodemon": "^3.0.2"
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead"
-  ]
+  "engines": {
+    "node": ">=14.0.0"
+  }
 }

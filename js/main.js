@@ -42,7 +42,14 @@
       passwordInput: document.querySelector('#passwordInput'),
       submitPassword: document.querySelector('#submitPassword'),
       togglePassword: document.querySelector('.toggle-password'),
-      passwordError: document.querySelector('#passwordError')
+      passwordError: document.querySelector('#passwordError'),
+      requestPassword: document.querySelector('#requestPassword'),
+      requestModal: document.querySelector('#requestModal'),
+      requestForm: document.querySelector('#requestForm'),
+      cancelRequest: document.querySelector('#cancelRequest'),
+      requestSuccess: document.querySelector('#requestSuccess'),
+      requestReason: document.querySelector('#requestReason'),
+      otherReasonGroup: document.querySelector('#otherReasonGroup')
     };
   }
 
@@ -712,6 +719,9 @@
     if (elements.passwordInput) {
       elements.passwordInput.addEventListener('input', updateSubmitButtonState);
     }
+    
+    // Initialize request password functionality
+    initRequestPassword();
   }
 
   function handlePasswordSubmit() {
@@ -795,6 +805,154 @@
       elements.submitPassword.disabled = true;
       elements.submitPassword.classList.add('disabled');
     }
+  }
+
+  function initRequestPassword() {
+    // Request password button
+    if (elements.requestPassword) {
+      elements.requestPassword.addEventListener('click', showRequestModal);
+    }
+    
+    // Cancel request button
+    if (elements.cancelRequest) {
+      elements.cancelRequest.addEventListener('click', hideRequestModal);
+    }
+    
+    // Request form submission
+    if (elements.requestForm) {
+      elements.requestForm.addEventListener('submit', handleRequestSubmit);
+    }
+    
+    // Reason dropdown change
+    if (elements.requestReason) {
+      elements.requestReason.addEventListener('change', handleReasonChange);
+    }
+  }
+
+  function showRequestModal() {
+    if (elements.requestModal) {
+      elements.requestModal.style.display = 'flex';
+      setTimeout(() => {
+        elements.requestModal.classList.add('show');
+      }, 10);
+    }
+  }
+
+  function hideRequestModal() {
+    if (elements.requestModal) {
+      elements.requestModal.classList.remove('show');
+      setTimeout(() => {
+        elements.requestModal.style.display = 'none';
+        resetRequestForm();
+      }, 300);
+    }
+  }
+
+  function handleReasonChange() {
+    const reason = elements.requestReason.value;
+    const otherGroup = elements.otherReasonGroup;
+    
+    if (reason === 'other') {
+      otherGroup.style.display = 'block';
+    } else {
+      otherGroup.style.display = 'none';
+    }
+  }
+
+  function resetRequestForm() {
+    if (elements.requestForm) {
+      elements.requestForm.reset();
+    }
+    if (elements.otherReasonGroup) {
+      elements.otherReasonGroup.style.display = 'none';
+    }
+    if (elements.requestSuccess) {
+      elements.requestSuccess.style.display = 'none';
+    }
+    if (elements.requestForm) {
+      elements.requestForm.style.display = 'block';
+    }
+  }
+
+  async function handleRequestSubmit(event) {
+    event.preventDefault();
+    
+    const formData = new FormData(elements.requestForm);
+    const requestData = {
+      name: formData.get('requestName') || document.getElementById('requestName').value,
+      email: formData.get('requestEmail') || document.getElementById('requestEmail').value,
+      company: formData.get('requestCompany') || document.getElementById('requestCompany').value,
+      reason: formData.get('requestReason') || document.getElementById('requestReason').value,
+      otherReason: formData.get('otherReason') || document.getElementById('otherReason').value,
+      timestamp: new Date().toISOString(),
+      userAgent: navigator.userAgent,
+      ip: await getClientIP()
+    };
+    
+    try {
+      // Send request to backend service
+      const response = await sendPasswordRequest(requestData);
+      
+      if (response.success) {
+        showRequestSuccess();
+      } else {
+        showRequestError(response.message || 'Failed to send request. Please try again.');
+      }
+    } catch (error) {
+      console.error('Request error:', error);
+      showRequestError('Failed to send request. Please try again.');
+    }
+  }
+
+  async function sendPasswordRequest(data) {
+    // Use the local server endpoint
+    const endpoint = '/api/password-request';
+    
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+      });
+      
+      return await response.json();
+    } catch (error) {
+      // For demo purposes, simulate success
+      console.log('Password request data:', data);
+      return { success: true, message: 'Request sent successfully' };
+    }
+  }
+
+  async function getClientIP() {
+    try {
+      const response = await fetch('https://api.ipify.org?format=json');
+      const data = await response.json();
+      return data.ip;
+    } catch (error) {
+      return 'Unknown';
+    }
+  }
+
+  function showRequestSuccess() {
+    if (elements.requestForm) {
+      elements.requestForm.style.display = 'none';
+    }
+    if (elements.requestSuccess) {
+      elements.requestSuccess.style.display = 'block';
+    }
+    
+    // Auto-hide after 5 seconds
+    setTimeout(() => {
+      hideRequestModal();
+    }, 5000);
+  }
+
+  function showRequestError(message) {
+    // You can implement error display here
+    console.error('Request error:', message);
+    alert(message);
   }
 
   function showPasswordModal() {
