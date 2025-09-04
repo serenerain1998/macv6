@@ -704,6 +704,14 @@
     if (elements.togglePassword) {
       elements.togglePassword.addEventListener('click', togglePasswordVisibility);
     }
+    
+    // Initialize submit button state
+    updateSubmitButtonState();
+    
+    // Add input event listener to monitor password field
+    if (elements.passwordInput) {
+      elements.passwordInput.addEventListener('input', updateSubmitButtonState);
+    }
   }
 
   function handlePasswordSubmit() {
@@ -772,6 +780,20 @@
       input.type = 'text';
       icon.className = 'fas fa-eye-slash';
       state.isPasswordVisible = true;
+    }
+  }
+
+  function updateSubmitButtonState() {
+    if (!elements.passwordInput || !elements.submitPassword) return;
+    
+    const hasValue = elements.passwordInput.value.trim().length > 0;
+    
+    if (hasValue) {
+      elements.submitPassword.disabled = false;
+      elements.submitPassword.classList.remove('disabled');
+    } else {
+      elements.submitPassword.disabled = true;
+      elements.submitPassword.classList.add('disabled');
     }
   }
 
