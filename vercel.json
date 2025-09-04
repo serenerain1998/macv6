@@ -10,11 +10,11 @@
       "use": "@vercel/static"
     },
     {
-      "src": "css/*",
+      "src": "css/**",
       "use": "@vercel/static"
     },
     {
-      "src": "js/*",
+      "src": "js/**",
       "use": "@vercel/static"
     },
     {
@@ -26,6 +26,10 @@
     {
       "src": "/api/(.*)",
       "dest": "/server.js"
+    },
+    {
+      "src": "/(.*\\.(js|css|png|jpg|jpeg|gif|svg|ico|mp4|mov|pdf))",
+      "dest": "/$1"
     },
     {
       "src": "/(.*)",
