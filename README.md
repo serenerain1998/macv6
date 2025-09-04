@@ -52,20 +52,28 @@ The server will run on `http://localhost:3000`
 1. **Request Process**:
    - User clicks "Request Access" on the password screen
    - Fills out the form with their information
-   - System generates a random 16-character password
-   - You receive an email notification with all details
-   - User receives an email with their temporary password
+   - System generates a unique request ID and stores the request
+   - You receive an email notification with all details and approval/decline links
+   - User sees a confirmation that their request has been submitted
 
-2. **Password Validation**:
+2. **Approval Process**:
+   - You review the request details in your email
+   - Click "Approve Request" link to grant access
+   - System generates a random 16-character password
+   - User receives an email with their temporary password
+   - Or click "Decline Request" to deny access
+
+3. **Password Validation**:
    - Temporary passwords are stored in memory (use a database in production)
-   - Passwords automatically expire after 48 hours
+   - Passwords automatically expire after 72 hours
    - System cleans up expired passwords every hour
 
-3. **Security Features**:
+4. **Security Features**:
    - Tracks IP addresses and user agents
    - Validates required fields
-   - Prevents duplicate requests from same IP
+   - Manual approval process prevents unauthorized access
    - Automatic password expiration
+   - Pending requests are cleaned up after 7 days
 
 ## Production Deployment
 

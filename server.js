@@ -12,7 +12,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static('.'));
 
-// Store temporary passwords (in production, use a database)
+// Store pending requests and temporary passwords (in production, use a database)
+const pendingRequests = new Map();
 const temporaryPasswords = new Map();
 
 // Email configuration
@@ -60,7 +61,42 @@ async function sendNotificationEmail(requestData, temporaryPassword) {
   }
 }
 
-// Send password to requester
+// Send approval request email to you
+async function sendApprovalRequestEmail(requestData, requestId) {
+  const mailOptions = {
+    from: 'melissa.casole@yahoo.com',
+    to: 'melissa.casole@yahoo.com',
+    subject: 'Portfolio Access Request - Action Required',
+    html: `
+      <h2>New Portfolio Access Request</h2>
+      <p><strong>Request ID:</strong> ${requestId}</p>
+      <p><strong>Name:</strong> ${requestData.name}</p>
+      <p><strong>Email:</strong> ${requestData.email}</p>
+      <p><strong>Company:</strong> ${requestData.company || 'Not provided'}</p>
+      <p><strong>Reason:</strong> ${requestData.reason}</p>
+      <p><strong>Other Reason:</strong> ${requestData.otherReason || 'N/A'}</p>
+      <p><strong>Timestamp:</strong> ${new Date(requestData.timestamp).toLocaleString()}</p>
+      <p><strong>IP Address:</strong> ${requestData.ip}</p>
+      <p><strong>User Agent:</strong> ${requestData.userAgent}</p>
+      <hr>
+      <p><strong>To approve this request:</strong></p>
+      <p>Click this link: <a href="http://localhost:3000/api/approve-request/${requestId}">Approve Request</a></p>
+      <p><strong>To decline this request:</strong></p>
+      <p>Click this link: <a href="http://localhost:3000/api/decline-request/${requestId}">Decline Request</a></p>
+      <p><em>Note: These links will work when the server is running. In production, replace localhost:3000 with your actual domain.</em></p>
+    `
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    return true;
+  } catch (error) {
+    console.error('Email error:', error);
+    return false;
+  }
+}
+
+// Send password to requester after approval
 async function sendPasswordEmail(requestData, temporaryPassword) {
   const mailOptions = {
     from: 'melissa.casole@yahoo.com',
@@ -71,8 +107,32 @@ async function sendPasswordEmail(requestData, temporaryPassword) {
       <p>Hello ${requestData.name},</p>
       <p>Your request for portfolio access has been approved.</p>
       <p><strong>Temporary Password:</strong> ${temporaryPassword}</p>
-      <p><strong>Expires:</strong> ${new Date(Date.now() + 48 * 60 * 60 * 1000).toLocaleString()}</p>
-      <p>This password will expire in 48 hours for security purposes.</p>
+      <p><strong>Expires:</strong> ${new Date(Date.now() + 72 * 60 * 60 * 1000).toLocaleString()}</p>
+      <p>This password will expire in 72 hours for security purposes.</p>
+      <p>Best regards,<br>Melissa Casole</p>
+    `
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    return true;
+  } catch (error) {
+    console.error('Email error:', error);
+    return false;
+  }
+}
+
+// Send decline notification to requester
+async function sendDeclineEmail(requestData) {
+  const mailOptions = {
+    from: 'melissa.casole@yahoo.com',
+    to: requestData.email,
+    subject: 'Portfolio Access Request - Update',
+    html: `
+      <h2>Portfolio Access Request</h2>
+      <p>Hello ${requestData.name},</p>
+      <p>Thank you for your interest in my portfolio. Unfortunately, I am unable to grant access at this time.</p>
+      <p>If you have any questions, please feel free to reach out directly.</p>
       <p>Best regards,<br>Melissa Casole</p>
     `
   };
@@ -99,27 +159,23 @@ app.post('/api/password-request', async (req, res) => {
       });
     }
 
-    // Generate temporary password
-    const temporaryPassword = generateTemporaryPassword();
-    const expiresAt = Date.now() + (48 * 60 * 60 * 1000); // 48 hours
-
-    // Store temporary password
-    temporaryPasswords.set(temporaryPassword, {
-      email: requestData.email,
-      expiresAt: expiresAt,
-      requestData: requestData
+    // Generate unique request ID
+    const requestId = crypto.randomBytes(16).toString('hex');
+    
+    // Store pending request
+    pendingRequests.set(requestId, {
+      ...requestData,
+      status: 'pending',
+      createdAt: Date.now()
     });
 
-    // Send notification email to you
-    const notificationSent = await sendNotificationEmail(requestData, temporaryPassword);
-    
-    // Send password email to requester
-    const passwordSent = await sendPasswordEmail(requestData, temporaryPassword);
+    // Send approval request email to you
+    const approvalEmailSent = await sendApprovalRequestEmail(requestData, requestId);
 
-    if (notificationSent && passwordSent) {
+    if (approvalEmailSent) {
       res.json({ 
         success: true, 
-        message: 'Request processed successfully' 
+        message: 'Request submitted successfully. You will be notified of the decision.' 
       });
     } else {
       res.json({ 
@@ -134,6 +190,154 @@ app.post('/api/password-request', async (req, res) => {
       success: false, 
       message: 'Internal server error' 
     });
+  }
+});
+
+// Approve request
+app.get('/api/approve-request/:requestId', async (req, res) => {
+  try {
+    const { requestId } = req.params;
+    const requestData = pendingRequests.get(requestId);
+    
+    if (!requestData) {
+      return res.status(404).json({ 
+        success: false, 
+        message: 'Request not found' 
+      });
+    }
+
+    if (requestData.status !== 'pending') {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Request has already been processed' 
+      });
+    }
+
+    // Generate temporary password
+    const temporaryPassword = generateTemporaryPassword();
+    const expiresAt = Date.now() + (72 * 60 * 60 * 1000); // 72 hours
+
+    // Store temporary password
+    temporaryPasswords.set(temporaryPassword, {
+      email: requestData.email,
+      expiresAt: expiresAt,
+      requestData: requestData
+    });
+
+    // Update request status
+    pendingRequests.set(requestId, {
+      ...requestData,
+      status: 'approved',
+      approvedAt: Date.now(),
+      temporaryPassword: temporaryPassword
+    });
+
+    // Send password email to requester
+    const passwordSent = await sendPasswordEmail(requestData, temporaryPassword);
+
+    if (passwordSent) {
+      res.send(`
+        <html>
+          <head><title>Request Approved</title></head>
+          <body style="font-family: Arial, sans-serif; text-align: center; padding: 50px;">
+            <h1 style="color: #10b981;">✅ Request Approved</h1>
+            <p>Access has been granted to <strong>${requestData.name}</strong> (${requestData.email})</p>
+            <p>Temporary password has been sent to the requester.</p>
+            <p><small>You can close this window.</small></p>
+          </body>
+        </html>
+      `);
+    } else {
+      res.send(`
+        <html>
+          <head><title>Error</title></head>
+          <body style="font-family: Arial, sans-serif; text-align: center; padding: 50px;">
+            <h1 style="color: #ef4444;">❌ Error</h1>
+            <p>Failed to send password email. Please try again.</p>
+          </body>
+        </html>
+      `);
+    }
+
+  } catch (error) {
+    console.error('Approval error:', error);
+    res.status(500).send(`
+      <html>
+        <head><title>Error</title></head>
+        <body style="font-family: Arial, sans-serif; text-align: center; padding: 50px;">
+          <h1 style="color: #ef4444;">❌ Server Error</h1>
+          <p>An error occurred while processing the request.</p>
+        </body>
+      </html>
+    `);
+  }
+});
+
+// Decline request
+app.get('/api/decline-request/:requestId', async (req, res) => {
+  try {
+    const { requestId } = req.params;
+    const requestData = pendingRequests.get(requestId);
+    
+    if (!requestData) {
+      return res.status(404).json({ 
+        success: false, 
+        message: 'Request not found' 
+      });
+    }
+
+    if (requestData.status !== 'pending') {
+      return res.status(400).json({ 
+        success: false, 
+        message: 'Request has already been processed' 
+      });
+    }
+
+    // Update request status
+    pendingRequests.set(requestId, {
+      ...requestData,
+      status: 'declined',
+      declinedAt: Date.now()
+    });
+
+    // Send decline email to requester
+    const declineEmailSent = await sendDeclineEmail(requestData);
+
+    if (declineEmailSent) {
+      res.send(`
+        <html>
+          <head><title>Request Declined</title></head>
+          <body style="font-family: Arial, sans-serif; text-align: center; padding: 50px;">
+            <h1 style="color: #ef4444;">❌ Request Declined</h1>
+            <p>Access has been denied to <strong>${requestData.name}</strong> (${requestData.email})</p>
+            <p>Decline notification has been sent to the requester.</p>
+            <p><small>You can close this window.</small></p>
+          </body>
+        </html>
+      `);
+    } else {
+      res.send(`
+        <html>
+          <head><title>Error</title></head>
+          <body style="font-family: Arial, sans-serif; text-align: center; padding: 50px;">
+            <h1 style="color: #ef4444;">❌ Error</h1>
+            <p>Failed to send decline email. Please try again.</p>
+          </body>
+        </html>
+      `);
+    }
+
+  } catch (error) {
+    console.error('Decline error:', error);
+    res.status(500).send(`
+      <html>
+        <head><title>Error</title></head>
+        <body style="font-family: Arial, sans-serif; text-align: center; padding: 50px;">
+          <h1 style="color: #ef4444;">❌ Server Error</h1>
+          <p>An error occurred while processing the request.</p>
+        </body>
+      </html>
+    `);
   }
 });
 
@@ -171,12 +375,22 @@ app.post('/api/verify-password', (req, res) => {
   });
 });
 
-// Clean up expired passwords (run every hour)
+// Clean up expired passwords and old pending requests (run every hour)
 setInterval(() => {
   const now = Date.now();
+  
+  // Clean up expired passwords
   for (const [password, data] of temporaryPasswords.entries()) {
     if (now > data.expiresAt) {
       temporaryPasswords.delete(password);
+    }
+  }
+  
+  // Clean up old pending requests (older than 7 days)
+  const sevenDaysAgo = now - (7 * 24 * 60 * 60 * 1000);
+  for (const [requestId, data] of pendingRequests.entries()) {
+    if (data.createdAt < sevenDaysAgo) {
+      pendingRequests.delete(requestId);
     }
   }
 }, 60 * 60 * 1000);
