@@ -17,7 +17,7 @@ const pendingRequests = new Map();
 const temporaryPasswords = new Map();
 
 // Email configuration
-const transporter = nodemailer.createTransporter({
+const transporter = nodemailer.createTransport({
   service: 'yahoo',
   auth: {
     user: 'melissa.casole@yahoo.com', // Your email
