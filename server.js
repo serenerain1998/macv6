@@ -488,6 +488,29 @@ setInterval(() => {
   }
 }, 60 * 60 * 1000);
 
+// Test email endpoint
+app.get('/api/test-email', async (req, res) => {
+  console.log('Testing email configuration...');
+  console.log('Email password set:', !!process.env.EMAIL_PASSWORD);
+  console.log('Email password length:', process.env.EMAIL_PASSWORD ? process.env.EMAIL_PASSWORD.length : 0);
+  
+  try {
+    const testMailOptions = {
+      from: 'melissa.casole@yahoo.com',
+      to: 'melissa.casole@yahoo.com',
+      subject: 'Test Email from Portfolio',
+      html: '<h2>Test Email</h2><p>This is a test email to verify the email configuration is working.</p>'
+    };
+    
+    const result = await transporter.sendMail(testMailOptions);
+    console.log('Test email sent successfully:', result);
+    res.json({ success: true, message: 'Test email sent successfully' });
+  } catch (error) {
+    console.error('Test email failed:', error);
+    res.json({ success: false, error: error.message });
+  }
+});
+
 // Serve the main page
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
