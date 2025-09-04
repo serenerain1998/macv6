@@ -17,6 +17,7 @@ const pendingRequests = new Map();
 const temporaryPasswords = new Map();
 
 // Email configuration
+console.log('Email password set:', !!process.env.EMAIL_PASSWORD);
 const transporter = nodemailer.createTransport({
   service: 'yahoo',
   auth: {
@@ -83,7 +84,7 @@ async function sendApprovalRequestEmail(requestData, requestId) {
       <p>Click this link: <a href="http://localhost:3000/api/approve-request/${requestId}">Approve Request</a></p>
       <p><strong>To decline this request:</strong></p>
       <p>Click this link: <a href="http://localhost:3000/api/decline-request/${requestId}">Decline Request</a></p>
-      <p><em>Note: These links will work when the server is running. In production, replace localhost:3000 with your actual domain.</em></p>
+      <p><em>Note: Make sure the server is running when you click these links.</em></p>
     `
   };
 
@@ -205,6 +206,9 @@ app.post('/api/password-request', async (req, res) => {
 app.get('/api/approve-request/:requestId', async (req, res) => {
   try {
     const { requestId } = req.params;
+    console.log('Approval request for ID:', requestId);
+    console.log('Available request IDs:', Array.from(pendingRequests.keys()));
+    
     const requestData = pendingRequests.get(requestId);
     
     if (!requestData) {
@@ -353,6 +357,9 @@ app.get('/api/decline-request/:requestId', async (req, res) => {
 app.post('/api/verify-password', (req, res) => {
   const { password } = req.body;
   
+  console.log('Password verification request for:', password);
+  console.log('Available temporary passwords:', Array.from(temporaryPasswords.keys()));
+  
   if (!password) {
     return res.status(400).json({ 
       success: false, 
@@ -363,6 +370,7 @@ app.post('/api/verify-password', (req, res) => {
   const passwordData = temporaryPasswords.get(password);
   
   if (!passwordData) {
+    console.log('Password not found in temporary passwords');
     return res.json({ 
       success: false, 
       message: 'Invalid password' 
@@ -370,6 +378,7 @@ app.post('/api/verify-password', (req, res) => {
   }
 
   if (Date.now() > passwordData.expiresAt) {
+    console.log('Password expired');
     temporaryPasswords.delete(password);
     return res.json({ 
       success: false, 
@@ -377,6 +386,7 @@ app.post('/api/verify-password', (req, res) => {
     });
   }
 
+  console.log('Password valid');
   res.json({ 
     success: true, 
     message: 'Password valid' 

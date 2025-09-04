@@ -724,12 +724,35 @@
     initRequestPassword();
   }
 
-  function handlePasswordSubmit() {
+  async function handlePasswordSubmit() {
     const enteredPassword = elements.passwordInput.value;
     
+    // First check the hardcoded password
     if (enteredPassword === CONFIG.password) {
       authenticateUser();
-    } else {
+      return;
+    }
+    
+    // Then check temporary passwords
+    try {
+      const response = await fetch('/api/verify-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ password: enteredPassword })
+      });
+      
+      const result = await response.json();
+      console.log('Password verification result:', result);
+      
+      if (result.success) {
+        authenticateUser();
+      } else {
+        showPasswordError();
+      }
+    } catch (error) {
+      console.error('Password verification error:', error);
       showPasswordError();
     }
   }
