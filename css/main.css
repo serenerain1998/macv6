@@ -3505,3 +3505,26 @@ body.is-scrolling .contact-section {
   background: #2d2d2d !important;
   color: #9ca3af !important;
 }
+
+/* Password input and button width alignment */
+.password-modal .password-form .input-group {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.password-modal .password-form .submit-btn {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+/* Privacy notice text centering */
+.password-modal .privacy-notice {
+  text-align: center;
+}
+
+.password-modal .privacy-notice p {
+  text-align: center;
+  margin: 0;
+}
