@@ -120,9 +120,9 @@ async function sendApprovalRequestEmail(requestData, requestId) {
       <p><strong>User Agent:</strong> ${requestData.userAgent}</p>
       <hr>
       <p><strong>To approve this request:</strong></p>
-      <p>Click this link: <a href="https://www.melissacasole.com/api/approve-request/${requestId}">Approve Request</a></p>
+      <p>Click this link: <a href="https://www.melissacasole.com/api/approve-request/${requestId}?email=${encodeURIComponent(requestData.email)}&name=${encodeURIComponent(requestData.name)}">Approve Request</a></p>
       <p><strong>To decline this request:</strong></p>
-      <p>Click this link: <a href="https://www.melissacasole.com/api/decline-request/${requestId}">Decline Request</a></p>
+      <p>Click this link: <a href="https://www.melissacasole.com/api/decline-request/${requestId}?email=${encodeURIComponent(requestData.email)}&name=${encodeURIComponent(requestData.name)}">Decline Request</a></p>
       <p><em>Note: Make sure the server is running when you click these links.</em></p>
     `
   };
@@ -253,17 +253,20 @@ app.post('/api/password-request', async (req, res) => {
 app.get('/api/approve-request/:requestId', async (req, res) => {
   try {
     const { requestId } = req.params;
+    const { email, name } = req.query; // Get email and name from URL parameters
     console.log('Approval request for ID:', requestId);
+    console.log('Email from URL:', email);
+    console.log('Name from URL:', name);
     
     // Check if request exists in memory
     let requestData = pendingRequests[requestId];
     
     if (!requestData) {
-      // If request not found in memory, create a generic approval
-      console.log('Request not found in memory, creating generic approval');
+      // If request not found in memory, use data from URL parameters
+      console.log('Request not found in memory, using URL parameters');
       requestData = {
-        name: 'Unknown User',
-        email: 'unknown@example.com',
+        name: name || 'Unknown User',
+        email: email || 'unknown@example.com',
         company: 'Unknown Company',
         reason: 'Request approved via direct link',
         timestamp: new Date().toISOString()
@@ -339,6 +342,7 @@ app.get('/api/approve-request/:requestId', async (req, res) => {
 app.get('/api/decline-request/:requestId', async (req, res) => {
   try {
     const { requestId } = req.params;
+    const { email, name } = req.query; // Get email and name from URL parameters
     const requestData = pendingRequests[requestId];
     
     if (!requestData) {
