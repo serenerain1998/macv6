@@ -81,9 +81,9 @@ async function sendApprovalRequestEmail(requestData, requestId) {
       <p><strong>User Agent:</strong> ${requestData.userAgent}</p>
       <hr>
       <p><strong>To approve this request:</strong></p>
-      <p>Click this link: <a href="https://macv6.vercel.app/api/approve-request/${requestId}">Approve Request</a></p>
+      <p>Click this link: <a href="https://www.melissacasole.com/api/approve-request/${requestId}">Approve Request</a></p>
       <p><strong>To decline this request:</strong></p>
-      <p>Click this link: <a href="https://macv6.vercel.app/api/decline-request/${requestId}">Decline Request</a></p>
+      <p>Click this link: <a href="https://www.melissacasole.com/api/decline-request/${requestId}">Decline Request</a></p>
       <p><em>Note: Make sure the server is running when you click these links.</em></p>
     `
   };
