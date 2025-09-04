@@ -678,10 +678,24 @@
   
   function initPasswordAuthentication() {
     // Check if user is already authenticated
-    if (sessionStorage.getItem('portfolioAuthenticated') === 'true') {
-      state.isAuthenticated = true;
-      showMainContent();
-      return;
+    const authTimestamp = localStorage.getItem('portfolioAuthTimestamp');
+    const authStatus = localStorage.getItem('portfolioAuthenticated');
+    
+    // Check if authentication is still valid (7 days)
+    if (authStatus === 'true' && authTimestamp) {
+      const authTime = parseInt(authTimestamp);
+      const currentTime = Date.now();
+      const sevenDays = 7 * 24 * 60 * 60 * 1000; // 7 days in milliseconds
+      
+      if (currentTime - authTime < sevenDays) {
+        state.isAuthenticated = true;
+        showMainContent();
+        return;
+      } else {
+        // Authentication expired, clear it
+        localStorage.removeItem('portfolioAuthenticated');
+        localStorage.removeItem('portfolioAuthTimestamp');
+      }
     }
 
     // Show password modal
@@ -762,7 +776,8 @@
 
   function authenticateUser() {
     state.isAuthenticated = true;
-    sessionStorage.setItem('portfolioAuthenticated', 'true');
+    localStorage.setItem('portfolioAuthenticated', 'true');
+    localStorage.setItem('portfolioAuthTimestamp', Date.now().toString());
     
     // Hide password modal with animation
     if (elements.passwordModal) {
