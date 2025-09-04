@@ -82,22 +82,22 @@
             <form class="request-form" id="requestForm">
                 <div class="input-group">
                     <label for="requestName">Full Name *</label>
-                    <input type="text" id="requestName" class="request-input" placeholder="Enter your full name" required>
+                    <input type="text" id="requestName" name="requestName" class="request-input" placeholder="Enter your full name" required>
                 </div>
 
                 <div class="input-group">
                     <label for="requestEmail">Email Address *</label>
-                    <input type="email" id="requestEmail" class="request-input" placeholder="Enter your email address" required>
+                    <input type="email" id="requestEmail" name="requestEmail" class="request-input" placeholder="Enter your email address" required>
                 </div>
 
                 <div class="input-group">
                     <label for="requestCompany">Company/Organization</label>
-                    <input type="text" id="requestCompany" class="request-input" placeholder="Enter your company name">
+                    <input type="text" id="requestCompany" name="requestCompany" class="request-input" placeholder="Enter your company name">
                 </div>
 
                 <div class="input-group">
                     <label for="requestReason">Reason for Access *</label>
-                    <select id="requestReason" class="request-input" required>
+                    <select id="requestReason" name="requestReason" class="request-input" required>
                         <option value="">Select a reason</option>
                         <option value="recruitment">Recruitment/Hiring</option>
                         <option value="collaboration">Project Collaboration</option>
@@ -109,7 +109,7 @@
 
                 <div class="input-group" id="otherReasonGroup" style="display: none;">
                     <label for="otherReason">Please specify</label>
-                    <textarea id="otherReason" class="request-input" placeholder="Please describe your reason for access"></textarea>
+                    <textarea id="otherReason" name="otherReason" class="request-input" placeholder="Please describe your reason for access"></textarea>
                 </div>
 
                 <button type="submit" class="submit-btn" id="submitRequest">

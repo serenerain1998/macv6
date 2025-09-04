@@ -881,6 +881,8 @@
   async function handleRequestSubmit(event) {
     event.preventDefault();
     
+    console.log('Form submitted');
+    
     const formData = new FormData(elements.requestForm);
     const requestData = {
       name: formData.get('requestName') || document.getElementById('requestName').value,
@@ -893,9 +895,13 @@
       ip: await getClientIP()
     };
     
+    console.log('Request data:', requestData);
+    
     try {
       // Send request to backend service
       const response = await sendPasswordRequest(requestData);
+      
+      console.log('Response:', response);
       
       if (response.success) {
         showRequestSuccess();
@@ -940,16 +946,21 @@
   }
 
   function showRequestSuccess() {
+    console.log('Showing success message');
+    
     if (elements.requestForm) {
+      console.log('Hiding form');
       elements.requestForm.style.display = 'none';
     }
     if (elements.requestSuccess) {
+      console.log('Showing success message');
       elements.requestSuccess.classList.add('show');
     }
     
     // Hide the modal header text
     const modalHeader = document.querySelector('.request-modal .modal-header');
     if (modalHeader) {
+      console.log('Hiding modal header');
       modalHeader.style.display = 'none';
     }
     
