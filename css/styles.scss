@@ -900,9 +900,10 @@ img {
   }
   
   p {
-    font-size: font-size(lg);
+    line-height: map-get($typography, 'line-height', 'normal');
+    font-size: font-size(3xl);
     color: color(text, secondary);
-    max-width: 600px;
+    max-width: 900px;
     margin: 0 auto;
   }
 }
@@ -1158,11 +1159,11 @@ img {
     }
     
     p {
-      font-size: font-size(lg);
+      font-size: font-size(3xl);
       color: color(text, secondary);
-      max-width: 700px;
+      max-width: 900px;
       margin: 0 auto;
-      line-height: map-get($typography, 'line-height', 'relaxed');
+      line-height: map-get($typography, 'line-height', 'normal');
       font-weight: font-weight(medium);
     }
   }
