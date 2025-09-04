@@ -1832,6 +1832,8 @@ body.is-scrolling .contact-section {
   padding: var(--space-12);
   max-width: 1024px;
   width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
   text-align: center;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
 }
@@ -3264,6 +3266,140 @@ body.is-scrolling .contact-section {
   
   .next-project-content p {
     font-size: var(--font-size-base);
+  }
+}
+
+/* Password Modal Responsive Adjustments */
+@media (max-width: 768px) {
+  .password-modal .modal-content {
+    padding: var(--space-6);
+    width: 95%;
+    max-height: 95vh;
+  }
+  
+  .password-modal .modal-header h1 {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--space-3);
+  }
+  
+  .password-modal .modal-header p {
+    font-size: var(--font-size-sm);
+    line-height: 1.5;
+  }
+  
+  .password-modal .lock-icon {
+    width: 60px;
+    height: 60px;
+    font-size: 1.5rem;
+    margin-bottom: var(--space-4);
+  }
+  
+  .password-modal .password-form {
+    margin-bottom: var(--space-6);
+  }
+  
+  .password-modal .input-group {
+    margin-bottom: var(--space-4);
+  }
+  
+  .password-modal .password-input {
+    padding: var(--space-3) var(--space-10) var(--space-3) var(--space-3);
+    font-size: var(--font-size-sm);
+  }
+  
+  .password-modal .submit-btn {
+    padding: var(--space-3) var(--space-6);
+    font-size: var(--font-size-sm);
+  }
+  
+  .password-modal .privacy-notice {
+    margin-top: var(--space-4);
+    padding: var(--space-3);
+  }
+  
+  .password-modal .privacy-notice p {
+    font-size: var(--font-size-xs);
+  }
+  
+  /* Request Modal Responsive */
+  .request-modal .modal-content {
+    padding: var(--space-4);
+    width: 95%;
+    max-height: 95vh;
+  }
+  
+  .request-modal .modal-header h1 {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--space-2);
+  }
+  
+  .request-modal .modal-header p {
+    font-size: var(--font-size-sm);
+    line-height: 1.5;
+  }
+  
+  .request-modal .request-form {
+    max-width: 100%;
+  }
+  
+  .request-modal .input-group {
+    margin-bottom: var(--space-3);
+  }
+  
+  .request-modal .request-input {
+    padding: var(--space-3);
+    font-size: var(--font-size-sm);
+  }
+  
+  .request-modal .submit-btn,
+  .request-modal .cancel-btn {
+    padding: var(--space-3) var(--space-4);
+    font-size: var(--font-size-sm);
+  }
+}
+
+@media (max-height: 600px) {
+  .password-modal .modal-content {
+    padding: var(--space-4);
+    max-height: 98vh;
+  }
+  
+  .password-modal .modal-header {
+    margin-bottom: var(--space-4);
+  }
+  
+  .password-modal .lock-icon {
+    width: 50px;
+    height: 50px;
+    font-size: 1.25rem;
+    margin-bottom: var(--space-3);
+  }
+  
+  .password-modal .modal-header h1 {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--space-2);
+  }
+  
+  .password-modal .modal-header p {
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--space-3);
+  }
+  
+  .password-modal .password-form {
+    margin-bottom: var(--space-4);
+  }
+  
+  .password-modal .input-group {
+    margin-bottom: var(--space-3);
+  }
+  
+  .password-modal .submit-btn {
+    padding: var(--space-2) var(--space-4);
+  }
+  
+  .password-modal .privacy-notice {
+    margin-top: var(--space-3);
+    padding: var(--space-2);
   }
 }
 
