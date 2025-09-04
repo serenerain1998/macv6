@@ -3581,7 +3581,7 @@ body.is-scrolling .contact-section {
   overflow: hidden;
 }
 .request-btn i {
-  margin-right: 1em;
+  margin-right: 0.75em;
 }
 
 .request-btn::before {

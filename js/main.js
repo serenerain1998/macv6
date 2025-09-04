@@ -720,8 +720,11 @@
       elements.passwordInput.addEventListener('input', updateSubmitButtonState);
     }
     
-    // Initialize request password functionality
-    initRequestPassword();
+      // Initialize request password functionality
+  initRequestPassword();
+  
+  // Initialize security measures (only on production)
+  initSecurityMeasures();
   }
 
   async function handlePasswordSubmit() {
@@ -1007,6 +1010,74 @@
     // You can implement error display here
     console.error('Request error:', message);
     alert(message);
+  }
+
+  function initSecurityMeasures() {
+    // Only apply security measures on production (not localhost)
+    if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+      // Disable right-click context menu
+      document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        return false;
+      });
+
+      // Disable F12 key
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || 
+            (e.ctrlKey && e.shiftKey && e.key === 'J') || (e.ctrlKey && e.key === 'U')) {
+          e.preventDefault();
+          return false;
+        }
+      });
+
+      // Disable developer tools shortcuts
+      document.addEventListener('keydown', function(e) {
+        // Ctrl+Shift+I (Developer Tools)
+        if (e.ctrlKey && e.shiftKey && e.key === 'I') {
+          e.preventDefault();
+          return false;
+        }
+        // Ctrl+Shift+J (Console)
+        if (e.ctrlKey && e.shiftKey && e.key === 'J') {
+          e.preventDefault();
+          return false;
+        }
+        // Ctrl+U (View Source)
+        if (e.ctrlKey && e.key === 'u') {
+          e.preventDefault();
+          return false;
+        }
+        // Ctrl+Shift+C (Inspect Element)
+        if (e.ctrlKey && e.shiftKey && e.key === 'C') {
+          e.preventDefault();
+          return false;
+        }
+      });
+
+      // Disable text selection
+      document.addEventListener('selectstart', function(e) {
+        e.preventDefault();
+        return false;
+      });
+
+      // Disable drag and drop
+      document.addEventListener('dragstart', function(e) {
+        e.preventDefault();
+        return false;
+      });
+
+      // Additional protection against developer tools
+      setInterval(function() {
+        const devtools = /./;
+        devtools.toString = function() {
+          this.opened = true;
+        }
+        console.log('%c', devtools);
+        if (devtools.opened) {
+          document.body.innerHTML = 'Developer tools are not allowed on this site.';
+        }
+      }, 1000);
+    }
   }
 
   function showPasswordModal() {
