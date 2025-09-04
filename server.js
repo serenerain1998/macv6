@@ -3,17 +3,6 @@ const cors = require('cors');
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 const path = require('path');
-const fs = require('fs');
-
-// File paths for persistent storage
-const REQUESTS_FILE = path.join(__dirname, 'data', 'pending-requests.json');
-const PASSWORDS_FILE = path.join(__dirname, 'data', 'temporary-passwords.json');
-
-// Ensure data directory exists
-const dataDir = path.join(__dirname, 'data');
-if (!fs.existsSync(dataDir)) {
-  fs.mkdirSync(dataDir, { recursive: true });
-}
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -23,32 +12,9 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static('.'));
 
-// File storage functions
-function loadData(filePath) {
-  try {
-    if (fs.existsSync(filePath)) {
-      const data = fs.readFileSync(filePath, 'utf8');
-      return JSON.parse(data);
-    }
-  } catch (error) {
-    console.error(`Error loading data from ${filePath}:`, error);
-  }
-  return {};
-}
-
-function saveData(filePath, data) {
-  try {
-    fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
-    return true;
-  } catch (error) {
-    console.error(`Error saving data to ${filePath}:`, error);
-    return false;
-  }
-}
-
-// Load existing data
-let pendingRequests = loadData(REQUESTS_FILE);
-let temporaryPasswords = loadData(PASSWORDS_FILE);
+// In-memory storage (will reset on server restart, but works for Vercel)
+let pendingRequests = {};
+let temporaryPasswords = {};
 
 // Email configuration
 console.log('Email password set:', !!process.env.EMAIL_PASSWORD);
@@ -225,9 +191,6 @@ app.post('/api/password-request', async (req, res) => {
       status: 'pending',
       createdAt: Date.now()
     };
-    
-    // Save to file
-    saveData(REQUESTS_FILE, pendingRequests);
 
     // Send approval request email to you
     console.log('Sending approval email for request ID:', requestId);
@@ -301,10 +264,6 @@ app.get('/api/approve-request/:requestId', async (req, res) => {
       approvedAt: Date.now(),
       temporaryPassword: temporaryPassword
     };
-    
-    // Save to files
-    saveData(PASSWORDS_FILE, temporaryPasswords);
-    saveData(REQUESTS_FILE, pendingRequests);
 
     // Send password email to requester
     const passwordSent = await sendPasswordEmail(requestData, temporaryPassword);
@@ -373,9 +332,6 @@ app.get('/api/decline-request/:requestId', async (req, res) => {
       status: 'declined',
       declinedAt: Date.now()
     };
-    
-    // Save to file
-    saveData(REQUESTS_FILE, pendingRequests);
 
     // Send decline email to requester
     const declineEmailSent = await sendDeclineEmail(requestData);
@@ -445,7 +401,6 @@ app.post('/api/verify-password', (req, res) => {
   if (Date.now() > passwordData.expiresAt) {
     console.log('Password expired');
     delete temporaryPasswords[password];
-    saveData(PASSWORDS_FILE, temporaryPasswords);
     return res.json({ 
       success: false, 
       message: 'Password expired' 
@@ -462,13 +417,11 @@ app.post('/api/verify-password', (req, res) => {
 // Clean up expired passwords and old pending requests (run every hour)
 setInterval(() => {
   const now = Date.now();
-  let changed = false;
   
   // Clean up expired passwords
   for (const password in temporaryPasswords) {
     if (now > temporaryPasswords[password].expiresAt) {
       delete temporaryPasswords[password];
-      changed = true;
     }
   }
   
@@ -477,14 +430,7 @@ setInterval(() => {
   for (const requestId in pendingRequests) {
     if (pendingRequests[requestId].createdAt < sevenDaysAgo) {
       delete pendingRequests[requestId];
-      changed = true;
     }
-  }
-  
-  // Save changes to files
-  if (changed) {
-    saveData(PASSWORDS_FILE, temporaryPasswords);
-    saveData(REQUESTS_FILE, pendingRequests);
   }
 }, 60 * 60 * 1000);
 
