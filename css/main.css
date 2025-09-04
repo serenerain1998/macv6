@@ -3580,6 +3580,9 @@ body.is-scrolling .contact-section {
   position: relative;
   overflow: hidden;
 }
+.request-btn i {
+  margin-right: 1em;
+}
 
 .request-btn::before {
   content: '';
@@ -3775,6 +3778,11 @@ body.is-scrolling .contact-section {
 .request-modal .success-message {
   text-align: center;
   color: #10b981;
+  display: none;
+}
+
+.request-modal .success-message.show {
+  display: block;
 }
 
 .request-modal .success-message i {

@@ -862,15 +862,19 @@
   function resetRequestForm() {
     if (elements.requestForm) {
       elements.requestForm.reset();
+      elements.requestForm.style.display = 'block';
     }
     if (elements.otherReasonGroup) {
       elements.otherReasonGroup.style.display = 'none';
     }
     if (elements.requestSuccess) {
-      elements.requestSuccess.style.display = 'none';
+      elements.requestSuccess.classList.remove('show');
     }
-    if (elements.requestForm) {
-      elements.requestForm.style.display = 'block';
+    
+    // Show the modal header text again
+    const modalHeader = document.querySelector('.request-modal .modal-header');
+    if (modalHeader) {
+      modalHeader.style.display = 'block';
     }
   }
 
@@ -940,7 +944,13 @@
       elements.requestForm.style.display = 'none';
     }
     if (elements.requestSuccess) {
-      elements.requestSuccess.style.display = 'block';
+      elements.requestSuccess.classList.add('show');
+    }
+    
+    // Hide the modal header text
+    const modalHeader = document.querySelector('.request-modal .modal-header');
+    if (modalHeader) {
+      modalHeader.style.display = 'none';
     }
     
     // Auto-hide after 5 seconds
