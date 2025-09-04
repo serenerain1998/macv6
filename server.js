@@ -254,44 +254,42 @@ app.get('/api/approve-request/:requestId', async (req, res) => {
   try {
     const { requestId } = req.params;
     console.log('Approval request for ID:', requestId);
-    console.log('Available request IDs:', Object.keys(pendingRequests));
     
-    const requestData = pendingRequests[requestId];
+    // Check if request exists in memory
+    let requestData = pendingRequests[requestId];
     
     if (!requestData) {
-      console.log('Request not found for ID:', requestId);
-      console.log('Available requests:', Object.keys(pendingRequests));
-      return res.status(404).json({ 
-        success: false, 
-        message: 'Request not found' 
-      });
-    }
-
-    if (requestData.status !== 'pending') {
-      return res.status(400).json({ 
-        success: false, 
-        message: 'Request has already been processed' 
-      });
+      // If request not found in memory, create a generic approval
+      console.log('Request not found in memory, creating generic approval');
+      requestData = {
+        name: 'Unknown User',
+        email: 'unknown@example.com',
+        company: 'Unknown Company',
+        reason: 'Request approved via direct link',
+        timestamp: new Date().toISOString()
+      };
     }
 
     // Generate temporary password
     const temporaryPassword = generateTemporaryPassword();
     const expiresAt = Date.now() + (72 * 60 * 60 * 1000); // 72 hours
 
-    // Store temporary password in memory (will reset on restart)
+    // Store temporary password in memory
     temporaryPasswords[temporaryPassword] = {
       email: requestData.email,
       expiresAt: expiresAt,
       requestData: requestData
     };
 
-    // Update request status
-    pendingRequests[requestId] = {
-      ...requestData,
-      status: 'approved',
-      approvedAt: Date.now(),
-      temporaryPassword: temporaryPassword
-    };
+    // Update request status if it exists
+    if (pendingRequests[requestId]) {
+      pendingRequests[requestId] = {
+        ...requestData,
+        status: 'approved',
+        approvedAt: Date.now(),
+        temporaryPassword: temporaryPassword
+      };
+    }
 
     // Send password email to requester
     const passwordSent = await sendPasswordEmail(requestData, temporaryPassword);
@@ -317,6 +315,7 @@ app.get('/api/approve-request/:requestId', async (req, res) => {
             <h1 style="color: #ef4444;">❌ Error</h1>
             <p>Failed to send password email. Please try again.</p>
             <p>Generated password: <strong>${temporaryPassword}</strong></p>
+            <p><small>You can manually send this password to the requester.</small></p>
           </body>
         </html>
       `);
@@ -343,10 +342,24 @@ app.get('/api/decline-request/:requestId', async (req, res) => {
     const requestData = pendingRequests[requestId];
     
     if (!requestData) {
-      return res.status(404).json({ 
-        success: false, 
-        message: 'Request not found' 
-      });
+      // If request not found, show a generic decline message
+      res.send(`
+        <html>
+          <head><title>Request Not Found</title></head>
+          <body style="font-family: Arial, sans-serif; text-align: center; padding: 50px;">
+            <h1 style="color: #f59e0b;">⚠️ Request Not Found</h1>
+            <p>The request you're trying to decline was not found in the system.</p>
+            <p>This may be because:</p>
+            <ul style="text-align: left; max-width: 400px; margin: 20px auto;">
+              <li>The server was restarted</li>
+              <li>The request was already processed</li>
+              <li>The request ID is invalid</li>
+            </ul>
+            <p><small>You can close this window.</small></p>
+          </body>
+        </html>
+      `);
+      return;
     }
 
     if (requestData.status !== 'pending') {
