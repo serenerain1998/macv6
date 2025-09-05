@@ -376,12 +376,13 @@ img {
     border-radius: map-get($radius, xl);
     padding: spacing('3xl');
     max-width: 1024px;
-    width: 90%;
+    width: 30%;
+    min-width: 375px;
     text-align: center;
     @include elevation(lg);
     position: relative;
     overflow: hidden;
-   
+    flex-direction: column;
     
     &::before {
       content: '';

@@ -1610,6 +1610,7 @@ body.is-scrolling .contact-section {
   max-height: 95vh;
   z-index: 1;
   display: flex;
+  flex-direction: row;
   align-items: stretch;
   justify-content: center;
   overflow: visible;
@@ -1624,6 +1625,7 @@ body.is-scrolling .contact-section {
   align-items: center;
   justify-content: center;
   min-width: 0;
+  max-width: 50%;
 }
 
 .modal-media img,
@@ -1644,6 +1646,7 @@ body.is-scrolling .contact-section {
   justify-content: center;
   padding: 2rem;
   min-width: 0;
+  max-width: 50%;
 }
 
 .modal-info h3 {
@@ -1794,13 +1797,13 @@ body.is-scrolling .contact-section {
   .modal-content {
     max-width: 85vw;
     max-height: 85vh;
-    flex-direction: row;
     gap: 2rem;
   }
   
   .modal-media {
     flex: 1;
     order: 1;
+    max-width: 50% !important;
   }
   
   .modal-media img,
@@ -1813,6 +1816,7 @@ body.is-scrolling .contact-section {
     flex: 1;
     order: 2;
     padding: 2rem;
+    max-width: 50% !important;
   }
   
   .modal-btn {
@@ -1831,10 +1835,19 @@ body.is-scrolling .contact-section {
   .modal-content {
     max-width: 80vw;
     max-height: 80vh;
+    
+  }
+  
+  .modal-media {
+    max-width: 50% !important;
+  }
+  
+  .modal-info {
+    max-width: 50% !important;
   }
   
   .modal-content video {
-    max-width: 80vw;
+    max-width: 100%;
     max-height: 80vh;
   }
 }
@@ -3824,7 +3837,6 @@ body.is-scrolling .contact-section {
 
 /* Modal Info */
 .modal-info {
-  position: absolute;
   bottom: -80px;
   left: 0;
   right: 0;
