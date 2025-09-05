@@ -876,6 +876,13 @@
       setTimeout(() => {
         elements.requestModal.classList.add('show');
       }, 10);
+      
+      // Add click outside to close functionality
+      elements.requestModal.addEventListener('click', (e) => {
+        if (e.target === elements.requestModal) {
+          hideRequestModal();
+        }
+      });
     }
   }
 
@@ -1066,6 +1073,7 @@
     const sliderItems = document.querySelectorAll('.slider-item');
     const modal = document.getElementById('imageModal');
     const modalImage = document.getElementById('modalImage');
+    const modalVideo = document.getElementById('modalVideo');
     const modalClose = document.querySelector('.modal-close');
     const modalPrevBtn = document.querySelector('.modal-btn.prev-btn');
     const modalNextBtn = document.querySelector('.modal-btn.next-btn');
@@ -1536,6 +1544,13 @@
     // Close modal on escape key
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && videoModal.style.display === 'flex') {
+        closeVideoModal();
+      }
+    });
+
+    // Close modal when clicking outside of it
+    videoModal.addEventListener('click', (e) => {
+      if (e.target === videoModal) {
         closeVideoModal();
       }
     });
