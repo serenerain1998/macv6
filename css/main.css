@@ -1610,15 +1610,24 @@ body.is-scrolling .contact-section {
   max-height: 95vh;
   z-index: 1;
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: center;
   overflow: visible;
   box-sizing: border-box;
   padding: 60px 20px 20px 20px;
+  gap: 2rem;
 }
 
-.modal-content img,
-.modal-content video {
+.modal-media {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+}
+
+.modal-media img,
+.modal-media video {
   width: 100%;
   height: auto;
   max-width: 100%;
@@ -1626,6 +1635,30 @@ body.is-scrolling .contact-section {
   object-fit: contain;
   border-radius: var(--radius-xl);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.modal-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem;
+  min-width: 0;
+}
+
+.modal-info h3 {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  margin: 0 0 var(--space-3) 0;
+  color: var(--color-primary-400);
+}
+
+.modal-info p {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-base);
+  line-height: 1.6;
+  margin: 0;
+  opacity: 0.9;
 }
 
 .modal-content video {
@@ -1721,16 +1754,65 @@ body.is-scrolling .contact-section {
   transform: scale(1.1);
 }
 
+/* Tablet Responsive */
+@media (min-width: 769px) and (max-width: 1023px) {
+  .modal-content {
+    max-width: 90vw;
+    max-height: 90vh;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .modal-media {
+    flex: none;
+    order: 1;
+  }
+  
+  .modal-media img,
+  .modal-media video {
+    max-width: 90vw;
+    max-height: 70vh;
+  }
+  
+  .modal-info {
+    flex: none;
+    order: 2;
+    padding: 1.5rem;
+  }
+  
+  .modal-info h3 {
+    font-size: var(--font-size-xl);
+  }
+  
+  .modal-info p {
+    font-size: var(--font-size-base);
+  }
+}
+
 /* Desktop Modal Sizes */
 @media (min-width: 1024px) {
   .modal-content {
     max-width: 85vw;
     max-height: 85vh;
+    flex-direction: row;
+    gap: 2rem;
   }
   
-  .modal-content video {
-    max-width: 85vw;
+  .modal-media {
+    flex: 1;
+    order: 1;
+  }
+  
+  .modal-media img,
+  .modal-media video {
+    max-width: 100%;
     max-height: 85vh;
+  }
+  
+  .modal-info {
+    flex: 1;
+    order: 2;
+    padding: 2rem;
   }
   
   .modal-btn {
@@ -1779,12 +1861,35 @@ body.is-scrolling .contact-section {
     max-width: 98vw;
     max-height: 98vh;
     padding: 50px 10px 10px 10px;
+    flex-direction: column;
+    gap: 1rem;
   }
   
-  .modal-content video {
+  .modal-media {
+    flex: none;
+    order: 1;
+  }
+  
+  .modal-media img,
+  .modal-media video {
     max-width: 98vw;
-    max-height: 98vh;
+    max-height: 60vh;
     aspect-ratio: 16 / 9;
+  }
+  
+  .modal-info {
+    flex: none;
+    order: 2;
+    padding: 1rem;
+  }
+  
+  .modal-info h3 {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--space-2);
+  }
+  
+  .modal-info p {
+    font-size: var(--font-size-sm);
   }
   
   .modal-btn {

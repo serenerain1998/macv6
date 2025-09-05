@@ -311,11 +311,13 @@
                 <button class="modal-close" aria-label="Close modal">
                     <i class="fas fa-times"></i>
                 </button>
-                <video id="modalVideo" controls>
-                    <source src="" type="video/mp4">
-                    <source src="" type="video/quicktime">
-                </video>
-                <div class="video-description">
+                <div class="modal-media">
+                    <video id="modalVideo" controls>
+                        <source src="" type="video/mp4">
+                        <source src="" type="video/quicktime">
+                    </video>
+                </div>
+                <div class="modal-info">
                     <h3 id="videoTitle">Video Title</h3>
                     <p id="videoDescription">Video description will appear here...</p>
                 </div>
@@ -331,7 +333,13 @@
                 <button class="modal-close" aria-label="Close modal">
                     <i class="fas fa-times"></i>
                 </button>
-                <img id="modalImage" src="" alt="Project Image">
+                <div class="modal-media">
+                    <img id="modalImage" src="" alt="Project Image">
+                </div>
+                <div class="modal-info">
+                    <h3 id="modalTitle">Image Title</h3>
+                    <p id="modalDescription">Image description will appear here...</p>
+                </div>
                 <div class="modal-navigation">
                     <button class="nav-btn prev-btn" aria-label="Previous image">
                         <i class="fas fa-chevron-left"></i>
@@ -339,10 +347,6 @@
                     <button class="nav-btn next-btn" aria-label="Next image">
                         <i class="fas fa-chevron-right"></i>
                     </button>
-                </div>
-                <div class="modal-info">
-                    <h3 id="modalTitle">Image Title</h3>
-                    <p id="modalDescription">Image description will appear here...</p>
                 </div>
             </div>
         </div>
