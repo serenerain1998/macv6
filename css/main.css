@@ -1937,6 +1937,131 @@ body.is-scrolling .contact-section {
   }
 }
 
+/* ===== FLOATING RESUME BUTTON ===== */
+
+.floating-resume-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500));
+  color: white;
+  border: none;
+  border-radius: var(--radius-full);
+  padding: var(--space-2) var(--space-6);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-lg);
+  z-index: var(--z-fixed);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  white-space: nowrap;
+  min-width: fit-content;
+}
+
+.floating-resume-btn:hover {
+  background: linear-gradient(135deg, var(--color-primary-400), var(--color-secondary-400));
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-xl);
+  color: white;
+  text-decoration: none;
+  padding-right: var(--space-8);
+  justify-content: flex-start;
+}
+
+.floating-resume-btn:active {
+  transform: translateY(-1px);
+}
+
+.floating-resume-btn i {
+  position: absolute;
+  left: var(--space-4);
+  margin-right: 0;
+  font-size: var(--font-size-lg);
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 0;
+  overflow: hidden;
+}
+
+.floating-resume-btn:hover i {
+  margin-right: 0.25em;
+  opacity: 1;
+  transform: translateX(0);
+  width: auto;
+}
+
+.floating-resume-btn span {
+  font-weight: var(--font-weight-semibold);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.floating-resume-btn:hover span {
+  margin-left: var(--space-6);
+}
+
+/* Responsive adjustments for floating button */
+@media (max-width: 768px) {
+  .floating-resume-btn {
+    bottom: 1.5rem;
+    right: 1.5rem;
+    padding: var(--space-3) var(--space-4);
+    font-size: var(--font-size-sm);
+  }
+  
+  .floating-resume-btn:hover {
+    padding-right: var(--space-6);
+  }
+  
+  .floating-resume-btn i {
+    left: var(--space-3);
+    margin-right: 0;
+    font-size: var(--font-size-base);
+  }
+  
+  .floating-resume-btn:hover i {
+    margin-right: 0.25em;
+  }
+  
+  .floating-resume-btn:hover span {
+    margin-left: var(--space-5);
+  }
+}
+
+@media (max-width: 480px) {
+  .floating-resume-btn {
+    bottom: 1rem;
+    right: 1rem;
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--font-size-xs);
+  }
+  
+  .floating-resume-btn:hover {
+    padding-right: var(--space-5);
+  }
+  
+  .floating-resume-btn i {
+    left: var(--space-2);
+    margin-right: 0;
+    font-size: var(--font-size-sm);
+  }
+  
+  .floating-resume-btn:hover i {
+    margin-right: 0.25em;
+  }
+  
+  .floating-resume-btn:hover span {
+    margin-left: var(--space-4);
+  }
+}
+
 /* ===== PASSWORD MODAL ===== */
 
 .password-modal {
