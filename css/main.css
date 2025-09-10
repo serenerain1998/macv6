@@ -2471,6 +2471,26 @@ body.is-scrolling .contact-section {
   background: #000;
 }
 
+.video-wrapper video {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-lg);
+  max-width: 100%;
+  display: block;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  object-fit: contain;
+  background: #000;
+}
+
+/* Ensure video controls are visible */
+video::-webkit-media-controls {
+  opacity: 1;
+}
+
+video::-webkit-media-controls-panel {
+  background: rgba(0, 0, 0, 0.7);
+}
+
 /* Video Mosaic Wall */
 .video-mosaic {
   padding: var(--space-16) 0;
