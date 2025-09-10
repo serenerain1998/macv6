@@ -60,6 +60,14 @@ data/
 *.flv
 *.webm
 
+# Allow specific video files under 100MB
+!assets/images/saviynt/form1.mov
+!assets/images/saviynt/form2.mov
+!assets/images/saviynt/form3.mov
+!assets/images/saviynt/form4.mov
+!assets/images/saviynt/form_proto.mov
+!assets/images/saviynt/savi_final_comp.mp4
+
 # Large image files
 *.psd
 *.ai
