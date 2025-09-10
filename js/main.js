@@ -1064,6 +1064,39 @@
     if (elements.passwordModal) {
       elements.passwordModal.style.display = 'none';
     }
+    
+    // Re-initialize all functionality after content is shown
+    setTimeout(() => {
+      initProjectFilters();
+      initNavbarAccessibility();
+      initSmoothScrolling();
+      initIntersectionObserver();
+      initTooltipLabels();
+      initFormHandling();
+      initPerformanceOptimizations();
+      initAccessibilityEnhancements();
+      initImageSlider();
+      initVideoAutoplay();
+      initMosaicWall();
+      initGalleryModal();
+      
+      // Initialize AOS animations
+      if (typeof AOS !== 'undefined') {
+        AOS.init({
+          duration: 800,
+          easing: 'ease-in-out',
+          once: true,
+          offset: 100
+        });
+      }
+      
+      // Initialize GSAP ScrollTrigger
+      if (typeof ScrollTrigger !== 'undefined') {
+        ScrollTrigger.refresh();
+      }
+      
+      console.log('All functionality re-initialized after password authentication');
+    }, 100);
   }
 
   // ===== IMAGE SLIDER =====

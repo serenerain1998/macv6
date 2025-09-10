@@ -2456,6 +2456,8 @@ body.is-scrolling .contact-section {
   justify-content: center;
   backdrop-filter: blur(20px);
   overflow: hidden;
+  position: relative;
+  width: 100%;
 }
 
 .video-container video {
@@ -2465,6 +2467,8 @@ body.is-scrolling .contact-section {
   max-width: 100%;
   display: block;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  object-fit: contain;
+  background: #000;
 }
 
 /* Video Mosaic Wall */
