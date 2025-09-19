@@ -1472,7 +1472,7 @@ img {
   }
   
   .hero-actions {
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     gap: spacing(md);
     
@@ -2022,7 +2022,7 @@ img {
   }
   
   .hero-actions {
-    flex-direction: column;
+    flex-direction: row;
     gap: spacing(3);
     
     .btn-primary,
@@ -2108,7 +2108,7 @@ img {
   }
   
   .hero-actions {
-    flex-direction: column;
+    flex-direction: row;
     gap: spacing(4);
     
     .btn-primary,
