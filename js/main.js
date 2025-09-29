@@ -1103,20 +1103,6 @@
           });
         });
         
-        // Add a test button to manually trigger modal
-        const testButton = document.createElement('button');
-        testButton.textContent = 'Test Modal';
-        testButton.style.cssText = 'position: fixed; top: 10px; right: 10px; z-index: 9999; background: red; color: white; padding: 10px; border: none; cursor: pointer;';
-        testButton.onclick = () => {
-          console.log('Test button clicked - attempting to open modal...');
-          if (window.MainApp && window.MainApp.testModal) {
-            window.MainApp.testModal();
-          } else {
-            console.log('Test modal function not available');
-          }
-        };
-        document.body.appendChild(testButton);
-        console.log('Added test button to manually trigger modal');
       }
       
       // Initialize AOS animations
@@ -2061,30 +2047,6 @@
     filterProjects,
     updateActiveNavigation,
     handleMobileNavToggle,
-    testModal: () => {
-      console.log('Test modal function called');
-      const modal = document.getElementById('imageModal');
-      const modalImage = document.getElementById('modalImage');
-      const modalTitle = document.getElementById('modalTitle');
-      const modalDescription = document.getElementById('modalDescription');
-      
-      if (modal && modalImage && modalTitle && modalDescription) {
-        modalImage.src = 'assets/images/adf/adf2.png';
-        modalImage.alt = 'Test Image';
-        modalTitle.textContent = 'Test Modal';
-        modalDescription.textContent = 'This is a test modal to verify functionality.';
-        modal.classList.add('show');
-        document.body.style.overflow = 'hidden';
-        console.log('Test modal opened successfully');
-      } else {
-        console.log('Modal elements not found:', {
-          modal: !!modal,
-          modalImage: !!modalImage,
-          modalTitle: !!modalTitle,
-          modalDescription: !!modalDescription
-        });
-      }
-    }
   };
 
   // Auto-initialize
