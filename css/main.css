@@ -24,7 +24,7 @@ body::before {
     radial-gradient(circle at 30% 70%, rgba(0, 0, 0, 0.8) 0%, transparent 100%);
   background-blend-mode: screen, multiply, overlay;
   filter: saturate(1.8) contrast(1.3) brightness(0.9);
-  pointer-events: none;
+  pointer-events: auto;
   z-index: -1;
   animation: background-aurora 80s ease-in-out infinite;
   background-size: 200% 200%;
@@ -264,7 +264,7 @@ body.is-scrolling .contact-section {
   left: 0;
   right: 0;
   bottom: 0;
-  pointer-events: none;
+  pointer-events: auto;
   z-index: 1;
   overflow: hidden;
 }
@@ -381,7 +381,7 @@ body.is-scrolling .contact-section {
     radial-gradient(circle at 20% 80%, rgba(13, 13, 30, 0.15) 0%, transparent 50%),
     radial-gradient(circle at 80% 20%, rgba(24, 35, 53, 0.15) 0%, transparent 50%),
     radial-gradient(circle at 50% 50%, rgba(13, 22, 39, 0.1) 0%, transparent 70%);
-  pointer-events: none;
+  pointer-events: auto;
   opacity: 0;
   animation: fadeIn 1s ease-out 0.5s forwards;
 }
@@ -594,7 +594,7 @@ body.is-scrolling .contact-section {
   height: 200%;
   background: radial-gradient(circle, rgba(0, 0, 0, 0.3) 0%, transparent 70%);
   animation: aurora-subtle 30s ease-in-out infinite;
-  pointer-events: none;
+  pointer-events: auto;
   z-index: 0;
 }
 
@@ -612,7 +612,7 @@ body.is-scrolling .contact-section {
   height: 200%;
   background: radial-gradient(circle, rgba(13, 14, 29, 0.25) 0%, transparent 70%);
   animation: aurora-subtle 35s ease-in-out infinite reverse;
-  pointer-events: none;
+  pointer-events: auto;
   z-index: 0;
 }
 
@@ -630,7 +630,7 @@ body.is-scrolling .contact-section {
   height: 200%;
   background: radial-gradient(circle, rgba(0, 0, 0, 0.2) 0%, transparent 70%);
   animation: aurora-subtle 40s ease-in-out infinite;
-  pointer-events: none;
+  pointer-events: auto;
   z-index: 0;
 }
 
@@ -679,7 +679,7 @@ body.is-scrolling .contact-section {
   background: radial-gradient(circle at 50% 0%, rgba(18, 4, 28, 0.2) 0%, transparent 50%);
   opacity: 0;
   transition: opacity var(--transition-normal);
-  pointer-events: none;
+  pointer-events: auto;
 }
 
 .project-card:hover {
@@ -1105,7 +1105,7 @@ body.is-scrolling .contact-section {
   opacity: 0;
   visibility: hidden;
   transition: all var(--transition-normal);
-  pointer-events: none;
+  pointer-events: auto;
   box-shadow: var(--shadow-lg);
 }
 
@@ -1588,7 +1588,7 @@ body.is-scrolling .contact-section {
 }
 
 .video-item video {
-  pointer-events: none;
+  pointer-events: auto;
 }
 
 
@@ -1802,8 +1802,8 @@ body.is-scrolling .contact-section {
   display: flex;
   justify-content: space-between;
   padding: 0 var(--space-4);
-  pointer-events: none;
-  z-index: 10002;
+  pointer-events: auto;
+  z-index: 2001;
 }
 
 .nav-btn {
@@ -2741,7 +2741,7 @@ video::-webkit-media-controls-panel {
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
   display: block;
   position: relative;
-  z-index: 10002;
+  z-index: 2001;
   background: #000;
   margin-bottom: var(--space-6);
   object-fit: contain;
@@ -4048,8 +4048,8 @@ video::-webkit-media-controls-panel {
   display: flex;
   justify-content: space-between;
   padding: 0 var(--space-4);
-  pointer-events: none;
-  z-index: 10002;
+  pointer-events: auto;
+  z-index: 2001;
 }
 
 .nav-btn {
@@ -4084,7 +4084,7 @@ video::-webkit-media-controls-panel {
   right: 0;
   text-align: center;
   color: white;
-  z-index: 10002;
+  z-index: 2000;
 }
 
 .modal-info h3 {

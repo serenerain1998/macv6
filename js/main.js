@@ -1067,6 +1067,7 @@
     
     // Re-initialize all functionality after content is shown
     setTimeout(() => {
+      console.log('=== RE-INITIALIZING AFTER AUTHENTICATION ===');
       initProjectFilters();
       initNavbarAccessibility();
       initSmoothScrolling();
@@ -1079,6 +1080,44 @@
       initVideoAutoplay();
       initMosaicWall();
       initGalleryModal();
+      
+      // Test modal functionality
+      console.log('Testing modal elements...');
+      const testModal = document.getElementById('imageModal');
+      const testGalleryItems = document.querySelectorAll('.gallery-item');
+      console.log('Test results:', {
+        modalFound: !!testModal,
+        galleryItemsFound: testGalleryItems.length,
+        modalInDOM: !!document.querySelector('#imageModal')
+      });
+      
+      // Test clicking on gallery items
+      if (testGalleryItems.length > 0) {
+        console.log('Testing gallery item click handlers...');
+        testGalleryItems.forEach((item, index) => {
+          console.log(`Gallery item ${index}:`, {
+            element: item,
+            hasClickListener: item.onclick !== null,
+            dataImage: item.getAttribute('data-image'),
+            dataVideo: item.getAttribute('data-video')
+          });
+        });
+        
+        // Add a test button to manually trigger modal
+        const testButton = document.createElement('button');
+        testButton.textContent = 'Test Modal';
+        testButton.style.cssText = 'position: fixed; top: 10px; right: 10px; z-index: 9999; background: red; color: white; padding: 10px; border: none; cursor: pointer;';
+        testButton.onclick = () => {
+          console.log('Test button clicked - attempting to open modal...');
+          if (window.MainApp && window.MainApp.testModal) {
+            window.MainApp.testModal();
+          } else {
+            console.log('Test modal function not available');
+          }
+        };
+        document.body.appendChild(testButton);
+        console.log('Added test button to manually trigger modal');
+      }
       
       // Initialize AOS animations
       if (typeof AOS !== 'undefined') {
@@ -1407,6 +1446,12 @@
       modalOverlay: !!modalOverlay
     });
 
+    // Early return if no mosaic items found (this is for project3, not project2)
+    if (mosaicItems.length === 0) {
+      console.log('No mosaic items found, skipping mosaic wall initialization');
+      return;
+    }
+
     // GSAP animations for mosaic items
     mosaicItems.forEach((item, index) => {
       // Initial state
@@ -1582,11 +1627,13 @@
     });
 
     // Close modal when clicking outside of it
-    videoModal.addEventListener('click', (e) => {
-      if (e.target === videoModal) {
-        closeVideoModal();
-      }
-    });
+    if (videoModal) {
+      videoModal.addEventListener('click', (e) => {
+        if (e.target === videoModal) {
+          closeVideoModal();
+        }
+      });
+    }
 
     function closeVideoModal() {
       // Simple fade out animation
@@ -1622,6 +1669,8 @@
   // ===== GALLERY MODAL =====
   
   function initGalleryModal() {
+    console.log('=== INITIALIZING GALLERY MODAL ===');
+    
     // Check for both gallery items (project2) and slider items (project3)
     const galleryItems = document.querySelectorAll('.gallery-item');
     const sliderItems = document.querySelectorAll('.slider-item');
@@ -1633,9 +1682,9 @@
     const modalVideo = document.getElementById('modalVideo');
     const modalTitle = document.getElementById('modalTitle');
     const modalDescription = document.getElementById('modalDescription');
-    const modalClose = modal.querySelector('.modal-close');
-    const prevBtn = modal.querySelector('.nav-btn.prev-btn');
-    const nextBtn = modal.querySelector('.nav-btn.next-btn');
+    const modalClose = modal ? modal.querySelector('.modal-close') : null;
+    const prevBtn = modal ? modal.querySelector('.nav-btn.prev-btn') : null;
+    const nextBtn = modal ? modal.querySelector('.nav-btn.next-btn') : null;
     
     console.log('Gallery Modal Init:', {
       galleryItems: galleryItems.length,
@@ -1651,14 +1700,22 @@
     
     // Debug modal structure
     if (modal) {
-      console.log('Modal HTML structure:', modal.innerHTML);
+      console.log('Modal HTML structure:', modal.innerHTML.substring(0, 500) + '...');
       console.log('Modal video element found:', !!modal.querySelector('#modalVideo'));
       console.log('Modal image element found:', !!modal.querySelector('#modalImage'));
     } else {
       console.log('ERROR: Modal not found!');
     }
     
-    if (!items.length || !modal) return;
+    if (!items.length) {
+      console.log('No gallery items found, skipping modal initialization');
+      return;
+    }
+    
+    if (!modal) {
+      console.log('Modal element not found, skipping modal initialization');
+      return;
+    }
     
     let currentIndex = 0;
     const images = Array.from(items).map(item => ({
@@ -1669,7 +1726,14 @@
     }));
     
     function openModal(index) {
-      console.log('Opening modal for index:', index, 'Total images:', images.length);
+      console.log('=== OPENING MODAL ===', {
+        index: index,
+        totalImages: images.length,
+        modal: modal,
+        modalImage: modalImage,
+        modalVideo: modalVideo
+      });
+      
       currentIndex = index;
       const image = images[index];
       
@@ -1692,13 +1756,16 @@
         });
         modalVideo.load();
         
-        // Play video
+        // Play video with autoplay
         setTimeout(() => {
           console.log('Attempting to play video...');
           modalVideo.play().then(() => {
             console.log('Video playing successfully in modal');
           }).catch(error => {
-            console.log('Video play failed:', error);
+            console.log('Video autoplay failed:', error);
+            // Add controls as fallback if autoplay fails
+            modalVideo.controls = true;
+            console.log('Added controls as fallback for video playback');
           });
         }, 100);
       } else {
@@ -1713,10 +1780,16 @@
       if (modalTitle) modalTitle.textContent = image.title;
       if (modalDescription) modalDescription.textContent = image.description;
       
+      console.log('Adding show class to modal...');
       modal.classList.add('show');
       document.body.style.overflow = 'hidden';
       
-      console.log('Modal opened successfully');
+      console.log('Modal opened successfully', {
+        modalClasses: modal.className,
+        modalDisplay: window.getComputedStyle(modal).display,
+        modalVisibility: window.getComputedStyle(modal).visibility,
+        modalOpacity: window.getComputedStyle(modal).opacity
+      });
     }
     
     function closeModal() {
@@ -1725,6 +1798,8 @@
       // Pause video if playing
       if (modalVideo) {
         modalVideo.pause();
+        // Remove controls if they were added as fallback
+        modalVideo.controls = false;
         // Clear video source
         const sources = modalVideo.querySelectorAll('source');
         sources.forEach(source => {
@@ -1739,9 +1814,13 @@
     }
     
     function nextImage() {
-      console.log('Next image called, current index:', currentIndex);
+      console.log('=== NEXT IMAGE FUNCTION CALLED ===', {
+        currentIndex: currentIndex,
+        imagesLength: images.length,
+        images: images
+      });
       currentIndex = (currentIndex + 1) % images.length;
-      console.log('New index:', currentIndex);
+      console.log('New index after increment:', currentIndex);
       openModal(currentIndex);
     }
     
@@ -1754,8 +1833,19 @@
     
     // Event listeners
     items.forEach((item, index) => {
-      item.addEventListener('click', () => {
-        console.log('Item clicked:', index);
+      console.log(`Adding click listener to item ${index}:`, item);
+      item.addEventListener('click', (e) => {
+        console.log('=== GALLERY ITEM CLICKED ===', {
+          index: index,
+          item: item,
+          event: e,
+          hasDataImage: !!item.getAttribute('data-image'),
+          hasDataVideo: !!item.getAttribute('data-video'),
+          hasImg: !!item.querySelector('img'),
+          hasVideo: !!item.querySelector('video')
+        });
+        e.preventDefault();
+        e.stopPropagation();
         openModal(index);
       });
     });
@@ -1889,8 +1979,10 @@
     }
     if (prevBtn) {
       console.log('Previous button found:', prevBtn);
-      prevBtn.addEventListener('click', () => {
-        console.log('Previous button clicked');
+      prevBtn.addEventListener('click', (e) => {
+        console.log('Previous button clicked', e);
+        e.preventDefault();
+        e.stopPropagation();
         prevImage();
       });
     } else {
@@ -1898,8 +1990,12 @@
     }
     if (nextBtn) {
       console.log('Next button found:', nextBtn);
-      nextBtn.addEventListener('click', () => {
+      console.log('Next button found and event listeners attached');
+      
+      nextBtn.addEventListener('click', (e) => {
         console.log('Next button clicked');
+        e.preventDefault();
+        e.stopPropagation();
         nextImage();
       });
     } else {
@@ -1964,7 +2060,31 @@
     state,
     filterProjects,
     updateActiveNavigation,
-    handleMobileNavToggle
+    handleMobileNavToggle,
+    testModal: () => {
+      console.log('Test modal function called');
+      const modal = document.getElementById('imageModal');
+      const modalImage = document.getElementById('modalImage');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalDescription = document.getElementById('modalDescription');
+      
+      if (modal && modalImage && modalTitle && modalDescription) {
+        modalImage.src = 'assets/images/adf/adf2.png';
+        modalImage.alt = 'Test Image';
+        modalTitle.textContent = 'Test Modal';
+        modalDescription.textContent = 'This is a test modal to verify functionality.';
+        modal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+        console.log('Test modal opened successfully');
+      } else {
+        console.log('Modal elements not found:', {
+          modal: !!modal,
+          modalImage: !!modalImage,
+          modalTitle: !!modalTitle,
+          modalDescription: !!modalDescription
+        });
+      }
+    }
   };
 
   // Auto-initialize
