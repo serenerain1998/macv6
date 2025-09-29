@@ -669,7 +669,7 @@ body.is-scrolling .contact-section {
   transform-origin: left;
 }
 
-.project-card::after {
+/* .project-card::after {
   content: '';
   position: absolute;
   top: 0;
@@ -680,7 +680,7 @@ body.is-scrolling .contact-section {
   opacity: 0;
   transition: opacity var(--transition-normal);
   pointer-events: auto;
-}
+} */
 
 .project-card:hover {
   transform: translateY(-8px);
