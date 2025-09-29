@@ -3844,9 +3844,6 @@ video::-webkit-media-controls-panel {
     margin: 0.25rem;
   }
   
-  .password-modal .modal-header {
-    margin-bottom: var(--space-4);
-  }
   
   .password-modal .lock-icon {
     width: 50px;
@@ -4137,6 +4134,11 @@ video::-webkit-media-controls-panel {
 /* Privacy notice text centering */
 .password-modal .privacy-notice {
   text-align: center;
+}
+
+/* Override modal header margin from styles.css */
+.password-modal .modal-header {
+  margin-bottom: 0 !important;
 }
 
 .password-modal .privacy-notice p {
