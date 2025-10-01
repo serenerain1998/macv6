@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-58LS07X7LB"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-58LS07X7LB');
+    </script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual Design - Melissa Casole UX Portfolio</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="assets/favicon/android-chrome-512x512.png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.3.1/css/hover-min.css" rel="stylesheet">
+    <link href="css/themes.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <script async defer src="https://tools.luckyorange.com/core/lo.js?site-id=51b04e98"></script>
+</head>
+
+<body>
+    <!-- Skip to Content Link -->
+    
+    <!-- Password Protection Modal -->
+    <div class="password-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="lock-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h1>Private Portfolio</h1>
+                <p>This portfolio contains confidential UX case studies and private client work. A password is required
+                    to view the content.</p>
+            </div>
+
+            <form class="password-form" method="post" onsubmit="return false;">
+                <div class="input-group">
+                    <input type="password" id="passwordInput" class="password-input" placeholder="Enter password"
+                        required>
+                    <button type="button" class="toggle-password" aria-label="Toggle password visibility">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+
+                <button type="button" class="submit-btn" id="submitPassword">
+                    Access Portfolio  <i class="fas fa-unlock me-2"></i>
+                </button>
+
+                <div class="error-message" id="passwordError">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    Incorrect password. Please try again.
+                </div>
+
+                <div class="request-password-section">
+                    <div class="divider">
+                        <span>or</span>
+                    </div>
+                    
+                    <button type="button" class="request-btn" id="requestPassword">
+                        <i class="fas fa-envelope me-2"></i>
+                        Request Access
+                    </button>
+                </div>
+            </form>
+
+            <div class="privacy-notice">
+                <p><i class="fas fa-shield-alt me-2"></i>Your privacy is important. This password is only used to
+                    protect sensitive portfolio content.</p>
+            </div>
+
+            <div class="alternative-access">
+                <div class="divider">
+                    <span>or</span>
+                </div>
+                
+                <a href="https://dribbble.com/melissacasole" class="dribbble-btn" target="_blank">
+                    <i class="fab fa-dribbble"></i>
+                    <span>View My Dribbble</span>
+                </a>
+                
+                <p class="alternative-text">Don't have the password? Check out my public work on Dribbble!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Request Password Modal -->
+    <div class="request-modal" id="requestModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="lock-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <h1>Request Portfolio Access</h1>
+                <p>Please provide your information to request access to the portfolio. You'll receive a temporary password via email.</p>
+            </div>
+
+            <form class="request-form" id="requestForm">
+                <div class="input-group">
+                    <label for="requestName">Full Name *</label>
+                    <input type="text" id="requestName" name="requestName" class="request-input" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="requestEmail">Email Address *</label>
+                    <input type="email" id="requestEmail" name="requestEmail" class="request-input" placeholder="Enter your email address" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="requestCompany">Company/Organization</label>
+                    <input type="text" id="requestCompany" name="requestCompany" class="request-input" placeholder="Enter your company name">
+                </div>
+
+                <div class="input-group">
+                    <label for="requestReason">Reason for Access *</label>
+                    <select id="requestReason" name="requestReason" class="request-input" required>
+                        <option value="">Select a reason</option>
+                        <option value="recruitment">Recruitment/Hiring</option>
+                        <option value="collaboration">Project Collaboration</option>
+                        <option value="partnership">Business Partnership</option>
+                        <option value="reference">Reference/Recommendation</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="input-group" id="otherReasonGroup" style="display: none;">
+                    <label for="otherReason">Please specify</label>
+                    <textarea id="otherReason" name="otherReason" class="request-input" placeholder="Please describe your reason for access"></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitRequest">
+                    <i class="fas fa-paper-plane me-2"></i>
+                    Send Request
+                </button>
+
+                <button type="button" class="cancel-btn" id="cancelRequest">
+                    Cancel
+                </button>
+            </form>
+
+            <div class="success-message" id="requestSuccess" style="display: none;">
+                <i class="fas fa-check-circle"></i>
+                <h3>Request Submitted!</h3>
+                <p>Thank you for your interest! I will send you a temporary password via email as soon as possible.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content (Hidden until password is entered) -->
+    <div id="mainContent">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="navbar-container">
+                <a class="navbar-brand" href="index.html">
+                    <img src="assets/images/mac_designs_logo_white.png" alt="MAC Designs Logo" class="logo-image">
+                </a>
+
+                <ul class="navbar-nav">
+                    <li><a class="nav-link" href="index.html#home">Home</a></li>
+                    <li><a class="nav-link" href="projects.html">Projects</a></li>
+                    <li><a class="nav-link active" href="#visual-design">Visual Design</a></li>
+                    <li><a class="nav-link" href="index.html#about">About</a></li>
+                    <li><a class="nav-link" href="index.html#contact">Contact</a></li>
+                </ul>
+
+                <button class="navbar-toggle" aria-label="Toggle navigation menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Visual Design Section -->
+        <section id="visual-design" class="visual-design-section">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Visual Design Portfolio</h2>
+                <p>Explore my visual design work across various industries and platforms. Each piece represents thoughtful design decisions and user-centered approaches.</p>
+            </div>
+
+            <!-- Category Filters -->
+            <div class="visual-filters" data-aos="fade-up" data-aos-delay="100">
+                <button class="filter-btn active" data-filter="all">All Work</button>
+                <button class="filter-btn" data-filter="medical">Medical</button>
+                <button class="filter-btn" data-filter="travel">Travel</button>
+                <button class="filter-btn" data-filter="pilot">Pilot</button>
+                <button class="filter-btn" data-filter="mobile">Mobile</button>
+            </div>
+
+            <!-- Visual Mosaic Grid -->
+            <div class="visual-mosaic" data-aos="fade-up" data-aos-delay="200">
+                <!-- Medical UI Work -->
+                <div class="mosaic-item large medical" data-category="medical">
+                    <div class="mosaic-content">
+                        <img src="assets/visuals/med.webp" alt="Medical Dashboard Interface" class="mosaic-image">
+                        <div class="mosaic-overlay">
+                            <div class="mosaic-info">
+                                <h3>Medical Dashboard</h3>
+                                <p>Comprehensive healthcare management interface with intuitive data visualization and patient monitoring capabilities.</p>
+                                <span class="mosaic-category">Medical UI</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mosaic-item medium medical" data-category="medical">
+                    <div class="mosaic-content">
+                        <img src="assets/visuals/med2.webp" alt="Medical Mobile Interface" class="mosaic-image">
+                        <div class="mosaic-overlay">
+                            <div class="mosaic-info">
+                                <h3>Medical Mobile App</h3>
+                                <p>Mobile-first healthcare interface designed for accessibility and ease of use.</p>
+                                <span class="mosaic-category">Medical Mobile</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mosaic-item small medical" data-category="medical">
+                    <div class="mosaic-content">
+                        <img src="assets/visuals/med3.webp" alt="Medical AI Interface" class="mosaic-image">
+                        <div class="mosaic-overlay">
+                            <div class="mosaic-info">
+                                <h3>AI Medical Assistant</h3>
+                                <p>Intelligent healthcare assistant interface with predictive analytics.</p>
+                                <span class="mosaic-category">AI Medical</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mosaic-item medium medical" data-category="medical">
+                    <div class="mosaic-content">
+                        <img src="assets/visuals/medAI1.webp" alt="Medical AI Dashboard" class="mosaic-image">
+                        <div class="mosaic-overlay">
+                            <div class="mosaic-info">
+                                <h3>AI-Powered Medical Dashboard</h3>
+                                <p>Advanced medical analytics platform with machine learning insights.</p>
+                                <span class="mosaic-category">AI Medical</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mosaic-item small medical" data-category="medical">
+                    <div class="mosaic-content">
+                        <img src="assets/visuals/medAI2.webp" alt="Medical AI Interface" class="mosaic-image">
+                        <div class="mosaic-overlay">
+                            <div class="mosaic-info">
+                                <h3>Medical AI Interface</h3>
+                                <p>Streamlined AI-powered medical decision support system.</p>
+                                <span class="mosaic-category">AI Medical</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mosaic-item medium medical" data-category="medical">
+                    <div class="mosaic-content">
+                        <img src="assets/visuals/medAI3.webp" alt="Medical AI Analytics" class="mosaic-image">
+                        <div class="mosaic-overlay">
+                            <div class="mosaic-info">
+                                <h3>Medical AI Analytics</h3>
+                                <p>Comprehensive medical data analysis interface with AI insights.</p>
+                                <span class="mosaic-category">AI Medical</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mosaic-item small medical" data-category="medical">
+                    <div class="mosaic-content">
+                        <img src="assets/visuals/medAI4.webp" alt="Medical AI Platform" class="mosaic-image">
+                        <div class="mosaic-overlay">
+                            <div class="mosaic-info">
+                                <h3>Medical AI Platform</h3>
+                                <p>Integrated AI platform for healthcare professionals.</p>
+                                <span class="mosaic-category">AI Medical</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mosaic-item medium medical" data-category="medical">
+                    <div class="mosaic-content">
+                        <img src="assets/visuals/medmob.webp" alt="Medical Mobile Interface" class="mosaic-image">
+                        <div class="mosaic-overlay">
+                            <div class="mosaic-info">
+                                <h3>Medical Mobile Interface</h3>
+                                <p>Responsive medical application design for mobile devices.</p>
+                                <span class="mosaic-category">Medical Mobile</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mosaic-item small medical" data-category="medical">
+                    <div class="mosaic-content">
+                        <img src="assets/visuals/medmob2.webp" alt="Medical Mobile App" class="mosaic-image">
+                        <div class="mosaic-overlay">
+                            <div class="mosaic-info">
+                                <h3>Medical Mobile App</h3>
+                                <p>Patient-focused mobile healthcare application.</p>
+                                <span class="mosaic-category">Medical Mobile</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Travel UI Work -->
+                <div class="mosaic-item large travel" data-category="travel">
+                    <div class="mosaic-content">
+                        <img src="assets/visuals/travel1.webp" alt="Travel Booking Platform" class="mosaic-image">
+                        <div class="mosaic-overlay">
+                            <div class="mosaic-info">
+                                <h3>Travel Booking Platform</h3>
+                                <p>Comprehensive travel booking interface with seamless user experience and intuitive navigation.</p>
+                                <span class="mosaic-category">Travel UI</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mosaic-item medium travel" data-category="travel">
+                    <div class="mosaic-content">
+                        <img src="assets/visuals/travel2.webp" alt="Travel Mobile App" class="mosaic-image">
+                        <div class="mosaic-overlay">
+                            <div class="mosaic-info">
+                                <h3>Travel Mobile App</h3>
+                                <p>Mobile-first travel application with location-based features.</p>
+                                <span class="mosaic-category">Travel Mobile</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mosaic-item small travel" data-category="travel">
+                    <div class="mosaic-content">
+                        <img src="assets/visuals/travel3.webp" alt="Travel Dashboard" class="mosaic-image">
+                        <div class="mosaic-overlay">
+                            <div class="mosaic-info">
+                                <h3>Travel Dashboard</h3>
+                                <p>Personalized travel management dashboard.</p>
+                                <span class="mosaic-category">Travel UI</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mosaic-item medium travel" data-category="travel">
+                    <div class="mosaic-content">
+                        <img src="assets/visuals/tourist.webp" alt="Tourist Guide App" class="mosaic-image">
+                        <div class="mosaic-overlay">
+                            <div class="mosaic-info">
+                                <h3>Tourist Guide App</h3>
+                                <p>Interactive tourist guide application with AR features.</p>
+                                <span class="mosaic-category">Travel Mobile</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pilot Company Work -->
+                <div class="mosaic-item large pilot" data-category="pilot">
+                    <div class="mosaic-content">
+                        <img src="assets/visuals/pilot1.webp" alt="Pilot Company Dashboard" class="mosaic-image">
+                        <div class="mosaic-overlay">
+                            <div class="mosaic-info">
+                                <h3>Pilot Company Dashboard</h3>
+                                <p>Comprehensive business management interface for Pilot company with real-time analytics and performance tracking.</p>
+                                <span class="mosaic-category">Pilot UI</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mosaic-item medium pilot" data-category="pilot">
+                    <div class="mosaic-content">
+                        <img src="assets/visuals/pilot2.webp" alt="Pilot Analytics Platform" class="mosaic-image">
+                        <div class="mosaic-overlay">
+                            <div class="mosaic-info">
+                                <h3>Pilot Analytics Platform</h3>
+                                <p>Advanced data analytics and reporting interface for Pilot company's business intelligence needs.</p>
+                                <span class="mosaic-category">Pilot UI</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mosaic-item small pilot" data-category="pilot">
+                    <div class="mosaic-content">
+                        <img src="assets/visuals/pilot3.webp" alt="Pilot Mobile App" class="mosaic-image">
+                        <div class="mosaic-overlay">
+                            <div class="mosaic-info">
+                                <h3>Pilot Mobile App</h3>
+                                <p>Mobile-first application for Pilot company's field operations and team collaboration.</p>
+                                <span class="mosaic-category">Pilot Mobile</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mosaic-item medium pilot" data-category="pilot">
+                    <div class="mosaic-content">
+                        <img src="assets/visuals/pilot4.webp" alt="Pilot Project Management" class="mosaic-image">
+                        <div class="mosaic-overlay">
+                            <div class="mosaic-info">
+                                <h3>Pilot Project Management</h3>
+                                <p>Intuitive project planning and task management system for Pilot company's workflow optimization.</p>
+                                <span class="mosaic-category">Pilot UI</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mosaic-item small pilot" data-category="pilot">
+                    <div class="mosaic-content">
+                        <img src="assets/visuals/pilot5.webp" alt="Pilot Operations Dashboard" class="mosaic-image">
+                        <div class="mosaic-overlay">
+                            <div class="mosaic-info">
+                                <h3>Pilot Operations Dashboard</h3>
+                                <p>Real-time operations monitoring and control system for Pilot company's business processes.</p>
+                                <span class="mosaic-category">Pilot UI</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional UI Work -->
+                <div class="mosaic-item medium mobile" data-category="mobile">
+                    <div class="mosaic-content">
+                        <img src="assets/visuals/funmob.webp" alt="Fun Mobile App" class="mosaic-image">
+                        <div class="mosaic-overlay">
+                            <div class="mosaic-info">
+                                <h3>Entertainment Mobile App</h3>
+                                <p>Engaging mobile application with gamification elements.</p>
+                                <span class="mosaic-category">Mobile UI</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mosaic-item small mobile" data-category="mobile">
+                    <div class="mosaic-content">
+                        <img src="assets/visuals/adf1.webp" alt="ADF Interface" class="mosaic-image">
+                        <div class="mosaic-overlay">
+                            <div class="mosaic-info">
+                                <h3>ADF Platform</h3>
+                                <p>Advanced data processing and analytics interface.</p>
+                                <span class="mosaic-category">Data UI</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mosaic-item medium mobile" data-category="mobile">
+                    <div class="mosaic-content">
+                        <img src="assets/visuals/adf2.webp" alt="ADF Dashboard" class="mosaic-image">
+                        <div class="mosaic-overlay">
+                            <div class="mosaic-info">
+                                <h3>ADF Dashboard</h3>
+                                <p>Comprehensive data analytics and visualization platform.</p>
+                                <span class="mosaic-category">Data UI</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Navigation</h3>
+                    <ul>
+                        <li><a href="index.html#home">Home</a></li>
+                        <li><a href="projects.html">Projects</a></li>
+                        <li><a href="#visual-design">Visual Design</a></li>
+                        <li><a href="index.html#about">About</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Projects</h3>
+                    <ul>
+                        <li><a href="project1.html">Horizon Control</a></li>
+                        <li><a href="project2.html">AdFluence</a></li>
+                        <li><a href="project3.html">Form Builder</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <div class="social-links">
+                        <a href="https://linkedin.com/in/melissacasole" target="_blank" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="https://dribbble.com/melissacasole" target="_blank" aria-label="Dribbble">
+                            <i class="fab fa-dribbble"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="assets/docs/melissa_casole_ux_resume.pdf" download>Resume</a></li>
+                        <li><a href="index.html#about">Skills</a></li>
+                        <li><a href="index.html#contact">Contact Info</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 Melissa Casole. All rights reserved. | Designed with ❤️ for user experience.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Visual Design Modal -->
+    <div class="visual-modal" id="visualModal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <button class="modal-nav modal-nav-prev" id="modalPrev">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="modal-nav modal-nav-next" id="modalNext">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+            <div class="modal-media">
+                <img id="modalImage" src="" alt="" class="modal-image">
+            </div>
+            <div class="modal-info">
+                <h3 id="modalTitle"></h3>
+                <p id="modalDescription"></p>
+                <span id="modalCategory" class="modal-category"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Resume Button -->
+    <a href="assets/docs/melissa_casole_ux_resume.pdf" class="floating-resume-btn" download>
+        <i class="fas fa-download"></i>
+        <span>Resume</span>
+    </a>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
+    <script src="js/libs-init.js"></script>
+    <script src="js/main.js"></script>
+    
+    <!-- Visual Design Specific Scripts -->
+    <script>
+        // Visual Design Mosaic Animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize GSAP animations for mosaic items
+            gsap.registerPlugin(ScrollTrigger);
+            
+            // Store original order of items
+            const mosaicContainer = document.querySelector('.visual-mosaic');
+            const originalItems = Array.from(document.querySelectorAll('.mosaic-item'));
+            
+            // Stagger animation for mosaic items
+            gsap.fromTo('.mosaic-item', 
+                {
+                    opacity: 0,
+                    y: 60,
+                    scale: 0.8
+                },
+                {
+                    opacity: 1,
+                    y: 0,
+                    scale: 1,
+                    duration: 0.8,
+                    ease: "power2.out",
+                    stagger: 0.1,
+                    scrollTrigger: {
+                        trigger: '.visual-mosaic',
+                        start: 'top 80%',
+                        end: 'bottom 20%',
+                        toggleActions: 'play none none reverse'
+                    }
+                }
+            );
+
+            // Hover animations for mosaic items
+            document.querySelectorAll('.mosaic-item').forEach(item => {
+                const overlay = item.querySelector('.mosaic-overlay');
+                const image = item.querySelector('.mosaic-image');
+                
+                item.addEventListener('mouseenter', () => {
+                    gsap.to(overlay, {
+                        opacity: 1,
+                        duration: 0.3,
+                        ease: "power2.out"
+                    });
+                    
+                    gsap.to(image, {
+                        scale: 1.1,
+                        duration: 0.6,
+                        ease: "power2.out"
+                    });
+                    
+                    gsap.to(item, {
+                        y: -10,
+                        duration: 0.3,
+                        ease: "power2.out"
+                    });
+                });
+                
+                item.addEventListener('mouseleave', () => {
+                    gsap.to(overlay, {
+                        opacity: 0,
+                        duration: 0.3,
+                        ease: "power2.out"
+                    });
+                    
+                    gsap.to(image, {
+                        scale: 1,
+                        duration: 0.6,
+                        ease: "power2.out"
+                    });
+                    
+                    gsap.to(item, {
+                        y: 0,
+                        duration: 0.3,
+                        ease: "power2.out"
+                    });
+                });
+            });
+
+            // Modal functionality
+            const modal = document.getElementById('visualModal');
+            const modalImage = document.getElementById('modalImage');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalDescription = document.getElementById('modalDescription');
+            const modalCategory = document.getElementById('modalCategory');
+            const modalClose = document.getElementById('modalClose');
+            const modalPrev = document.getElementById('modalPrev');
+            const modalNext = document.getElementById('modalNext');
+            const modalOverlay = modal.querySelector('.modal-overlay');
+            
+            // Navigation state
+            let currentImageIndex = 0;
+            let allMosaicItems = [];
+
+            // Initialize mosaic items array
+            allMosaicItems = Array.from(document.querySelectorAll('.mosaic-item'));
+
+            // Function to update modal content
+            function updateModalContent(item) {
+                const image = item.querySelector('.mosaic-image');
+                const title = item.querySelector('.mosaic-info h3');
+                const description = item.querySelector('.mosaic-info p');
+                const category = item.querySelector('.mosaic-category');
+
+                modalImage.src = image.src;
+                modalImage.alt = image.alt;
+                modalTitle.textContent = title.textContent;
+                modalDescription.textContent = description.textContent;
+                modalCategory.textContent = category.textContent;
+            }
+
+            // Function to show modal with animation
+            function showModal() {
+                modal.style.display = 'flex';
+                gsap.fromTo(modal, 
+                    { opacity: 0 },
+                    { opacity: 1, duration: 0.3, ease: "power2.out" }
+                );
+                gsap.fromTo(modal.querySelector('.modal-content'), 
+                    { scale: 0.8, y: 50 },
+                    { scale: 1, y: 0, duration: 0.4, ease: "back.out(1.7)" }
+                );
+            }
+
+            // Function to navigate to specific image
+            function navigateToImage(index) {
+                if (index >= 0 && index < allMosaicItems.length) {
+                    currentImageIndex = index;
+                    updateModalContent(allMosaicItems[currentImageIndex]);
+                    
+                    // Animate image change
+                    gsap.fromTo(modalImage, 
+                        { opacity: 0, scale: 0.9 },
+                        { opacity: 1, scale: 1, duration: 0.3, ease: "power2.out" }
+                    );
+                }
+            }
+
+            // Click and touch to open modal
+            allMosaicItems.forEach((item, index) => {
+                const openModal = () => {
+                    currentImageIndex = index;
+                    updateModalContent(item);
+                    showModal();
+                };
+
+                // Add both click and touchstart events for better mobile support
+                item.addEventListener('click', openModal);
+                item.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    openModal();
+                });
+            });
+
+            // Close modal
+            function closeModal() {
+                gsap.to(modal, {
+                    opacity: 0,
+                    duration: 0.3,
+                    ease: "power2.out",
+                    onComplete: () => {
+                        modal.style.display = 'none';
+                    }
+                });
+            }
+
+            // Navigation event listeners
+            modalPrev.addEventListener('click', () => {
+                const prevIndex = currentImageIndex > 0 ? currentImageIndex - 1 : allMosaicItems.length - 1;
+                navigateToImage(prevIndex);
+            });
+
+            modalNext.addEventListener('click', () => {
+                const nextIndex = currentImageIndex < allMosaicItems.length - 1 ? currentImageIndex + 1 : 0;
+                navigateToImage(nextIndex);
+            });
+
+            // Touch support for navigation
+            modalPrev.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                const prevIndex = currentImageIndex > 0 ? currentImageIndex - 1 : allMosaicItems.length - 1;
+                navigateToImage(prevIndex);
+            });
+
+            modalNext.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                const nextIndex = currentImageIndex < allMosaicItems.length - 1 ? currentImageIndex + 1 : 0;
+                navigateToImage(nextIndex);
+            });
+
+            // Close modal with click and touch
+            modalClose.addEventListener('click', closeModal);
+            modalClose.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                closeModal();
+            });
+            modalOverlay.addEventListener('click', closeModal);
+            modalOverlay.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                closeModal();
+            });
+
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (modal.style.display === 'flex') {
+                    switch(e.key) {
+                        case 'Escape':
+                            closeModal();
+                            break;
+                        case 'ArrowLeft':
+                            e.preventDefault();
+                            const prevIndex = currentImageIndex > 0 ? currentImageIndex - 1 : allMosaicItems.length - 1;
+                            navigateToImage(prevIndex);
+                            break;
+                        case 'ArrowRight':
+                            e.preventDefault();
+                            const nextIndex = currentImageIndex < allMosaicItems.length - 1 ? currentImageIndex + 1 : 0;
+                            navigateToImage(nextIndex);
+                            break;
+                    }
+                }
+            });
+
+            // Enhanced filter functionality with shuffling
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const mosaicItems = document.querySelectorAll('.mosaic-item');
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // Add active class to clicked button
+                    button.classList.add('active');
+                    
+                    const filter = button.dataset.filter;
+                    
+                    if (filter === 'all') {
+                        // Restore original order
+                        originalItems.forEach(item => {
+                            mosaicContainer.appendChild(item);
+                        });
+                        
+                        // Animate all items back to full visibility
+                        gsap.to(mosaicItems, {
+                            opacity: 1,
+                            scale: 1,
+                            duration: 0.6,
+                            ease: "power2.out",
+                            stagger: 0.05
+                        });
+                    } else {
+                        // Separate items by category
+                        const matchingItems = [];
+                        const nonMatchingItems = [];
+                        
+                        mosaicItems.forEach(item => {
+                            const category = item.dataset.category;
+                            if (category === filter) {
+                                matchingItems.push(item);
+                            } else {
+                                nonMatchingItems.push(item);
+                            }
+                        });
+                        
+                        // Clear container
+                        mosaicContainer.innerHTML = '';
+                        
+                        // Add matching items first (shuffled to top)
+                        matchingItems.forEach(item => {
+                            mosaicContainer.appendChild(item);
+                        });
+                        
+                        // Add non-matching items after
+                        nonMatchingItems.forEach(item => {
+                            mosaicContainer.appendChild(item);
+                        });
+                        
+                        // Animate matching items to full visibility
+                        gsap.to(matchingItems, {
+                            opacity: 1,
+                            scale: 1,
+                            duration: 0.6,
+                            ease: "power2.out",
+                            stagger: 0.05
+                        });
+                        
+                        // Animate non-matching items to reduced visibility
+                        gsap.to(nonMatchingItems, {
+                            opacity: 0.3,
+                            scale: 0.8,
+                            duration: 0.6,
+                            ease: "power2.out",
+                            stagger: 0.05
+                        });
+                    }
+                });
+            });
+
+            // Parallax effect for section header
+            gsap.to('.section-header', {
+                y: -50,
+                scrollTrigger: {
+                    trigger: '.visual-design-section',
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: 1
+                }
+            });
+
+            // Floating animation for filter buttons
+            gsap.to('.visual-filters', {
+                y: -20,
+                duration: 2,
+                ease: "power2.inOut",
+                yoyo: true,
+                repeat: -1
+            });
+        });
+    </script>
+</body>
+
+</html>
