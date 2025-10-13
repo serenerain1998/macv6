@@ -2038,6 +2038,77 @@
     window.dispatchEvent(new CustomEvent('mainInitialized'));
   }
 
+  // ===== STAR PROGRESS INDICATOR =====
+  
+  function initSTARProgressIndicator() {
+    const starIndicator = document.querySelector('.star-progress-indicator');
+    if (!starIndicator) return;
+
+    const starSteps = document.querySelectorAll('.star-step');
+    const sections = {
+      situation: document.querySelector('[data-star="situation"]'),
+      task: document.querySelector('[data-star="task"]'),
+      action: document.querySelector('[data-star="action"]'),
+      result: document.querySelector('[data-star="result"]')
+    };
+
+    // Track scroll position and update active state
+    function updateSTARProgress() {
+      const scrollPosition = window.scrollY + window.innerHeight / 2; // Changed from /3 to /2 for better detection
+      const windowHeight = window.innerHeight;
+
+      let activeSection = 'situation';
+      
+      // Check each section to see which one is currently in view
+      Object.entries(sections).forEach(([key, section]) => {
+        if (section) {
+          const sectionTop = section.offsetTop;
+          const sectionBottom = sectionTop + section.offsetHeight;
+          
+          // Section is active if it's in the middle portion of the viewport
+          if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+            activeSection = key;
+          }
+        }
+      });
+
+      // Update active states
+      starSteps.forEach(step => {
+        const stepType = step.dataset.step;
+        
+        // Remove all states
+        step.classList.remove('active', 'completed');
+        
+        // Add appropriate state
+        if (stepType === activeSection) {
+          step.classList.add('active');
+        } else if (getStepOrder(stepType) < getStepOrder(activeSection)) {
+          step.classList.add('completed');
+        }
+      });
+    }
+
+    function getStepOrder(step) {
+      const order = { situation: 1, task: 2, action: 3, result: 4 };
+      return order[step] || 0;
+    }
+
+    // Click handlers for navigation
+    starSteps.forEach(step => {
+      step.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetSection = sections[step.dataset.step];
+        if (targetSection) {
+          targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // Listen to scroll events
+    window.addEventListener('scroll', updateSTARProgress);
+    updateSTARProgress(); // Initial call
+  }
+
   // ===== EXPORTS =====
   
   // Make functions available globally if needed
@@ -2047,9 +2118,15 @@
     filterProjects,
     updateActiveNavigation,
     handleMobileNavToggle,
+    initSTARProgressIndicator,
   };
 
   // Auto-initialize
   init();
+  
+  // Initialize STAR progress indicator if on case study page
+  document.addEventListener('DOMContentLoaded', () => {
+    initSTARProgressIndicator();
+  });
 
 })();

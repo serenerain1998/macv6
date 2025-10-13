@@ -168,6 +168,28 @@
             </button>
         </div>
     </nav>
+
+        <!-- STAR Progress Indicator -->
+        <div class="star-progress-indicator">
+            <div class="star-progress-steps">
+                <div class="star-step" data-step="situation">
+                    <div class="star-step-circle">S</div>
+                    <div class="star-step-label">Situation</div>
+                </div>
+                <div class="star-step" data-step="task">
+                    <div class="star-step-circle">T</div>
+                    <div class="star-step-label">Task</div>
+                </div>
+                <div class="star-step" data-step="action">
+                    <div class="star-step-circle">A</div>
+                    <div class="star-step-label">Action</div>
+                </div>
+                <div class="star-step" data-step="result">
+                    <div class="star-step-circle">R</div>
+                    <div class="star-step-label">Result</div>
+                </div>
+            </div>
+        </div>
         <!-- Hero Section -->
         <section class="case-study-hero">
             <div class="hero-background">
@@ -211,10 +233,63 @@
             </div>
         </section>
 
-        <!-- Executive Summary -->
-        <section class="executive-summary">
+        <!-- At a Glance Section -->
+        <section class="container">
+            <div class="at-a-glance" data-aos="fade-up">
+                <h3 class="at-a-glance-title">
+                    <i class="fas fa-info-circle"></i>
+                    At a Glance
+                </h3>
+                <div class="at-a-glance-grid">
+                    <div class="at-a-glance-item">
+                        <div class="at-a-glance-label">Role</div>
+                        <div class="at-a-glance-value">
+                            <i class="fas fa-user"></i>
+                            Senior UX Designer
+                        </div>
+                    </div>
+                    <div class="at-a-glance-item">
+                        <div class="at-a-glance-label">Timeline</div>
+                        <div class="at-a-glance-value">
+                            <i class="fas fa-calendar"></i>
+                            6 months
+                        </div>
+                    </div>
+                    <div class="at-a-glance-item">
+                        <div class="at-a-glance-label">Industry</div>
+                        <div class="at-a-glance-value">
+                            <i class="fas fa-shield-alt"></i>
+                            Cybersecurity
+                        </div>
+                    </div>
+                    <div class="at-a-glance-item">
+                        <div class="at-a-glance-label">Tools Used</div>
+                        <div class="at-a-glance-value">
+                            <i class="fas fa-toolbox"></i>
+                            Lovable, Cursor, GitHub
+                        </div>
+                    </div>
+                    <div class="at-a-glance-item">
+                        <div class="at-a-glance-label">Key Impact</div>
+                        <div class="at-a-glance-value">
+                            <i class="fas fa-chart-line"></i>
+                            95% User Satisfaction
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SITUATION: Executive Summary -->
+        <section class="executive-summary" data-star="situation">
             <div class="container">
                 <div class="section-header" data-aos="fade-up">
+                    <div class="star-section-header">
+                        <span class="star-badge situation">
+                            <i class="fas fa-map-marked-alt"></i>
+                            Situation
+                        </span>
+                    </div>
                     <h2>The Challenge</h2>
                     <p>Everyone said "just build a form builder" – but I knew the real challenge was building one that people would actually want to use</p>
                 </div>
@@ -260,10 +335,66 @@
             </div>
         </section>
 
-        <!-- UX Process & Methodology -->
-        <section class="ux-process">
+        <!-- TASK: Objectives & Goals -->
+        <section class="task-section" data-star="task">
             <div class="container">
                 <div class="section-header" data-aos="fade-up">
+                    <div class="star-section-header">
+                        <span class="star-badge task">
+                            <i class="fas fa-bullseye"></i>
+                            Task
+                        </span>
+                    </div>
+                    <h2>Our Objectives</h2>
+                    <p>Building a form builder that users love through continuous real-world testing</p>
+                </div>
+
+                <div class="success-criteria" data-aos="fade-up" data-aos-delay="100">
+                    <h3 class="success-criteria-title">Success Criteria</h3>
+                    <div class="criteria-grid">
+                        <div class="criteria-item">
+                            <div class="criteria-icon">
+                                <i class="fas fa-users-cog"></i>
+                            </div>
+                            <div class="criteria-label">User Goals</div>
+                            <div class="criteria-value">Create forms 50% faster with intuitive drag-and-drop interface</div>
+                        </div>
+                        <div class="criteria-item">
+                            <div class="criteria-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="criteria-label">Business Goals</div>
+                            <div class="criteria-value">Achieve 90%+ satisfaction rate with 100+ real user testers</div>
+                        </div>
+                        <div class="criteria-item">
+                            <div class="criteria-icon">
+                                <i class="fas fa-cogs"></i>
+                            </div>
+                            <div class="criteria-label">Technical Goals</div>
+                            <div class="criteria-value">Seamless integration with existing cybersecurity platform</div>
+                        </div>
+                        <div class="criteria-item">
+                            <div class="criteria-icon">
+                                <i class="fas fa-rocket"></i>
+                            </div>
+                            <div class="criteria-label">Testing Goals</div>
+                            <div class="criteria-value">Validate with 100+ real users before production launch</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ACTION: UX Process & Methodology -->
+        <section class="ux-process" data-star="action">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <div class="star-section-header">
+                        <span class="star-badge action">
+                            <i class="fas fa-rocket"></i>
+                            Action
+                        </span>
+                    </div>
                     <h2>My Process: From Assumptions to Insights</h2>
                     <p>How I turned "build a form builder" into "build something people actually love using"</p>
                 </div>
@@ -478,10 +609,16 @@
             </div>
         </div>
 
-        <!-- Key Achievements & Impact -->
-        <section class="achievements-impact">
+        <!-- RESULT: Key Achievements & Impact -->
+        <section class="achievements-impact" data-star="result">
             <div class="container">
                 <div class="section-header" data-aos="fade-up">
+                    <div class="star-section-header">
+                        <span class="star-badge result">
+                            <i class="fas fa-trophy"></i>
+                            Result
+                        </span>
+                    </div>
                     <h2>The Results: When Real Users Validate Your Design</h2>
                     <p>Numbers are great, but the real win was proving that great UX comes from real feedback</p>
                 </div>
@@ -532,6 +669,37 @@
                         <div class="achievement-metric">
                             <span class="metric-number">100%</span>
                             <span class="metric-label">Integration Success</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Learnings & Reflection -->
+                <div class="learnings-section" data-aos="fade-up">
+                    <div class="learnings-header">
+                        <h3 class="learnings-title">Learnings & Reflections</h3>
+                        <p class="learnings-subtitle">Insights from testing with 100+ real users</p>
+                    </div>
+                    <div class="learnings-grid">
+                        <div class="learning-card">
+                            <div class="learning-icon">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <h4>What Worked Well</h4>
+                            <p>Testing with 100+ real users gave me continuous, actionable feedback that shaped every iteration. The Lovable/Cursor/GitHub/Netlify stack enabled rapid deployment, turning feedback into improvements within hours instead of weeks.</p>
+                        </div>
+                        <div class="learning-card">
+                            <div class="learning-icon">
+                                <i class="fas fa-redo"></i>
+                            </div>
+                            <h4>What I'd Do Differently</h4>
+                            <p>I would establish a more formal feedback categorization system from day one. While all 100+ users provided valuable insights, organizing feedback themes earlier would have accelerated pattern recognition and priority setting.</p>
+                        </div>
+                        <div class="learning-card">
+                            <div class="learning-icon">
+                                <i class="fas fa-award"></i>
+                            </div>
+                            <h4>Key Takeaway</h4>
+                            <p>Real users are your best design partners. The 95% satisfaction rate didn't come from my assumptions—it came from listening, iterating, and validating with actual people who would use the product every day.</p>
                         </div>
                     </div>
                 </div>
