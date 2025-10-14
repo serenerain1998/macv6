@@ -1118,6 +1118,9 @@
 
 
   function showPasswordModal() {
+    // Add password-protected class to body to hide all content
+    document.body.classList.add('password-protected');
+    
     if (elements.passwordModal) {
       elements.passwordModal.style.display = 'flex';
       elements.passwordModal.style.opacity = '1';
@@ -1130,6 +1133,9 @@
   }
 
   function showMainContent() {
+    // Remove password-protected class from body to show content
+    document.body.classList.remove('password-protected');
+    
     if (elements.mainContent) {
       elements.mainContent.style.display = 'block';
     }

@@ -2777,7 +2777,7 @@ body.is-scrolling .contact-section {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 9999;
+  z-index: 99999;
   opacity: 1;
   transform: scale(1);
   transition: all 0.3s ease;
@@ -2785,8 +2785,58 @@ body.is-scrolling .contact-section {
   box-sizing: border-box;
 }
 
+/* Hide page content when password modal is active */
+body.password-protected #mainContent,
+body.password-protected #mainContent *,
+body.password-protected #mainContent *::before,
+body.password-protected #mainContent *::after {
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  display: none !important;
+}
+
+/* Ensure password modal and its children are always visible */
+body.password-protected .password-modal,
+body.password-protected .password-modal *,
+body.password-protected .password-modal *::before,
+body.password-protected .password-modal *::after,
+body.password-protected .request-modal,
+body.password-protected .request-modal *,
+body.password-protected .request-modal *::before,
+body.password-protected .request-modal *::after {
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+body.password-protected .password-modal {
+  display: flex !important;
+}
+
+body.password-protected .password-modal .modal-content,
+body.password-protected .request-modal .modal-content {
+  display: block !important;
+}
+
+body.password-protected .password-modal input,
+body.password-protected .password-modal button,
+body.password-protected .password-modal select,
+body.password-protected .password-modal textarea,
+body.password-protected .request-modal input,
+body.password-protected .request-modal button,
+body.password-protected .request-modal select,
+body.password-protected .request-modal textarea {
+  display: inline-block !important;
+}
+
+body.password-protected .password-modal .lock-icon,
+body.password-protected .password-modal i {
+  display: inline-flex !important;
+}
+
 .password-modal .modal-content {
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 1);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-2xl);
