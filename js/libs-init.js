@@ -440,7 +440,7 @@
     // Initialize all libraries
     initGSAP();
     initAOS();
-    initTyped();
+    // initTyped(); // Disabled - using static subtitle instead
     initTippy();
     initLightbox();
     initHoverCSS();

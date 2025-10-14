@@ -133,7 +133,7 @@
     initScrollEffects();
     
     // Add active state to current section
-    updateActiveNavigationOnScroll();
+    initNavigation();
     
     // Handle mobile navigation toggle
     if (elements.navbarToggle) {
@@ -309,28 +309,101 @@
     });
   }
 
-  function updateActiveNavigationOnScroll() {
-    const sections = document.querySelectorAll('section[id]');
+  // Navigation state management
+  let navigationInitialized = false;
+  
+  function initNavigation() {
+    if (navigationInitialized) return; // Prevent multiple initializations
+    navigationInitialized = true;
+    
+    // Immediately highlight Home on page load
     const navLinks = document.querySelectorAll('.nav-link');
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === '#home') {
+        link.classList.add('active');
+      }
+    });
+    
+    // Set up scroll-based navigation updates
+    updateActiveNavigationOnScroll();
+    
+    // Update active section after a short delay to ensure proper initialization
+    setTimeout(() => {
+      updateActiveSection();
+    }, 100);
+  }
+
+  function updateActiveNavigationOnScroll() {
+    let scrollTimeout;
     
     window.addEventListener('scroll', () => {
-      let current = '';
+      // Throttle scroll events for better performance
+      if (scrollTimeout) {
+        clearTimeout(scrollTimeout);
+      }
       
-      sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        
-        if (window.scrollY >= (sectionTop - 200)) {
-          current = section.getAttribute('id');
-        }
-      });
+      scrollTimeout = setTimeout(() => {
+        updateActiveSection();
+      }, 10);
+    });
+  }
+  
+  function updateActiveSection() {
+    const sections = document.querySelectorAll('section[id]');
+    const methodologySection = document.querySelector('.methodology-highlights-section');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const scrollPosition = window.scrollY;
+    const viewportMiddle = scrollPosition + (window.innerHeight / 2);
+    
+    let current = '';
+    
+    // Check if methodology section is halfway in view
+    if (methodologySection) {
+      const methodologyTop = methodologySection.offsetTop;
+      const methodologyHeight = methodologySection.clientHeight;
+      const methodologyMiddle = methodologyTop + (methodologyHeight / 2);
       
-      navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${current}`) {
-          link.classList.add('active');
+      // If viewport middle is past the methodology section's middle point
+      if (viewportMiddle >= methodologyMiddle) {
+        current = 'methodology';
+      }
+    }
+    
+    // Check which section with ID is currently in view (using halfway point)
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.clientHeight;
+      const sectionMiddle = sectionTop + (sectionHeight / 2);
+      
+      // If viewport middle is past this section's middle point
+      if (viewportMiddle >= sectionMiddle) {
+        const sectionId = section.getAttribute('id');
+        // Don't override methodology with contact if we're still in methodology
+        if (sectionId !== 'contact' || current !== 'methodology') {
+          current = sectionId;
         }
-      });
+      }
+    });
+    
+    // If we're at the very top of the page, highlight Home
+    if (scrollPosition < 100) {
+      current = 'home';
+    }
+    
+    // Update navigation highlighting
+    navLinks.forEach(link => {
+      link.classList.remove('active');
+      const href = link.getAttribute('href');
+      
+      // Handle #section format
+      if (href === `#${current}`) {
+        link.classList.add('active');
+      }
+      // Handle methodology.html for the methodology highlights section
+      else if (href === 'methodology.html' && current === 'methodology') {
+        link.classList.add('active');
+      }
     });
   }
 
@@ -2109,6 +2182,79 @@
     updateSTARProgress(); // Initial call
   }
 
+  // ===== SKILL PROGRESS ANIMATION =====
+  function animateSkillProgress() {
+    const skillItems = document.querySelectorAll('.skill-item');
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const progressBar = entry.target.querySelector('.progress-bar');
+          if (progressBar) {
+            // Add animate class to trigger CSS animation
+            entry.target.classList.add('animate');
+            
+            // Unobserve after animation
+            observer.unobserve(entry.target);
+          }
+        }
+      });
+    }, {
+      threshold: 0.5
+    });
+    
+    skillItems.forEach(item => {
+      observer.observe(item);
+    });
+  }
+
+  // ===== ANIMATED COUNTERS =====
+  function animateCounters() {
+    const counters = document.querySelectorAll('.stat-number');
+    
+    counters.forEach(counter => {
+      const target = parseInt(counter.getAttribute('data-count'));
+      
+      if (isNaN(target)) {
+        console.error('Invalid target value for counter:', counter);
+        return;
+      }
+      
+      const duration = 2000; // 2 seconds
+      const increment = target / (duration / 16); // 60fps
+      let current = 0;
+      
+      const updateCounter = () => {
+        current += increment;
+        if (current < target) {
+          counter.textContent = Math.floor(current);
+          requestAnimationFrame(updateCounter);
+        } else {
+          counter.textContent = target + (target === 100 ? '%' : '+');
+        }
+      };
+      
+      // Start animation when element is in viewport
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            updateCounter();
+            observer.unobserve(entry.target);
+          }
+        });
+      });
+      
+      observer.observe(counter);
+      
+      // Fallback: set final value after 3 seconds if animation doesn't start
+      setTimeout(() => {
+        if (counter.textContent === '0') {
+          counter.textContent = target + (target === 100 ? '%' : '+');
+        }
+      }, 3000);
+    });
+  }
+
   // ===== EXPORTS =====
   
   // Make functions available globally if needed
@@ -2117,6 +2263,8 @@
     state,
     filterProjects,
     updateActiveNavigation,
+    animateCounters,
+    animateSkillProgress,
     handleMobileNavToggle,
     initSTARProgressIndicator,
   };
@@ -2127,6 +2275,9 @@
   // Initialize STAR progress indicator if on case study page
   document.addEventListener('DOMContentLoaded', () => {
     initSTARProgressIndicator();
+    animateCounters();
+    animateSkillProgress();
+    initNavigation(); // Initialize navigation highlighting
   });
 
 })();

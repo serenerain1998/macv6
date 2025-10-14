@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-58LS07X7LB"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-58LS07X7LB');
+    </script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Methodology - Melissa Casole UX Portfolio</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="assets/favicon/android-chrome-512x512.png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.3.1/css/hover-min.css" rel="stylesheet">
+    <link href="css/themes.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <script async defer src="https://tools.luckyorange.com/core/lo.js?site-id=51b04e98"></script>
+    
+    <style>
+        /* Methodology specific styles */
+        .methodology-hero {
+            padding: 120px 0 80px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .methodology-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+
+        .methodology-hero h1 {
+            color: white;
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .methodology-hero p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .methodology-section {
+            padding: 80px 0;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .methodology-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 24px;
+            padding: 50px;
+            margin-bottom: 60px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .methodology-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 0;
+        }
+
+        .methodology-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(102, 126, 234, 0.08), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            animation: rotate 6s linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .methodology-card:hover::before {
+            opacity: 1;
+        }
+
+        .methodology-card:hover::after {
+            opacity: 1;
+        }
+
+        .methodology-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.3),
+                0 0 0 1px rgba(102, 126, 234, 0.3);
+            border-color: rgba(102, 126, 234, 0.5);
+        }
+
+        .methodology-card h2 {
+            color: #667eea;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        .methodology-card:hover h2 {
+            color: #a7b4ff;
+            transform: translateX(10px);
+        }
+
+        .methodology-card h2 i {
+            transition: all 0.3s ease;
+        }
+
+        .methodology-card:hover h2 i {
+            transform: rotate(15deg) scale(1.1);
+            color: #764ba2;
+        }
+
+        .methodology-card h3 {
+            color: #fff;
+            font-size: 1.8rem;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        .methodology-card:hover h3 {
+            color: #a7b4ff;
+            transform: translateX(5px);
+        }
+
+        .methodology-card p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.8;
+            font-size: 1.1rem;
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        .methodology-card:hover p {
+            color: rgba(255, 255, 255, 0.95);
+            transform: translateX(5px);
+        }
+
+        .principle-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .principle-item {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .principle-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 0;
+        }
+
+        .principle-item:hover::before {
+            opacity: 1;
+        }
+
+        .principle-item:hover {
+            transform: translateY(-5px) scale(1.02);
+            border-left-color: #a7b4ff;
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.2);
+        }
+
+        .principle-item h4 {
+            color: #667eea;
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        .principle-item:hover h4 {
+            color: #a7b4ff;
+            transform: translateX(5px);
+        }
+
+        .principle-item h4 i {
+            transition: all 0.3s ease;
+        }
+
+        .principle-item:hover h4 i {
+            transform: rotate(15deg) scale(1.1);
+            color: #764ba2;
+        }
+
+        .principle-item p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1rem;
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        .principle-item:hover p {
+            color: rgba(255, 255, 255, 0.9);
+            transform: translateX(5px);
+        }
+
+        .brain-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 60px 40px;
+            margin: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .brain-section::before {
+            content: '\f5dc';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            font-size: 12rem;
+            opacity: 0.1;
+            right: -30px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 0;
+        }
+
+        .brain-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .brain-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .brain-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: 15px;
+            z-index: 0;
+        }
+
+        .brain-card:hover::before {
+            opacity: 1;
+        }
+
+        .brain-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .brain-card h4 {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        .brain-card:hover h4 {
+            color: #a7b4ff;
+            transform: translateX(5px);
+        }
+
+        .brain-card h4 i {
+            transition: all 0.3s ease;
+        }
+
+        .brain-card:hover h4 i {
+            transform: rotate(15deg) scale(1.1);
+            color: #ffd700;
+        }
+
+        .brain-card p {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.7;
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        .brain-card:hover p {
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .icon-badge {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #667eea;
+            margin: 0 auto 15px;
+        }
+        
+        .icon-badge i {
+            color: white;
+        }
+
+        .process-flow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 40px 0;
+            position: relative;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .process-step {
+            background: rgba(102, 126, 234, 0.1);
+            border: 2px solid #667eea;
+            border-radius: 15px;
+            padding: 25px;
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            position: relative;
+        }
+
+        .process-step::after {
+            content: '→';
+            position: absolute;
+            right: -30px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #667eea;
+            font-size: 2rem;
+        }
+
+        .process-step:last-child::after {
+            display: none;
+        }
+
+        .process-step h5 {
+            color: #667eea;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .process-step p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
+        }
+
+        /* Interactive Elements */
+        .interactive-element {
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .interactive-element::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(102, 126, 234, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.3s ease;
+            z-index: -1;
+        }
+
+        .interactive-element:hover::after {
+            width: 100%;
+            height: 100%;
+        }
+
+        .interactive-element:hover {
+            transform: scale(1.05);
+        }
+
+        /* Floating Action Button */
+        .floating-action-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            cursor: pointer;
+        }
+
+        .floating-action-btn:hover {
+            transform: scale(1.1) rotate(15deg);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Progress Indicator */
+        .progress-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(102, 126, 234, 0.2);
+            z-index: 1000;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        /* Reduce spacing for last card */
+        .methodology-card:last-of-type {
+            margin-bottom: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Progress Indicator -->
+    <div class="progress-indicator">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- Skip to Content Link -->
+    
+    <!-- Password Protection Modal -->
+    <div class="password-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="lock-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h1>Private Portfolio</h1>
+                <p>This portfolio contains confidential UX case studies and private client work. A password is required
+                    to view the content.</p>
+            </div>
+
+            <form class="password-form" method="post" onsubmit="return false;">
+                <div class="input-group">
+                    <input type="password" id="passwordInput" class="password-input" placeholder="Enter password"
+                        required>
+                    <button type="button" class="toggle-password" aria-label="Toggle password visibility">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+
+                <button type="button" class="submit-btn" id="submitPassword">
+                    Access Portfolio  <i class="fas fa-unlock me-2"></i>
+                </button>
+
+                <div class="error-message" id="passwordError">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    Incorrect password. Please try again.
+                </div>
+
+                <div class="request-password-section">
+                    <div class="divider">
+                        <span>or</span>
+                    </div>
+                    
+                    <button type="button" class="request-btn" id="requestPassword">
+                        <i class="fas fa-envelope me-2"></i>
+                        Request Access
+                    </button>
+                </div>
+            </form>
+
+            <div class="privacy-notice">
+                <p><i class="fas fa-shield-alt me-2"></i>Your privacy is important. This password is only used to
+                    protect sensitive portfolio content.</p>
+            </div>
+
+            <div class="alternative-access">
+                <div class="divider">
+                    <span>or</span>
+                </div>
+                
+                <a href="https://dribbble.com/melissacasole" class="dribbble-btn" target="_blank">
+                    <i class="fab fa-dribbble"></i>
+                    <span>View My Dribbble</span>
+                </a>
+                
+                <p class="alternative-text">Don't have the password? Check out my public work on Dribbble!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Request Password Modal -->
+    <div class="request-modal" id="requestModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="lock-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <h1>Request Portfolio Access</h1>
+                <p>Please provide your information to request access to the portfolio. You'll receive a temporary password via email.</p>
+            </div>
+
+            <form class="request-form" id="requestForm">
+                <div class="input-group">
+                    <label for="requestName">Full Name *</label>
+                    <input type="text" id="requestName" name="requestName" class="request-input" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="requestEmail">Email Address *</label>
+                    <input type="email" id="requestEmail" name="requestEmail" class="request-input" placeholder="Enter your email address" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="requestCompany">Company/Organization</label>
+                    <input type="text" id="requestCompany" name="requestCompany" class="request-input" placeholder="Enter your company name">
+                </div>
+
+                <div class="input-group">
+                    <label for="requestReason">Reason for Access *</label>
+                    <select id="requestReason" name="requestReason" class="request-input" required>
+                        <option value="">Select a reason</option>
+                        <option value="recruitment">Recruitment/Hiring</option>
+                        <option value="collaboration">Project Collaboration</option>
+                        <option value="partnership">Business Partnership</option>
+                        <option value="reference">Reference/Recommendation</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="input-group" id="otherReasonGroup" style="display: none;">
+                    <label for="otherReason">Please specify</label>
+                    <textarea id="otherReason" name="otherReason" class="request-input" placeholder="Please describe your reason for access"></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitRequest">
+                    <i class="fas fa-paper-plane me-2"></i>
+                    Send Request
+                </button>
+
+                <button type="button" class="cancel-btn" id="cancelRequest">
+                    Cancel
+                </button>
+            </form>
+
+            <div class="success-message" id="requestSuccess" style="display: none;">
+                <i class="fas fa-check-circle"></i>
+                <h3>Request Submitted!</h3>
+                <p>Thank you for your interest! I will send you a temporary password via email as soon as possible.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content (Hidden until password is entered) -->
+    <div id="mainContent">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="navbar-container">
+                <a class="navbar-brand" href="index.html">
+                    <img src="assets/images/mac_designs_logo_white.png" alt="MAC Designs Logo" class="logo-image">
+                </a>
+
+                <ul class="navbar-nav">
+                    <li><a class="nav-link" href="index.html#home">Home</a></li>
+                    <li><a class="nav-link" href="index.html#about">About</a></li>
+                    <li><a class="nav-link" href="index.html#projects">Projects</a></li>
+                    <li><a class="nav-link active" href="methodology.html">Methodology</a></li>
+                    <li><a class="nav-link" href="visual-design.html">Visual Design</a></li>
+                    <li><a class="nav-link" href="index.html#contact">Contact</a></li>
+                </ul>
+
+                <button class="navbar-toggle" aria-label="Toggle navigation menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="methodology-hero">
+            <div class="container text-center">
+                <h1 data-aos="fade-up">Design Methodology</h1>
+                <p data-aos="fade-up" data-aos-delay="100" style="text-align: center;">My approach to creating experiences that work with—not against—how people actually think, see, and interact</p>
+            </div>
+        </section>
+
+        <!-- Main Content -->
+        <main class="methodology-section container">
+            
+            <!-- Design Thinking -->
+            <div class="methodology-card" data-aos="fade-up">
+                <h2><i class="fas fa-lightbulb"></i> My Design Thinking Approach</h2>
+                <p>Over two decades in UX, I've learned that the best solutions don't come from assumptions—they come from truly understanding people. Design thinking isn't just a framework I follow; it's how I approach every problem. I've watched projects fail because teams skipped empathy, and I've seen "impossible" challenges solved when we took time to really listen to users.</p>
+                
+                <div class="process-flow">
+                    <div class="process-step">
+                        <div class="icon-badge"><i class="fas fa-users"></i></div>
+                        <h5>Empathize</h5>
+                        <p>I spend time with real users—not just surveys, but conversations and observations</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="icon-badge"><i class="fas fa-bullseye"></i></div>
+                        <h5>Define</h5>
+                        <p>I dig beneath surface requests to find the actual problem we need to solve</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="icon-badge"><i class="fas fa-lightbulb"></i></div>
+                        <h5>Ideate</h5>
+                        <p>I explore wild ideas alongside practical ones—sometimes the crazy ones work</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="icon-badge"><i class="fas fa-hammer"></i></div>
+                        <h5>Prototype</h5>
+                        <p>I build quickly to fail fast—paper sketches to Arduino prototypes</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="icon-badge"><i class="fas fa-check-circle"></i></div>
+                        <h5>Test</h5>
+                        <p>I put designs in front of real users early and often, then iterate based on what breaks</p>
+                    </div>
+                </div>
+
+                <p style="margin-top: 30px;">This process isn't linear for me—it's messy and iterative. I've gone back to empathy phase after testing revealed we were solving the wrong problem. That's not failure; that's learning. Each project teaches me something new about users, technology, or myself as a designer.</p>
+            </div>
+
+            <!-- Human-Centric Design Principles -->
+            <div class="methodology-card" data-aos="fade-up">
+                <h2><i class="fas fa-users"></i> How I Put People First</h2>
+                <p>Early in my career, I designed what I thought was a beautiful interface. Users hated it. That humbling experience taught me that design isn't about me—it's about them. Now, every decision I make is filtered through one question: "Does this help or hinder the person using it?" Here are the principles I live by:</p>
+                
+                <div class="principle-grid">
+                    <div class="principle-item">
+                        <h4><i class="fas fa-eye"></i> Visibility</h4>
+                        <p>If users have to hunt for something, I've failed. I make critical actions and information obvious because I've seen too many people give up when they can't find what they need.</p>
+                    </div>
+                    <div class="principle-item">
+                        <h4><i class="fas fa-comments"></i> Feedback</h4>
+                        <p>Silence is scary. When someone clicks a button, they need to know something happened. I design feedback into every interaction—sometimes it's subtle, but it's always there.</p>
+                    </div>
+                    <div class="principle-item">
+                        <h4><i class="fas fa-map"></i> Affordance</h4>
+                        <p>I believe design should be intuitive. If it looks like a button, it better act like one. I've learned that fighting user expectations just creates frustration.</p>
+                    </div>
+                    <div class="principle-item">
+                        <h4><i class="fas fa-route"></i> Consistency</h4>
+                        <p>I never make users relearn patterns. When save buttons work one way on page 1, they work the same way on page 50. Consistency builds trust and reduces cognitive load.</p>
+                    </div>
+                    <div class="principle-item">
+                        <h4><i class="fas fa-universal-access"></i> Accessibility</h4>
+                        <p>Designing for accessibility isn't just compliance—it's compassion. I've seen how thoughtful design can transform someone's ability to work independently, and that drives everything I do.</p>
+                    </div>
+                    <div class="principle-item">
+                        <h4><i class="fas fa-undo"></i> Error Prevention</h4>
+                        <p>Mistakes happen, but good design prevents them. I design with guardrails and clear recovery paths because I've seen the frustration when users accidentally delete important work.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gestalt Principles -->
+            <div class="methodology-card" data-aos="fade-up">
+                <h2><i class="fas fa-shapes"></i> Working With How We Actually See</h2>
+                <p>Your brain is doing incredible things right now—grouping, organizing, and making sense of visual information without you even realizing it. Once I understood Gestalt principles, I stopped fighting against human perception and started designing with it. These aren't just theory for me—they're tools I use every single day.</p>
+                
+                <div class="principle-grid">
+                    <div class="principle-item">
+                        <h4><i class="fas fa-circle"></i> Proximity</h4>
+                        <p>I group related items close together because our brains automatically assume they belong together. It's why I space form fields carefully—proper spacing tells users what's connected without saying a word.</p>
+                    </div>
+                    <div class="principle-item">
+                        <h4><i class="fas fa-palette"></i> Similarity</h4>
+                        <p>When I want users to recognize patterns, I use consistent visual styling. All primary actions get the same color, all warnings share a style—it helps users build mental models faster.</p>
+                    </div>
+                    <div class="principle-item">
+                        <h4><i class="fas fa-puzzle-piece"></i> Closure</h4>
+                        <p>Our brains complete incomplete shapes automatically. I use this to create cleaner interfaces—subtle borders, partial outlines. Less visual clutter, same comprehension.</p>
+                    </div>
+                    <div class="principle-item">
+                        <h4><i class="fas fa-stream"></i> Continuity</h4>
+                        <p>I design visual paths for the eye to follow. When elements align, users naturally flow from one to the next. It's how I guide attention without arrows or instructions.</p>
+                    </div>
+                    <div class="principle-item">
+                        <h4><i class="fas fa-layer-group"></i> Figure-Ground</h4>
+                        <p>Strong contrast helps users instantly understand what's important. I've seen designs fail because everything competed for attention. Good hierarchy makes the right things pop.</p>
+                    </div>
+                    <div class="principle-item">
+                        <h4><i class="fas fa-bezier-curve"></i> Common Fate</h4>
+                        <p>When I animate elements together, users see them as related. It's powerful for showing relationships—like how dragging one item affects others in a connected system.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cognitive Science & Psychology -->
+            <div class="brain-section" data-aos="fade-up">
+                <h2 style="color: white; text-align: center; margin-bottom: 20px;">
+                    <i class="fas fa-brain"></i> Why I Study How We Think
+                </h2>
+                <p style="color: rgba(255, 255, 255, 0.95); text-align: center; max-width: 900px; margin: 0 auto; font-size: 1.2rem;">
+                    The moment I learned about working memory limitations, everything clicked. Suddenly I understood why my complex navigation menus confused people. Understanding cognitive science transformed me from someone who designs pretty interfaces to someone who designs interfaces that work with the human brain. Here's what I've learned that actually matters in practice:
+                </p>
+
+                <div class="brain-grid">
+                    <div class="brain-card">
+                        <h4><i class="fas fa-bolt"></i> Instincts & Visceral Response</h4>
+                        <p>People judge interfaces in milliseconds—before they consciously think about it. I've seen users recoil from perfectly functional designs because something "felt wrong." Now I design for that gut reaction first: clear contrast, familiar patterns, and trustworthy visual cues. First impressions aren't everything, but they're hard to overcome.</p>
+                    </div>
+
+                    <div class="brain-card">
+                        <h4><i class="fas fa-memory"></i> Working Memory Limits</h4>
+                        <p>Your brain can only juggle about 5 things at once. I learned this the hard way when I built a form with 20 fields—users gave up. Now I chunk information ruthlessly. Progressive disclosure isn't just fancy—it's respecting cognitive limits. Every extra option on screen is mental weight someone has to carry.</p>
+                    </div>
+
+                    <div class="brain-card">
+                        <h4><i class="fas fa-archive"></i> Recognition Over Recall</h4>
+                        <p>I'd rather show users something they can recognize than make them remember it. It's why I use icons with labels, visual previews, and familiar patterns. Watching someone struggle to recall where they saved a file taught me: recognition is effortless, recall is work.</p>
+                    </div>
+
+                    <div class="brain-card">
+                        <h4><i class="fas fa-network-wired"></i> Spatial Memory & Navigation</h4>
+                        <p>Users build mental maps of interfaces. Move the menu once and watch them get lost—they're looking where it used to be, not where it is now. I keep navigation consistent because disrupting someone's spatial memory creates real cognitive friction. Location matters more than we think.</p>
+                    </div>
+
+                    <div class="brain-card">
+                        <h4><i class="fas fa-brain"></i> Left Brain: Logic & Language</h4>
+                        <p>When users need to understand instructions or complete sequential tasks, I'm appealing to logical, language-based thinking. This is where clear microcopy shines—well-chosen words can eliminate confusion. I've rewritten button labels 10 times to find the one that just clicks.</p>
+                    </div>
+
+                    <div class="brain-card">
+                        <h4><i class="fas fa-palette"></i> Right Brain: Visual & Emotional</h4>
+                        <p>Numbers and words aren't everything. Sometimes a well-chosen color or beautiful imagery communicates faster than text ever could. I design for emotional resonance too—how something feels matters. Medical software can be calming, financial tools can feel secure. Aesthetics aren't superficial; they're functional.</p>
+                    </div>
+
+                    <div class="brain-card">
+                        <h4><i class="fas fa-sync-alt"></i> Fast & Slow Thinking</h4>
+                        <p>Most actions should be automatic—System 1 thinking. But critical decisions need deliberate thought—System 2. I design common paths to be frictionless (one-click actions, defaults that make sense) while adding speed bumps before destructive actions. Delete buttons should make you pause.</p>
+                    </div>
+
+                    <div class="brain-card">
+                        <h4><i class="fas fa-lightbulb"></i> Using Cognitive Biases</h4>
+                        <p>Our brains have predictable shortcuts. People remember the first and last items in a list, so that's where I put important stuff. They trust the default option, so I make defaults smart. Understanding these patterns isn't manipulation—it's meeting users where their brains naturally go.</p>
+                    </div>
+                </div>
+
+                <h3 style="color: white; margin-top: 50px; margin-bottom: 20px; text-align: center;">
+                    <i class="fas fa-project-diagram"></i> What This Means in Practice
+                </h3>
+                <p style="color: rgba(255, 255, 255, 0.9); text-align: center; max-width: 900px; margin: 0 auto; line-height: 1.8;">
+                    I don't design based on what looks cool or what I personally prefer. I design based on how brains actually work. When I simplify a complex workflow, I'm reducing cognitive load. When I use familiar patterns, I'm leveraging existing mental models. When I add micro-interactions, I'm providing the feedback our brains crave. This knowledge has made me a better designer—not because I memorized theories, but because I've seen them play out in real user testing sessions again and again.
+                </p>
+            </div>
+
+            <!-- Integration -->
+            <div class="methodology-card" data-aos="fade-up" style="margin-top: 40px;">
+                <h2><i class="fas fa-link"></i> How It All Comes Together</h2>
+                <p>These aren't separate methodologies I pick and choose from—they're lenses I look through simultaneously. When I'm designing, I'm thinking about the user's goals (design thinking), their cognitive limits (psychology), how their eyes will flow across the page (Gestalt), and whether everyone can access it (human-centric design). It's second nature now, but it took years of practice.</p>
+                
+                <div class="principle-grid" style="margin-top: 30px;">
+                    <div class="principle-item">
+                        <h4><i class="fas fa-user-check"></i> Research First, Always</h4>
+                        <p>I've never regretted doing user research, but I've definitely regretted skipping it. Every assumption I make gets validated. Every design decision has evidence behind it. That's not being cautious—it's being smart.</p>
+                    </div>
+                    <div class="principle-item">
+                        <h4><i class="fas fa-vial"></i> Test Early, Test Often</h4>
+                        <p>Usability testing has humbled me more times than I can count. Users do unexpected things, misunderstand clear instructions, and reveal problems I never imagined. I've learned to love being wrong because it means I can make it right.</p>
+                    </div>
+                    <div class="principle-item">
+                        <h4><i class="fas fa-balance-scale"></i> Beauty With Purpose</h4>
+                        <p>I believe beautiful design performs better—but only when that beauty serves the user. Every color choice, every animation, every typeface has a job to do. If it's just decoration, it doesn't belong.</p>
+                    </div>
+                    <div class="principle-item">
+                        <h4><i class="fas fa-heart"></i> Empathy Isn't Optional</h4>
+                        <p>At the core of everything I do is a simple question: "How would this feel if I were struggling, tired, or frustrated?" Designing with empathy isn't just good practice—it's what separates functional design from truly helpful design.</p>
+                    </div>
+                </div>
+
+                <p style="margin-top: 40px; font-size: 1.2rem; color: #667eea; text-align: center; font-weight: 500;">
+                    "After 20+ years, I've learned that great design isn't about following rules—it's about understanding why those rules exist, knowing when to break them, and always, always putting the human first."
+                </p>
+            </div>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Navigation</h3>
+                    <ul>
+                        <li><a href="index.html#home">Home</a></li>
+                        <li><a href="index.html#projects">Projects</a></li>
+                        <li><a href="methodology.html">Methodology</a></li>
+                        <li><a href="visual-design.html">Visual Design</a></li>
+                        <li><a href="index.html#about">About</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Projects</h3>
+                    <ul>
+                        <li><a href="project1.html">Horizon Control</a></li>
+                        <li><a href="project2.html">AdFluence</a></li>
+                        <li><a href="project3.html">Form Builder</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <div class="social-links">
+                        <a href="https://linkedin.com/in/melissacasole" target="_blank" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="https://dribbble.com/melissacasole" target="_blank" aria-label="Dribbble">
+                            <i class="fab fa-dribbble"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="assets/docs/melissa_casole_ux_resume.pdf" download>Resume</a></li>
+                        <li><a href="index.html#about">Skills</a></li>
+                        <li><a href="index.html#contact">Contact Info</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 Melissa Casole. All rights reserved. | Designed with ❤️ for user experience.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Floating Resume Button -->
+    <a href="assets/docs/melissa_casole_ux_resume.pdf" class="floating-resume-btn" download>
+        <i class="fas fa-download"></i>
+        <span>Resume</span>
+    </a>
+
+    <!-- Floating Action Button -->
+    <div class="floating-action-btn" id="floatingBtn">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
+    <script src="js/libs-init.js"></script>
+    <script src="js/main.js"></script>
+    
+    <!-- Methodology Page Specific Scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Progress Bar
+            const progressBar = document.getElementById('progressBar');
+            const floatingBtn = document.getElementById('floatingBtn');
+            
+            // Update progress bar on scroll
+            function updateProgress() {
+                const scrollTop = window.pageYOffset;
+                const docHeight = document.body.scrollHeight - window.innerHeight;
+                const scrollPercent = (scrollTop / docHeight) * 100;
+                progressBar.style.width = scrollPercent + '%';
+            }
+            
+            // Show/hide floating button
+            function toggleFloatingBtn() {
+                if (window.pageYOffset > 300) {
+                    floatingBtn.style.opacity = '1';
+                    floatingBtn.style.transform = 'scale(1)';
+                } else {
+                    floatingBtn.style.opacity = '0';
+                    floatingBtn.style.transform = 'scale(0.8)';
+                }
+            }
+            
+            // Scroll to top function
+            floatingBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Add ripple effect to cards
+            function addRippleEffect(element) {
+                element.addEventListener('click', function(e) {
+                    const ripple = document.createElement('span');
+                    const rect = this.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    
+                    ripple.style.width = ripple.style.height = size + 'px';
+                    ripple.style.left = x + 'px';
+                    ripple.style.top = y + 'px';
+                    ripple.classList.add('ripple');
+                    
+                    this.appendChild(ripple);
+                    
+                    setTimeout(() => {
+                        ripple.remove();
+                    }, 600);
+                });
+            }
+            
+            // Add ripple effect to all methodology cards
+            document.querySelectorAll('.methodology-card').forEach(addRippleEffect);
+            document.querySelectorAll('.principle-item').forEach(addRippleEffect);
+            document.querySelectorAll('.brain-card').forEach(addRippleEffect);
+            
+            // Event listeners
+            window.addEventListener('scroll', function() {
+                updateProgress();
+                toggleFloatingBtn();
+            });
+            
+            // Initial calls
+            updateProgress();
+            toggleFloatingBtn();
+            
+            // Add CSS for ripple effect
+            const style = document.createElement('style');
+            style.textContent = `
+                .ripple {
+                    position: absolute;
+                    border-radius: 50%;
+                    background: rgba(102, 126, 234, 0.3);
+                    transform: scale(0);
+                    animation: ripple-animation 0.6s linear;
+                    pointer-events: none;
+                }
+                
+                @keyframes ripple-animation {
+                    to {
+                        transform: scale(4);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
+</body>
+
+</html>
+
