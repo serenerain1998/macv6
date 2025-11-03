@@ -74,6 +74,8 @@ body.is-scrolling {
 /* Smooth scroll for sections */
 section {
   scroll-margin-top: 80px;
+  padding-left: 1em;
+  padding-right: 1em;
 }
 
 /* Subtle scroll momentum visual feedback */
@@ -3118,6 +3120,7 @@ body.password-protected .password-modal i {
   grid-template-columns: 2fr 1fr;
   gap: var(--space-12);
   align-items: start;
+  padding: 0 1em;
 }
 
 .summary-text .lead {
@@ -3698,7 +3701,7 @@ video::-webkit-media-controls-panel {
 
 /* Technical Implementation */
 .technical-implementation {
-  padding: var(--space-16) 0;
+  /* padding: var(--space-16) 0; */
   background: var(--color-background-secondary);
 }
 
@@ -4279,6 +4282,7 @@ video::-webkit-media-controls-panel {
   .tech-content {
     grid-template-columns: 1fr;
     gap: var(--space-6);
+    padding: 0 1em
   }
   
   .timeline-item {

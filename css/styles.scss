@@ -303,6 +303,12 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+// Section padding
+section {
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
 // Typography
 h1, h2, h3, h4, h5, h6 {
   font-weight: font-weight(bold);

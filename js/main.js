@@ -1258,7 +1258,29 @@
     // Modal functionality
     function openModal(index) {
       console.log('Opening modal for index:', index);
+      
+      // Check if modal elements exist
+      if (!modal || !modalImage || !modalVideo) {
+        console.error('Modal elements not found');
+        return;
+      }
+      
+      // Get modal title and description elements
+      const modalTitle = document.getElementById('modalTitle');
+      const modalDescription = document.getElementById('modalDescription');
+      
+      // Validate index
+      if (index < 0 || index >= sliderItems.length) {
+        console.error('Invalid index:', index);
+        return;
+      }
+      
       const item = sliderItems[index];
+      if (!item) {
+        console.error('Slider item not found at index:', index);
+        return;
+      }
+      
       const isVideo = item.classList.contains('video-item');
       
       console.log('Is video:', isVideo);
@@ -1270,22 +1292,118 @@
         // Handle video
         const videoSrc = item.getAttribute('data-src');
         console.log('Video src:', videoSrc);
-        modalVideo.src = videoSrc;
-        modalVideo.style.display = 'block';
-        modalImage.style.display = 'none';
-        
-        // Play the video
-        modalVideo.play().catch(e => console.log('Video autoplay prevented:', e));
+        if (videoSrc) {
+          // Pause and reset the video
+          modalVideo.pause();
+          modalVideo.currentTime = 0;
+          
+          // Remove existing source elements completely
+          const existingSources = modalVideo.querySelectorAll('source');
+          existingSources.forEach(source => source.remove());
+          
+          // Clear src attribute on video element
+          modalVideo.removeAttribute('src');
+          modalVideo.load(); // Reset the video element
+          
+          // Show video, hide image
+          modalVideo.style.display = 'block';
+          modalImage.style.display = 'none';
+          
+          // Convert to absolute URL to ensure the video loads correctly
+          const absoluteVideoSrc = videoSrc.startsWith('http') || videoSrc.startsWith('//') 
+            ? videoSrc 
+            : new URL(videoSrc, window.location.href).href;
+          
+          console.log('Setting video source to:', absoluteVideoSrc);
+          
+          // Determine video type from extension
+          const videoExt = videoSrc.split('.').pop().toLowerCase();
+          let videoType = 'video/mp4';
+          if (videoExt === 'mov') {
+            videoType = 'video/quicktime';
+          }
+          
+          // Create new source element with absolute URL using setAttribute
+          const source = document.createElement('source');
+          source.setAttribute('src', absoluteVideoSrc);
+          source.setAttribute('type', videoType);
+          modalVideo.appendChild(source);
+          
+          console.log('Source element created:', source);
+          console.log('Source src:', source.getAttribute('src'));
+          console.log('Source type:', source.getAttribute('type'));
+          
+          // Load the video after adding the source
+          modalVideo.load();
+          
+          // Update modal title and description for videos
+          if (modalTitle) {
+            const videoTitle = item.getAttribute('data-title') || 'Video Preview';
+            modalTitle.textContent = videoTitle;
+          }
+          if (modalDescription) {
+            const videoDesc = item.getAttribute('data-description') || 'Click play to watch the video';
+            modalDescription.textContent = videoDesc;
+          }
+          
+          // Wait for video to load metadata before attempting to play
+          const playVideo = () => {
+            modalVideo.play().catch(e => {
+              console.log('Video autoplay prevented:', e);
+              // If autoplay fails, just display the video (user can click play)
+            });
+          };
+          
+          // Remove any existing event listeners to prevent duplicates
+          const playHandler = () => playVideo();
+          modalVideo.removeEventListener('loadeddata', playHandler);
+          modalVideo.removeEventListener('canplay', playHandler);
+          
+          // Try to play once video data is loaded
+          modalVideo.addEventListener('loadeddata', playHandler, { once: true });
+          modalVideo.addEventListener('canplay', playHandler, { once: true });
+          
+          // Load the video
+          modalVideo.load();
+        }
       } else {
         // Handle image
-        const imgSrc = item.querySelector('img').src;
-        const imgAlt = item.querySelector('img').alt;
+        const imgElement = item.querySelector('img');
+        if (!imgElement) {
+          console.error('Image element not found in slider item at index:', index);
+          return;
+        }
+        
+        // Get the actual image source - use getAttribute to get the original src, or currentSrc as fallback
+        const imgSrc = imgElement.getAttribute('src') || imgElement.src || imgElement.currentSrc;
+        const imgAlt = imgElement.getAttribute('alt') || imgElement.alt || '';
+        
         console.log('Image src:', imgSrc);
         
-        modalImage.src = imgSrc;
-        modalImage.alt = imgAlt;
-        modalImage.style.display = 'block';
-        modalVideo.style.display = 'none';
+        if (imgSrc) {
+          // Use absolute URL to ensure the image loads correctly
+          const absoluteSrc = imgSrc.startsWith('http') || imgSrc.startsWith('//') 
+            ? imgSrc 
+            : new URL(imgSrc, window.location.href).href;
+          
+          modalImage.src = absoluteSrc;
+          modalImage.alt = imgAlt;
+          modalImage.style.display = 'block';
+          modalVideo.style.display = 'none';
+          
+          // Update modal title and description for images
+          if (modalTitle) {
+            const imageTitle = item.getAttribute('data-title') || imgAlt || 'Image Preview';
+            modalTitle.textContent = imageTitle;
+          }
+          if (modalDescription) {
+            const imageDesc = item.getAttribute('data-description') || 'Project image from portfolio';
+            modalDescription.textContent = imageDesc;
+          }
+        } else {
+          console.error('No image source found for item at index:', index);
+          return;
+        }
       }
       
       modal.classList.add('show');
@@ -1317,12 +1435,77 @@
       openModal(prevIndex);
     }
     
-    // Event listeners
+    // Track clicks vs drags on slider items
+    const itemDragState = new Map();
+    
+    // Event listeners for slider items
     sliderItems.forEach((item, index) => {
-      item.addEventListener('click', () => {
-        console.log('Slider item clicked:', index);
-        openModal(index);
+      let dragStartX = 0;
+      let dragStartY = 0;
+      let hasDragged = false;
+      
+      // Track mousedown on item to distinguish clicks from drags
+      item.addEventListener('mousedown', (e) => {
+        dragStartX = e.pageX;
+        dragStartY = e.pageY;
+        hasDragged = false;
+        itemDragState.set(item, { dragStartX, dragStartY, hasDragged: false });
       });
+      
+      // Prevent drag tracking from interfering with clicks
+      item.addEventListener('mouseleave', () => {
+        itemDragState.delete(item);
+        dragStartX = 0;
+        dragStartY = 0;
+        hasDragged = false;
+      });
+      
+      // Handle click on slider item
+      item.addEventListener('click', (e) => {
+        const state = itemDragState.get(item);
+        // Only open modal if it wasn't a significant drag (more than 10px)
+        if (state) {
+          const dragDistance = Math.sqrt(
+            Math.pow(e.pageX - state.dragStartX, 2) + 
+            Math.pow(e.pageY - state.dragStartY, 2)
+          );
+          if (dragDistance > 10) {
+            console.log('Drag detected, ignoring click');
+            itemDragState.delete(item);
+            return;
+          }
+        }
+        
+        console.log('Slider item clicked:', index);
+        e.stopPropagation();
+        e.preventDefault();
+        openModal(index);
+        itemDragState.delete(item);
+      });
+      
+      // Also handle clicks on the overlay icon specifically
+      const overlay = item.querySelector('.image-overlay');
+      if (overlay) {
+        overlay.addEventListener('click', (e) => {
+          e.stopPropagation();
+          e.preventDefault();
+          console.log('Overlay clicked:', index);
+          openModal(index);
+          itemDragState.delete(item);
+        });
+      }
+      
+      // Handle image clicks directly
+      const imgElement = item.querySelector('img');
+      if (imgElement) {
+        imgElement.addEventListener('click', (e) => {
+          e.stopPropagation();
+          e.preventDefault();
+          console.log('Image clicked:', index);
+          openModal(index);
+          itemDragState.delete(item);
+        });
+      }
     });
     
     // Modal controls
@@ -1350,6 +1533,7 @@
     let startScrollLeft = 0;
     let dragVelocity = 0;
     let lastDragTime = 0;
+    let hasMoved = false; // Track if mouse moved during drag
     
     // Enable horizontal scrolling for drag
     sliderTrack.style.overflowX = 'auto';
@@ -1357,6 +1541,7 @@
     
     sliderTrack.addEventListener('mousedown', (e) => {
       isDragging = true;
+      hasMoved = false;
       pauseAutoScroll();
       startX = e.pageX;
       startScrollLeft = sliderTrack.scrollLeft;
@@ -1369,6 +1554,13 @@
     
     sliderTrack.addEventListener('mousemove', (e) => {
       if (!isDragging) return;
+      
+      // Check if mouse has moved significantly (more than 5px)
+      const moveDistance = Math.abs(e.pageX - startX);
+      if (moveDistance > 5) {
+        hasMoved = true;
+      }
+      
       e.preventDefault();
       const currentTime = Date.now();
       const deltaTime = currentTime - lastDragTime;
@@ -1394,6 +1586,11 @@
         sliderTrack.scrollLeft = sliderTrack.scrollLeft - momentum;
         sliderTrack.style.scrollBehavior = 'smooth';
       }
+      
+      // Reset hasMoved after a short delay to allow click events
+      setTimeout(() => {
+        hasMoved = false;
+      }, 100);
       
       // Resume auto-scroll after manual interaction
       setTimeout(() => {

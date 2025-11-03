@@ -1,0 +1,1577 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-58LS07X7LB"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-58LS07X7LB');
+    </script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design System Request Form - Enterprise Design System | Melissa Casole</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="assets/favicon/android-chrome-512x512.png">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.3.1/css/hover-min.css" rel="stylesheet">
+    <link href="css/themes.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <script async defer src="https://tools.luckyorange.com/core/lo.js?site-id=51b04e98"></script>
+    
+    <style>
+        /* Navbar Search Button Styles */
+        .navbar-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+        }
+        
+        .search-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius-full);
+            width: 40px;
+            height: 40px;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            text-decoration: none;
+        }
+        
+        .search-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+        
+        .search-btn:active {
+            transform: scale(0.95);
+        }
+        
+        @media (max-width: 768px) {
+            .navbar-actions {
+                gap: var(--space-2);
+            }
+            
+            .search-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 1rem;
+            }
+        }
+        
+        /* Feature Showcase Styling */
+        .feature-showcase {
+            padding: 80px 0;
+            position: relative;
+        }
+        
+        .feature-showcase.dashboard-section {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.03) 0%, rgba(118, 75, 162, 0.03) 100%);
+            border-radius: 30px;
+            margin: 40px 0;
+            padding: 60px 2rem;
+        }
+        
+        /* Make dashboard images bigger */
+        .dashboard-section .feature-content {
+            grid-template-columns: 1.5fr 1fr;
+            gap: 80px;
+        }
+        
+        .dashboard-section .feature-content.reverse {
+            grid-template-columns: 1fr 1.5fr;
+        }
+        
+        @media (max-width: 968px) {
+            .dashboard-section .feature-content,
+            .dashboard-section .feature-content.reverse {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+        }
+        
+        .feature-showcase .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .feature-showcase .section-header {
+            margin-bottom: 40px;
+        }
+        
+        .feature-showcase .section-header h2 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .feature-showcase .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 2px;
+        }
+        
+        .feature-showcase .section-header p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.2rem;
+            margin-top: 20px;
+        }
+        
+        .feature-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            margin-top: 60px;
+            position: relative;
+        }
+        
+        .feature-content.reverse {
+            direction: rtl;
+        }
+        
+        .feature-content.reverse > * {
+            direction: ltr;
+        }
+        
+        .feature-text {
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            position: relative;
+            z-index: 2;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .feature-text:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(99, 102, 241, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .feature-text h3 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .feature-text h3::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 2px;
+        }
+        
+        .feature-text p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.8;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-text ul {
+            list-style: none;
+            padding: 0;
+            margin: 1.5rem 0;
+        }
+        
+        .feature-text ul li {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.8;
+            padding-left: 30px;
+            position: relative;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-text ul li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        .feature-text ul li strong {
+            color: #a7b4ff;
+            font-weight: 600;
+        }
+        
+        .feature-visual {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .feature-visual .image-container {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .feature-visual .image-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            animation: rotate 8s linear infinite;
+            z-index: 0;
+        }
+        
+        .feature-visual .image-container:hover::before {
+            opacity: 1;
+        }
+        
+        .feature-visual .image-container:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 35px 60px rgba(102, 126, 234, 0.3);
+            border-color: rgba(102, 126, 234, 0.4);
+        }
+        
+        .feature-visual .image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 12px;
+            position: relative;
+            z-index: 1;
+            transition: all 0.4s ease;
+        }
+        
+        .feature-visual .image-container:hover img {
+            transform: scale(1.05);
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Summary Visual Image Container */
+        .summary-visual {
+            position: sticky;
+            top: calc(var(--header-height) + var(--space-8));
+        }
+        
+        .summary-visual .image-container {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .summary-visual .image-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 35px 60px rgba(102, 126, 234, 0.3);
+            border-color: rgba(102, 126, 234, 0.4);
+        }
+        
+        .summary-visual .image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 12px;
+            position: relative;
+            z-index: 1;
+            transition: all 0.4s ease;
+        }
+        
+        .summary-visual .image-container:hover img {
+            transform: scale(1.02);
+        }
+        
+        /* Info Grid Styling */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .info-item {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 3px solid #667eea;
+            transition: all 0.3s ease;
+        }
+        
+        .info-item:hover {
+            background: rgba(102, 126, 234, 0.15);
+            transform: translateX(5px);
+        }
+        
+        .info-item i {
+            color: #667eea;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .info-item h4 {
+            color: #a7b4ff;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+        
+        .info-item p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+        
+        /* Dashboard Features Styling */
+        .dashboard-features {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .dashboard-feature {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 4px solid #667eea;
+            transition: all 0.3s ease;
+        }
+        
+        .dashboard-feature:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateX(10px);
+            border-left-color: #a7b4ff;
+        }
+        
+        .dashboard-feature i {
+            color: #667eea;
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+        
+        .dashboard-feature h4 {
+            color: #a7b4ff;
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+        
+        .dashboard-feature p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+            margin: 0;
+        }
+        
+        /* Benefits Section Styling */
+        .benefits-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .benefits-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23667eea' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            opacity: 0.5;
+            z-index: 0;
+        }
+        
+        .benefits-section .container {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+        
+        .benefit-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .benefit-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 0;
+        }
+        
+        .benefit-card:hover::before {
+            opacity: 1;
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(102, 126, 234, 0.3);
+            border-color: rgba(102, 126, 234, 0.5);
+        }
+        
+        .benefit-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 2;
+            transition: all 0.4s ease;
+        }
+        
+        .benefit-card:hover .benefit-icon {
+            transform: scale(1.1) rotate(5deg);
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.3) 0%, rgba(118, 75, 162, 0.3) 100%);
+        }
+        
+        .benefit-icon i {
+            font-size: 2rem;
+            color: #667eea;
+            transition: all 0.4s ease;
+        }
+        
+        .benefit-card:hover .benefit-icon i {
+            color: #a7b4ff;
+            transform: scale(1.1);
+        }
+        
+        .benefit-card h3 {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+        
+        .benefit-card:hover h3 {
+            color: #a7b4ff;
+            transform: translateX(5px);
+        }
+        
+        .benefit-card p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.8;
+            font-size: 1rem;
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+        
+        .benefit-card:hover p {
+            color: rgba(255, 255, 255, 0.95);
+            transform: translateX(5px);
+        }
+        
+        @media (max-width: 968px) {
+            .feature-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .feature-content.reverse {
+                direction: ltr;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Skip to Content Link -->
+    
+    <!-- Password Protection Modal -->
+    <div class="password-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="lock-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h1>Private Portfolio</h1>
+                <p>This portfolio contains confidential UX case studies and private client work. A password is required
+                    to view the content.</p>
+            </div>
+
+            <form class="password-form" method="post" onsubmit="return false;">
+                <div class="input-group">
+                    <input type="password" id="passwordInput" class="password-input" placeholder="Enter password"
+                        required>
+                    <button type="button" class="toggle-password" aria-label="Toggle password visibility">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+
+                <button type="button" class="submit-btn" id="submitPassword">
+                    Access Portfolio  <i class="fas fa-unlock me-2"></i>
+                </button>
+
+                <div class="error-message" id="passwordError">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    Incorrect password. Please try again.
+                </div>
+
+                <div class="request-password-section">
+                    <div class="divider">
+                        <span>or</span>
+                    </div>
+                    
+                    <button type="button" class="request-btn" id="requestPassword">
+                        <i class="fas fa-envelope me-2"></i>
+                        Request Access
+                    </button>
+                </div>
+            </form>
+
+            <div class="privacy-notice">
+                <p><i class="fas fa-shield-alt me-2"></i>Your privacy is important. This password is only used to
+                    protect sensitive portfolio content.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Request Password Modal -->
+    <div class="request-modal" id="requestModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="lock-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <h1>Request Portfolio Access</h1>
+                <p>Please provide your information to request access to the portfolio. You'll receive a temporary password via email.</p>
+            </div>
+
+            <form class="request-form" id="requestForm">
+                <div class="input-group">
+                    <label for="requestName">Full Name *</label>
+                    <input type="text" id="requestName" name="requestName" class="request-input" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="requestEmail">Email Address *</label>
+                    <input type="email" id="requestEmail" name="requestEmail" class="request-input" placeholder="Enter your email address" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="requestCompany">Company/Organization</label>
+                    <input type="text" id="requestCompany" name="requestCompany" class="request-input" placeholder="Enter your company name">
+                </div>
+
+                <div class="input-group">
+                    <label for="requestReason">Reason for Access *</label>
+                    <select id="requestReason" name="requestReason" class="request-input" required>
+                        <option value="">Select a reason</option>
+                        <option value="recruitment">Recruitment/Hiring</option>
+                        <option value="collaboration">Project Collaboration</option>
+                        <option value="partnership">Business Partnership</option>
+                        <option value="reference">Reference/Recommendation</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="input-group" id="otherReasonGroup" style="display: none;">
+                    <label for="otherReason">Please specify</label>
+                    <textarea id="otherReason" name="otherReason" class="request-input" placeholder="Please describe your reason for access"></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitRequest">
+                    <i class="fas fa-paper-plane me-2"></i>
+                    Send Request
+                </button>
+
+                <button type="button" class="cancel-btn" id="cancelRequest">
+                    Cancel
+                </button>
+            </form>
+
+            <div class="success-message" id="requestSuccess" style="display: none;">
+                <i class="fas fa-check-circle"></i>
+                <h3>Request Submitted!</h3>
+                <p>Thank you for your interest! I will send you a temporary password via email as soon as possible.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content (Hidden until password is entered) -->
+    <div id="mainContent">
+        <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a class="navbar-brand" href="index.html">
+                <img src="assets/images/mac_designs_logo_white.png" alt="MAC Designs Logo" class="logo-image">
+            </a>
+
+                <ul class="navbar-nav">
+                    <li><a class="nav-link" href="index.html#home">Home</a></li>
+                    <li><a class="nav-link" href="index.html#about">About</a></li>
+                    <li><a class="nav-link" href="index.html#projects">Projects</a></li>
+                    <li><a class="nav-link" href="methodology.html">Methodology</a></li>
+                    <li><a class="nav-link" href="visual-design.html">Visual Design</a></li>
+                    <li><a class="nav-link" href="index.html#contact">Contact</a></li>
+                </ul>
+
+                <div class="navbar-actions">
+                    <a href="search.html" class="search-btn" aria-label="Search Portfolio">
+                        <i class="fas fa-search"></i>
+                    </a>
+                    <button class="navbar-toggle" aria-label="Toggle navigation menu">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+        </div>
+    </nav>
+
+        <!-- STAR Progress Indicator -->
+        <div class="star-progress-indicator">
+            <div class="star-progress-steps">
+                <div class="star-step" data-step="situation">
+                    <div class="star-step-circle">S</div>
+                    <div class="star-step-label">Situation</div>
+                </div>
+                <div class="star-step" data-step="task">
+                    <div class="star-step-circle">T</div>
+                    <div class="star-step-label">Task</div>
+                </div>
+                <div class="star-step" data-step="action">
+                    <div class="star-step-circle">A</div>
+                    <div class="star-step-label">Action</div>
+                </div>
+                <div class="star-step" data-step="result">
+                    <div class="star-step-circle">R</div>
+                    <div class="star-step-label">Result</div>
+                </div>
+            </div>
+        </div>
+        <!-- Hero Section -->
+        <section class="case-study-hero">
+            <div class="hero-background">
+                <div class="aurora">
+                    <div class="aurora-layer"></div>
+                    <div class="aurora-layer"></div>
+                    <div class="aurora-layer"></div>
+                    <div class="aurora-layer"></div>
+                </div>
+            </div>
+            
+            <div class="hero-content">
+                <div class="project-meta" data-aos="fade-up">
+                    <span class="project-category">Enterprise Design System</span>
+                    <span class="project-duration">3 months</span>
+                    <span class="project-role">Design System Manager</span>
+                </div>
+                
+                <h1 class="hero-title" data-aos="fade-up" data-aos-delay="100">
+                    <span class="gradient-text">Design System Request Form</span>
+                </h1>
+                
+                <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="200">
+                    When teams couldn't easily tell me what they needed from the design system, I built a simple way for them to share their ideas—turning scattered requests into a clear roadmap I could actually manage
+                </p>
+                
+                <div class="hero-stats" data-aos="fade-up" data-aos-delay="300">
+                    <div class="stat-item">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">Centralized Requests</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">150+</span>
+                        <span class="stat-label">Submitted Requests</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">15+</span>
+                        <span class="stat-label">Teams Assisted</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- At a Glance Section -->
+        <section class="container">
+            <div class="at-a-glance" data-aos="fade-up">
+                <h3 class="at-a-glance-title">
+                    <i class="fas fa-info-circle"></i>
+                    At a Glance
+                </h3>
+                <div class="at-a-glance-grid">
+                    <div class="at-a-glance-item" data-aos="fade-up" data-aos-delay="100">
+                        <div class="at-a-glance-label">Role</div>
+                        <div class="at-a-glance-value">
+                            <i class="fas fa-user"></i>
+                            Design System Manager
+                        </div>
+                    </div>
+                    <div class="at-a-glance-item" data-aos="fade-up" data-aos-delay="200">
+                        <div class="at-a-glance-label">Timeline</div>
+                        <div class="at-a-glance-value">
+                            <i class="fas fa-calendar"></i>
+                            3 months
+                        </div>
+                    </div>
+                    <div class="at-a-glance-item" data-aos="fade-up" data-aos-delay="300">
+                        <div class="at-a-glance-label">Industry</div>
+                        <div class="at-a-glance-value">
+                            <i class="fas fa-cube"></i>
+                            Enterprise Design Systems
+                        </div>
+                    </div>
+                    <div class="at-a-glance-item" data-aos="fade-up" data-aos-delay="400">
+                        <div class="at-a-glance-label">Tools Used</div>
+                        <div class="at-a-glance-value">
+                            <i class="fas fa-toolbox"></i>
+                            Figma, Figma Make, Cursor
+                        </div>
+                    </div>
+                    <div class="at-a-glance-item impact-highlight" data-aos="fade-up" data-aos-delay="500">
+                        <div class="at-a-glance-label">Key Impact</div>
+                        <div class="at-a-glance-value">
+                            <i class="fas fa-chart-line"></i>
+                            Organized Request Management
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SITUATION: Executive Summary -->
+        <section class="executive-summary" data-star="situation">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <div class="star-section-header">
+                        <span class="star-badge situation">
+                            <i class="fas fa-map-marked-alt"></i>
+                            Situation
+                        </span>
+                    </div>
+                    <h2>The Challenge</h2>
+                    <p>Managing an enterprise design system without a way to capture and organize requests from teams</p>
+                </div>
+                
+                <div class="summary-content">
+                    <div class="summary-text" data-aos="fade-up" data-aos-delay="100">
+                        <p class="lead">
+                            As the manager of an enterprise design system, I faced a critical problem: there was no structured way for external teams—both engineers and designers—to submit requests for new components, report bugs, or suggest enhancements. Requests were coming in through emails, Teams messages, hallway conversations, and scattered across different channels. Important feedback was getting lost, priorities were unclear, and I had no visibility into what teams actually needed.
+                        </p>
+                        
+                        <p>
+                            Teams were frustrated because they felt their requests weren't being heard. I was frustrated because I couldn't efficiently manage or prioritize the influx of requests. The design system couldn't scale without a proper process for capturing and organizing feedback. I needed a solution that would transform this chaos into clarity—a centralized system that would help me understand what teams needed, prioritize effectively, and demonstrate the value of the design system to the organization.
+                        </p>
+                        
+                        <div class="key-highlights">
+                            <div class="highlight-item">
+                                <i class="fas fa-comments"></i>
+                                <h4>Scattered Requests</h4>
+                                <p>Requests coming through emails, Teams, and ad-hoc conversations</p>
+                            </div>
+                            <div class="highlight-item">
+                                <i class="fas fa-search"></i>
+                                <h4>Lost Information</h4>
+                                <p>No centralized way to track or organize team requests</p>
+                            </div>
+                            <div class="highlight-item">
+                                <i class="fas fa-tasks"></i>
+                                <h4>Priority Confusion</h4>
+                                <p>Difficult to understand what teams needed most urgently</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="summary-visual" data-aos="fade-left" data-aos-delay="200">
+                        <div class="image-container">
+                            <img src="assets/images/elements/images/form3.png" alt="Design System Request Form - Initial View">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TASK: Objectives & Goals -->
+        <section class="task-section" data-star="task">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <div class="star-section-header">
+                        <span class="star-badge task">
+                            <i class="fas fa-bullseye"></i>
+                            Task
+                        </span>
+                    </div>
+                    <h2>Our Objectives</h2>
+                    <p>Creating a centralized request system that captures essential information and enables effective prioritization</p>
+                </div>
+
+                <div class="success-criteria" data-aos="fade-up" data-aos-delay="100">
+                    <h3 class="success-criteria-title">Success Criteria</h3>
+                    <div class="criteria-grid">
+                        <div class="criteria-item" data-aos="fade-up" data-aos-delay="100">
+                            <div class="criteria-icon">
+                                <i class="fas fa-inbox"></i>
+                            </div>
+                            <div class="criteria-label">User Goals</div>
+                            <div class="criteria-value">Provide a simple, accessible way for teams to submit requests with all necessary context</div>
+                        </div>
+                        <div class="criteria-item" data-aos="fade-up" data-aos-delay="200">
+                            <div class="criteria-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="criteria-label">Business Goals</div>
+                            <div class="criteria-value">Centralize all requests in one place to eliminate lost information and improve visibility</div>
+                        </div>
+                        <div class="criteria-item" data-aos="fade-up" data-aos-delay="300">
+                            <div class="criteria-icon">
+                                <i class="fas fa-cogs"></i>
+                            </div>
+                            <div class="criteria-label">Management Goals</div>
+                            <div class="criteria-value">Enable effective prioritization, sprint assignment, and tracking of request status</div>
+                        </div>
+                        <div class="criteria-item" data-aos="fade-up" data-aos-delay="400">
+                            <div class="criteria-icon">
+                                <i class="fas fa-database"></i>
+                            </div>
+                            <div class="criteria-label">Data Goals</div>
+                            <div class="criteria-value">Collect structured information that helps understand scope, impact, and urgency</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ACTION: UX Process & Methodology -->
+        <section class="ux-process" data-star="action">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <div class="star-section-header">
+                        <span class="star-badge action">
+                            <i class="fas fa-rocket"></i>
+                            Action
+                        </span>
+                    </div>
+                    <h2>My Process: Designing for Information Architecture</h2>
+                    <p>Building a request form that captures the right information at the right time</p>
+                </div>
+                
+                <div class="process-timeline">
+                    <div class="timeline-item" data-aos="fade-up" data-aos-delay="100">
+                        <div class="timeline-marker">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <div class="timeline-content">
+                            <h3>Step 1: Understanding the Information Needs</h3>
+                            <p>Before designing the form, I needed to understand what information would be most valuable for managing requests. I analyzed the types of questions I found myself asking repeatedly: "What problem does this solve?" "Who will benefit?" "How urgent is this?" "What's the current workaround?" Each piece of information would help me prioritize and understand the scope of work.</p>
+                            <ul>
+                                <li>Identified the key questions I needed answered for each request</li>
+                                <li>Analyzed common request patterns and information gaps</li>
+                                <li>Mapped out the decision-making process for prioritization</li>
+                                <li>Considered what context would help teams communicate their needs effectively</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item" data-aos="fade-up" data-aos-delay="200">
+                        <div class="timeline-marker">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <div class="timeline-content">
+                            <h3>Step 2: Designing the Request Form</h3>
+                            <p>I designed a form that guides users through providing essential context in a logical flow. The form starts with request type selection (New Component, Enhancement, Bug Fix), then progressively collects more detailed information. Each field serves a purpose in helping me understand the request's scope, impact, and priority.</p>
+                            <ul>
+                                <li>Created a clear request type selection to categorize requests upfront</li>
+                                <li>Designed progressive disclosure to avoid overwhelming users</li>
+                                <li>Included fields for business goals, problems solved, and user benefits</li>
+                                <li>Added optional fields for frequency, workarounds, and additional context</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item" data-aos="fade-up" data-aos-delay="300">
+                        <div class="timeline-marker">
+                            <i class="fas fa-tachometer-alt"></i>
+                        </div>
+                        <div class="timeline-content">
+                            <h3>Step 3: Building the Admin Dashboard</h3>
+                            <p>The request form would be useless without a way to manage all incoming requests. I designed an admin dashboard that provides a global view of all requests, their status, priority, and sprint assignments. This dashboard became my command center for managing the design system's roadmap.</p>
+                            <ul>
+                                <li>Created summary cards showing total requests, submitted, in sprint, and completed</li>
+                                <li>Designed a filterable table view for detailed request management</li>
+                                <li>Enabled in-line editing of priority, status, and sprint assignments</li>
+                                <li>Provided quick access to request details and submitter information</li>
+                                <li>Connected form submissions to our UX team's MS Teams channel for instant notifications</li>
+                            </ul>
+                            <p>One key feature I implemented was connecting the form submissions directly to our UX team's MS Teams channel. Every time someone submitted a request, I'd get notified immediately in Teams. This meant I never missed a request, and I could respond quickly to teams—even if I wasn't actively checking the dashboard. It transformed the form from a passive collection tool into an active communication channel.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item" data-aos="fade-up" data-aos-delay="400">
+                        <div class="timeline-marker">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="timeline-content">
+                            <h3>Step 4: Testing with Real Teams</h3>
+                            <p>I tested the form with actual engineers and designers who would be using it. Their feedback helped me refine the language, clarify instructions, and ensure the form felt approachable rather than bureaucratic. The goal was to make submitting requests feel easy and valuable, not like filling out paperwork.</p>
+                            <ul>
+                                <li>Tested form clarity and completion time with real users</li>
+                                <li>Gathered feedback on field labels and instructions</li>
+                                <li>Validated that collected information was actually useful for prioritization</li>
+                                <li>Ensured the dashboard provided the visibility I needed</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature Section: Request Type Selection -->
+        <section class="feature-showcase">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <h2>Request Type Selection</h2>
+                    <p>Making it easy for teams to categorize their requests from the start</p>
+                </div>
+                
+                <div class="feature-content">
+                    <div class="feature-text" data-aos="fade-up" data-aos-delay="100">
+                        <h3>Clear Categorization</h3>
+                        <p>The form starts with a simple but critical choice: what type of request is this? Teams can select from three options:</p>
+                        <ul>
+                            <li><strong>New Component:</strong> Request a brand new component for the design system</li>
+                            <li><strong>Enhancement:</strong> Suggest improvements to an existing component</li>
+                            <li><strong>Bug Fix:</strong> Report an issue with an existing component</li>
+                        </ul>
+                        <p>This upfront categorization helps me immediately understand the nature of each request and route it appropriately. Visual cards make the selection intuitive, and descriptions help teams choose the right option even if they're not sure of the terminology.</p>
+                    </div>
+                    
+                    <div class="feature-visual" data-aos="fade-left" data-aos-delay="200">
+                        <div class="image-container">
+                            <img src="assets/images/elements/images/form3.png" alt="Request Type Selection">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature Section: Detailed Request Information -->
+        <section class="feature-showcase">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <h2>Capturing Essential Context</h2>
+                    <p>Collecting the information that helps me understand scope, impact, and priority</p>
+                </div>
+                
+                <div class="feature-content reverse">
+                    <div class="feature-visual" data-aos="fade-right" data-aos-delay="100">
+                        <div class="image-container">
+                            <img src="assets/images/elements/images/form3.png" alt="Detailed Request Form">
+                        </div>
+                    </div>
+                    
+                    <div class="feature-text" data-aos="fade-up" data-aos-delay="200">
+                        <h3>Why This Information Matters</h3>
+                        <p>Each field in the form serves a specific purpose in helping me manage requests effectively:</p>
+                        
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <i class="fas fa-tag"></i>
+                                <h4>Component Name</h4>
+                                <p>Helps me understand what's being requested and check for existing components</p>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-bullseye"></i>
+                                <h4>Business Goal</h4>
+                                <p>Connects the request to organizational objectives, helping prioritize based on impact</p>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <h4>Problem Statement</h4>
+                                <p>Clarifies the pain point being addressed, essential for understanding urgency</p>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-users"></i>
+                                <h4>Who Benefits</h4>
+                                <p>Helps me understand scope and prioritize based on user impact</p>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-clock"></i>
+                                <h4>Usage Frequency</h4>
+                                <p>Indicates how often the component would be used, informing priority decisions</p>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-wrench"></i>
+                                <h4>Current Workaround</h4>
+                                <p>Reveals the cost of not having the component, helping justify development effort</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature Section: Priority and Context -->
+        <section class="feature-showcase">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <h2>Priority and Additional Context</h2>
+                    <p>Enabling teams to communicate urgency and provide supporting materials</p>
+                </div>
+                
+                <div class="feature-content">
+                    <div class="feature-text" data-aos="fade-up" data-aos-delay="100">
+                        <h3>Making Prioritization Collaborative</h3>
+                        <p>The form includes a priority field that allows teams to indicate urgency. While I make the final prioritization decisions, understanding how teams perceive urgency provides valuable context. The form also includes:</p>
+                        <ul>
+                            <li><strong>Priority Selection:</strong> Teams can indicate if a request is Low, Medium, High, or Critical</li>
+                            <li><strong>Image Attachments:</strong> Teams can upload screenshots, mockups, or examples (up to 5MB)</li>
+                            <li><strong>Additional Context:</strong> Space for links, examples, or any other helpful information</li>
+                            <li><strong>Submitter Information:</strong> Name, email, and role for follow-up communication</li>
+                        </ul>
+                        <p>This information helps me understand not just what's needed, but why it's needed and how urgently. The ability to attach images means teams can show me examples, current workarounds, or mockups that make their requests much clearer.</p>
+                    </div>
+                    
+                    <div class="feature-visual" data-aos="fade-left" data-aos-delay="200">
+                        <div class="image-container">
+                            <img src="assets/images/elements/images/form3.png" alt="Priority and Context Fields">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature Section: Admin Dashboard -->
+        <section class="feature-showcase dashboard-section">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <h2>Admin Dashboard: The Command Center</h2>
+                    <p>A global view that transforms scattered requests into organized, actionable insights</p>
+                </div>
+                
+                <div class="feature-content reverse">
+                    <div class="feature-visual" data-aos="fade-right" data-aos-delay="100">
+                        <div class="image-container">
+                            <img src="assets/images/elements/images/Admin Dashboard.png" alt="Admin Dashboard">
+                        </div>
+                    </div>
+                    
+                    <div class="feature-text" data-aos="fade-up" data-aos-delay="200">
+                        <h3>Why the Dashboard Matters</h3>
+                        <p>The dashboard is where the value of collecting structured information becomes clear. At a glance, I can see:</p>
+                        
+                        <div class="dashboard-features">
+                            <div class="dashboard-feature">
+                                <i class="fas fa-chart-pie"></i>
+                                <div>
+                                    <h4>Summary Statistics</h4>
+                                    <p>Total requests, submitted, in sprint, and completed—giving me a high-level view of the request pipeline</p>
+                                </div>
+                            </div>
+                            <div class="dashboard-feature">
+                                <i class="fas fa-filter"></i>
+                                <div>
+                                    <h4>Filterable Views</h4>
+                                    <p>Filter by status to quickly see what's submitted, in progress, or completed</p>
+                                </div>
+                            </div>
+                            <div class="dashboard-feature">
+                                <i class="fas fa-table"></i>
+                                <div>
+                                    <h4>Detailed Request Table</h4>
+                                    <p>See type, component name, submitter, date, status, priority, sprint assignment, and actions all in one place</p>
+                                </div>
+                            </div>
+                            <div class="dashboard-feature">
+                                <i class="fas fa-edit"></i>
+                                <div>
+                                    <h4>In-Line Management</h4>
+                                    <p>Update priority, status, and sprint assignments directly from the dashboard without opening individual requests</p>
+                                </div>
+                            </div>
+                            <div class="dashboard-feature">
+                                <i class="fas fa-eye"></i>
+                                <div>
+                                    <h4>Quick Access to Details</h4>
+                                    <p>View button on each row provides instant access to full request information when needed</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Request Details View -->
+                <div class="feature-content" style="margin-top: 80px;">
+                    <div class="feature-text" data-aos="fade-up" data-aos-delay="100">
+                        <h3>Diving Deeper: Request Details</h3>
+                        <p>When I need to see the full context of a request, clicking "View" opens a detailed view that shows all the information teams provided. This includes:</p>
+                        <ul>
+                            <li><strong>Complete Request Information:</strong> All the context teams provided—business goals, problem statements, usage frequency, and current workarounds</li>
+                            <li><strong>Submitter Details:</strong> Contact information and role, making it easy to follow up with questions or updates</li>
+                            <li><strong>Attached Files:</strong> Any screenshots or mockups teams uploaded to illustrate their needs</li>
+                            <li><strong>Status History:</strong> Track how the request has moved through the pipeline</li>
+                        </ul>
+                        <p>This detailed view is where all that structured information I collected becomes valuable. I can see everything at once, understand the full context, and make informed decisions about prioritization and implementation.</p>
+                    </div>
+                    
+                    <div class="feature-visual" data-aos="fade-left" data-aos-delay="200">
+                        <div class="image-container">
+                            <img src="assets/images/elements/images/Admin Dashboard - Request details.png" alt="Admin Dashboard Request Details View">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Benefits Section -->
+        <section class="benefits-section">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <h2>How This Helps Me Manage Requests</h2>
+                    <p>The benefits of collecting structured information and having a centralized dashboard</p>
+                </div>
+                
+                <div class="benefits-grid">
+                    <div class="benefit-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="benefit-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h3>No More Lost Requests</h3>
+                        <p>Every request is captured in one place with all relevant context. I never have to dig through emails or Teams history to find what someone asked for. The information is there when I need it, structured and searchable.</p>
+                    </div>
+                    
+                    <div class="benefit-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="benefit-icon">
+                            <i class="fas fa-sort-amount-down"></i>
+                        </div>
+                        <h3>Better Prioritization</h3>
+                        <p>With business goals, problem statements, usage frequency, and priority information, I can make informed decisions about what to work on first. I understand the impact and urgency of each request before diving into the work.</p>
+                    </div>
+                    
+                    <div class="benefit-card" data-aos="fade-up" data-aos-delay="300">
+                        <div class="benefit-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <h3>Sprint Planning Made Easy</h3>
+                        <p>The dashboard allows me to assign requests to specific sprints, track what's in progress, and see what's completed. I can plan capacity and set expectations with teams about when their requests will be addressed.</p>
+                    </div>
+                    
+                    <div class="benefit-card" data-aos="fade-up" data-aos-delay="400">
+                        <div class="benefit-icon">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <h3>Visibility and Reporting</h3>
+                        <p>I can see at a glance how many requests are in the pipeline, what's been completed, and what's in progress. This helps me communicate the design system's value to leadership and demonstrate that we're responding to team needs.</p>
+                    </div>
+                    
+                    <div class="benefit-card" data-aos="fade-up" data-aos-delay="500">
+                        <div class="benefit-icon">
+                            <i class="fas fa-users-cog"></i>
+                        </div>
+                        <h3>Understanding Team Needs</h3>
+                        <p>By seeing who submits requests, what problems they're solving, and how often they'd use components, I gain insights into how the design system is being used and where it needs to grow. This informs the roadmap.</p>
+                    </div>
+                    
+                    <div class="benefit-card" data-aos="fade-up" data-aos-delay="600">
+                        <div class="benefit-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h3>Better Communication</h3>
+                        <p>Having submitter information and contact details means I can follow up with teams, ask clarifying questions, and keep them updated on progress. Teams feel heard because their requests are tracked and acknowledged.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RESULT: Impact & Learnings -->
+        <section class="result-section" data-star="result">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <div class="star-section-header">
+                        <span class="star-badge result">
+                            <i class="fas fa-trophy"></i>
+                            Result
+                        </span>
+                    </div>
+                    <h2>The Impact</h2>
+                    <p>Transforming request chaos into organized, actionable insights</p>
+                </div>
+
+                <div class="achievements-grid">
+                    <div class="achievement-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="achievement-icon">
+                            <i class="fas fa-inbox"></i>
+                        </div>
+                        <h3>Centralized Request Management</h3>
+                        <p>All requests now come through a single, organized system. No more lost emails or forgotten Teams messages. Every request is captured with full context, making it easy to reference later and ensuring nothing falls through the cracks.</p>
+                        <div class="achievement-metric">
+                            <span class="metric-number">100%</span>
+                            <span class="metric-label">Request Capture</span>
+                        </div>
+                    </div>
+                    
+                    <div class="achievement-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="achievement-icon">
+                            <i class="fas fa-sort-amount-down"></i>
+                        </div>
+                        <h3>Informed Prioritization</h3>
+                        <p>With structured information about business goals, problem statements, usage frequency, and priority, I can make data-driven decisions about what to work on first. The dashboard gives me the visibility I need to balance urgent needs with strategic work.</p>
+                        <div class="achievement-metric">
+                            <span class="metric-number">Data-Driven</span>
+                            <span class="metric-label">Prioritization</span>
+                        </div>
+                    </div>
+                    
+                    <div class="achievement-card" data-aos="fade-up" data-aos-delay="300">
+                        <div class="achievement-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Improved Team Satisfaction</h3>
+                        <p>Teams feel heard because their requests are tracked, acknowledged, and visible. They can see the status of their requests and understand how priorities are set. The form makes it easy for them to provide all the context I need, reducing back-and-forth.</p>
+                        <div class="achievement-metric">
+                            <span class="metric-number">Better</span>
+                            <span class="metric-label">Communication</span>
+                        </div>
+                    </div>
+                    
+                    <div class="achievement-card" data-aos="fade-up" data-aos-delay="400">
+                        <div class="achievement-icon">
+                            <i class="fas fa-tachometer-alt"></i>
+                        </div>
+                        <h3>Efficient Workflow</h3>
+                        <p>The dashboard enables me to manage requests efficiently. I can quickly filter by status, update priorities inline, assign to sprints, and track progress—all without leaving the dashboard. This saves time and ensures I'm working on the right things.</p>
+                        <div class="achievement-metric">
+                            <span class="metric-number">Streamlined</span>
+                            <span class="metric-label">Workflow</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Learnings & Reflection -->
+                <div class="learnings-section" data-aos="fade-up">
+                    <div class="learnings-header">
+                        <h3 class="learnings-title">Learnings & Reflections</h3>
+                        <p class="learnings-subtitle">Insights from building a request management system</p>
+                    </div>
+                    <div class="learnings-grid">
+                        <div class="learning-card">
+                            <div class="learning-icon">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <h4>What Worked Well</h4>
+                            <p>Collecting structured information upfront eliminated the need for follow-up questions. The dashboard's summary cards and filterable table view gave me exactly the visibility I needed. Teams appreciated having a clear place to submit requests and see their status.</p>
+                        </div>
+                        <div class="learning-card">
+                            <div class="learning-icon">
+                                <i class="fas fa-redo"></i>
+                            </div>
+                            <h4>What I'd Do Differently</h4>
+                            <p>I would add automated notifications to keep teams updated when their request status changes. I'd also consider adding a public-facing request board so teams can see what others have requested and upvote requests they also need.</p>
+                        </div>
+                        <div class="learning-card">
+                            <div class="learning-icon">
+                                <i class="fas fa-award"></i>
+                            </div>
+                            <h4>Key Takeaway</h4>
+                            <p>The right information architecture makes all the difference. By thinking carefully about what information I needed to manage requests effectively, I created a system that not only captures requests but helps me prioritize, plan, and communicate progress.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project Visuals -->
+        <section class="project-visuals">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <h2>The Complete System</h2>
+                    <p>From request submission to dashboard management—see how the system works end-to-end</p>
+                </div>
+                
+                <div class="image-slider-container" data-aos="fade-up" data-aos-delay="100">
+                    <div class="slider-track">
+                        <!-- Image items -->
+                        <div class="slider-item" data-index="0">
+                            <img src="assets/images/elements/images/form3.png" alt="Request Type Selection" loading="lazy">
+                            <div class="image-overlay">
+                                <i class="fas fa-expand"></i>
+                            </div>
+                        </div>
+                        <div class="slider-item" data-index="1">
+                            <img src="assets/images/elements/images/Enhancement.png" alt="Enhancement Request Type" loading="lazy">
+                            <div class="image-overlay">
+                                <i class="fas fa-expand"></i>
+                            </div>
+                        </div>
+                        <div class="slider-item" data-index="2">
+                            <img src="assets/images/elements/images/Bug Fix.png" alt="Bug Fix Request Type" loading="lazy">
+                            <div class="image-overlay">
+                                <i class="fas fa-expand"></i>
+                            </div>
+                        </div>
+                        <div class="slider-item" data-index="3">
+                            <img src="assets/images/elements/images/Admin Dashboard.png" alt="Admin Dashboard" loading="lazy">
+                            <div class="image-overlay">
+                                <i class="fas fa-expand"></i>
+                            </div>
+                        </div>
+                        <div class="slider-item" data-index="4">
+                            <img src="assets/images/elements/images/dash-sprint.png" alt="Dashboard Sprint View" loading="lazy">
+                            <div class="image-overlay">
+                                <i class="fas fa-expand"></i>
+                            </div>
+                        </div>
+                        <div class="slider-item" data-index="5">
+                            <img src="assets/images/elements/images/Admin Login.png" alt="Admin Login" loading="lazy">
+                            <div class="image-overlay">
+                                <i class="fas fa-expand"></i>
+                            </div>
+                        </div>
+                        <div class="slider-item" data-index="6">
+                            <img src="assets/images/elements/images/Admin Dashboard - Request details.png" alt="Admin Dashboard Request Details" loading="lazy">
+                            <div class="image-overlay">
+                                <i class="fas fa-expand"></i>
+                            </div>
+                        </div>
+                        <!-- Duplicate set for seamless infinite scroll -->
+                        <div class="slider-item" data-index="7">
+                            <img src="assets/images/elements/images/form3.png" alt="Request Type Selection" loading="lazy">
+                            <div class="image-overlay">
+                                <i class="fas fa-expand"></i>
+                            </div>
+                        </div>
+                        <div class="slider-item" data-index="8">
+                            <img src="assets/images/elements/images/Enhancement.png" alt="Enhancement Request Type" loading="lazy">
+                            <div class="image-overlay">
+                                <i class="fas fa-expand"></i>
+                            </div>
+                        </div>
+                        <div class="slider-item" data-index="9">
+                            <img src="assets/images/elements/images/Bug Fix.png" alt="Bug Fix Request Type" loading="lazy">
+                            <div class="image-overlay">
+                                <i class="fas fa-expand"></i>
+                            </div>
+                        </div>
+                        <div class="slider-item" data-index="10">
+                            <img src="assets/images/elements/images/Admin Dashboard.png" alt="Admin Dashboard" loading="lazy">
+                            <div class="image-overlay">
+                                <i class="fas fa-expand"></i>
+                            </div>
+                        </div>
+                        <div class="slider-item" data-index="11">
+                            <img src="assets/images/elements/images/dash-sprint.png" alt="Dashboard Sprint View" loading="lazy">
+                            <div class="image-overlay">
+                                <i class="fas fa-expand"></i>
+                            </div>
+                        </div>
+                        <div class="slider-item" data-index="12">
+                            <img src="assets/images/elements/images/Admin Login.png" alt="Admin Login" loading="lazy">
+                            <div class="image-overlay">
+                                <i class="fas fa-expand"></i>
+                            </div>
+                        </div>
+                        <div class="slider-item" data-index="13">
+                            <img src="assets/images/elements/images/Admin Dashboard - Request details.png" alt="Admin Dashboard Request Details" loading="lazy">
+                            <div class="image-overlay">
+                                <i class="fas fa-expand"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Image/Video Modal -->
+        <div class="image-modal" id="imageModal">
+            <div class="modal-overlay"></div>
+            <div class="modal-content">
+                <button class="modal-close" aria-label="Close modal">
+                    <i class="fas fa-times"></i>
+                </button>
+                <div class="modal-media">
+                    <img src="" alt="" id="modalImage">
+                    <video id="modalVideo" controls>
+                        <source src="" type="video/mp4">
+                        <source src="" type="video/quicktime">
+                    </video>
+                </div>
+                <div class="modal-info">
+                    <h3 id="modalTitle">Image Title</h3>
+                    <p id="modalDescription">Image description will appear here...</p>
+                </div>
+                <div class="modal-navigation">
+                    <button class="nav-btn prev-btn" aria-label="Previous image">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="nav-btn next-btn" aria-label="Next image">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Next Project -->
+        <section class="next-project">
+            <div class="container">
+                <div class="next-project-content" data-aos="fade-up">
+                    <h2>Back to Portfolio</h2>
+                    <h3>View All Case Studies</h3>
+                    <p>Explore more of my UX design work and case studies.</p>
+                    <a href="index.html#projects" class="btn-primary">
+                        <i class="fas fa-arrow-left"></i>
+                        <span>Back to Projects</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Navigation</h3>
+                    <ul>
+                        <li><a href="index.html#home">Home</a></li>
+                        <li><a href="index.html#projects">Projects</a></li>
+                        <li><a href="index.html#about">About</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Projects</h3>
+                    <ul>
+                        <li><a href="project1.html">Horizon Control</a></li>
+                        <li><a href="project2.html">AdFluence</a></li>
+                        <li><a href="project3.html">Form Builder</a></li>
+                        <li><a href="project4.html">Design System Request Form</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <div class="social-links">
+                        <a href="https://linkedin.com/in/melissacasole" target="_blank" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="https://dribbble.com/melissacasole" target="_blank" aria-label="Dribbble">
+                            <i class="fab fa-dribbble"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="assets/docs/melissa_casole_ux_resume.pdf" download>Resume</a></li>
+                        <li><a href="index.html#about">Skills</a></li>
+                        <li><a href="index.html#contact">Contact Info</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 Melissa Casole. All rights reserved. | Designed with ❤️ for user experience.</p>
+            </div>
+        </footer>
+    </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Floating Resume Button -->
+    <a href="assets/docs/melissa_casole_ux_resume.pdf" class="floating-resume-btn" download>
+        <i class="fas fa-download"></i>
+        <span>Resume</span>
+    </a>
+
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
+    <!-- Vercel Analytics -->
+    <script src="js/vercel-analytics.js"></script>
+    
+    <script src="js/libs-init.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
+
+
