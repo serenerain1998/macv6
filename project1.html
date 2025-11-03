@@ -31,6 +31,54 @@
     <link href="css/main.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
     <script async defer src="https://tools.luckyorange.com/core/lo.js?site-id=51b04e98"></script>
+    
+    <style>
+        /* Navbar Search Button Styles */
+        .navbar-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+        }
+        
+        .search-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius-full);
+            width: 40px;
+            height: 40px;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            text-decoration: none;
+        }
+        
+        .search-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+        
+        .search-btn:active {
+            transform: scale(0.95);
+        }
+        
+        @media (max-width: 768px) {
+            .navbar-actions {
+                gap: var(--space-2);
+            }
+            
+            .search-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 1rem;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -165,9 +213,14 @@
                     <li><a class="nav-link" href="index.html#contact">Contact</a></li>
                 </ul>
 
-            <button class="navbar-toggle" aria-label="Toggle navigation menu">
-                <i class="fas fa-bars"></i>
-            </button>
+                <div class="navbar-actions">
+                    <a href="search.html" class="search-btn" aria-label="Search Portfolio">
+                        <i class="fas fa-search"></i>
+                    </a>
+                    <button class="navbar-toggle" aria-label="Toggle navigation menu">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
         </div>
     </nav>
         <!-- Hero Section -->

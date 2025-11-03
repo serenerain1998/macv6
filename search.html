@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-58LS07X7LB"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-58LS07X7LB');
+    </script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Melissa Casole - Portfolio Search</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="assets/favicon/android-chrome-512x512.png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="css/themes.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <script async defer src="https://tools.luckyorange.com/core/lo.js?site-id=51b04e98"></script>
+    
+    <style>
+        /* Portfolio Search Specific Styles - Matching Site Styling */
+        .portfolio-search-page {
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+            padding-top: calc(var(--header-height) + var(--space-8));
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+        }
+        
+        .search-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px var(--space-6);
+            position: relative;
+            z-index: 10;
+        }
+        
+        .search-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .search-header h1 {
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: var(--font-weight-black);
+            margin-bottom: var(--space-4);
+            background: linear-gradient(135deg, #ffffff 0%, #6366f1 25%, #3b82f6 50%, #0ea5e9 75%, #10b981 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .search-header p {
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: var(--font-weight-medium);
+        }
+        
+        .search-box-wrapper {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-2xl);
+            padding: var(--space-8);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .search-input-group {
+            position: relative;
+            margin-bottom: var(--space-4);
+        }
+        
+        .search-icon-wrapper {
+            position: absolute;
+            left: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--color-primary-400);
+            font-size: 1.3rem;
+            z-index: 1;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 20px 60px 20px 70px;
+            font-size: 1.1rem;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-xl);
+            transition: all var(--transition-normal);
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            box-sizing: border-box;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--color-primary-500);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+            background: rgba(255, 255, 255, 0.08);
+        }
+        
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .clear-search-btn {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color var(--transition-normal);
+            z-index: 1;
+        }
+        
+        .clear-search-btn:hover {
+            color: white;
+        }
+        
+        .search-hints {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-3);
+            margin-top: var(--space-4);
+        }
+        
+        .search-hint-tag {
+            display: inline-flex;
+            align-items: center;
+            padding: var(--space-2) var(--space-4);
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: var(--radius-full);
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-medium);
+            color: var(--color-primary-300);
+            cursor: pointer;
+            transition: all var(--transition-normal);
+        }
+        
+        .search-hint-tag:hover {
+            background: var(--color-primary-500);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .search-hint-tag.tag-active {
+            background: var(--color-primary-500);
+            color: white;
+            border-color: var(--color-primary-400);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+        }
+        
+        .search-hint-tag {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tag-ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: scale(0);
+            animation: ripple 0.6s ease-out;
+            pointer-events: none;
+        }
+        
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+        
+        .search-results-container {
+            margin-top: var(--space-8);
+        }
+        
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-6);
+            padding-bottom: var(--space-4);
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .results-count {
+            font-size: var(--font-size-lg);
+            color: var(--color-primary-300);
+            font-weight: var(--font-weight-semibold);
+        }
+        
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: var(--space-6);
+        }
+        
+        .result-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            transition: all var(--transition-normal);
+            cursor: pointer;
+        }
+        
+        .result-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--color-primary-500), var(--color-secondary-500));
+            transform: scaleX(0);
+            transition: transform var(--transition-normal);
+            transform-origin: left;
+        }
+        
+        .result-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .result-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+            border-color: var(--color-primary-500);
+        }
+        
+        .result-card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .result-card-content {
+            padding: var(--space-6);
+        }
+        
+        .result-card h3 {
+            font-size: var(--font-size-2xl);
+            font-weight: var(--font-weight-bold);
+            margin-bottom: var(--space-3);
+            color: white;
+        }
+        
+        .result-card p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: var(--line-height-relaxed);
+            margin-bottom: var(--space-4);
+        }
+        
+        .result-card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-2);
+            margin-bottom: var(--space-4);
+        }
+        
+        .result-card-tag {
+            padding: var(--space-1) var(--space-3);
+            background: rgba(99, 102, 241, 0.2);
+            color: var(--color-primary-300);
+            border-radius: var(--radius-full);
+            font-size: var(--font-size-sm);
+            font-weight: var(--font-weight-medium);
+        }
+        
+        .result-card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            color: var(--color-primary-400);
+            font-weight: var(--font-weight-semibold);
+            text-decoration: none;
+            transition: all var(--transition-normal);
+        }
+        
+        .result-card-link:hover {
+            gap: var(--space-3);
+            color: var(--color-primary-300);
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .no-results i {
+            font-size: 4rem;
+            margin-bottom: var(--space-4);
+            opacity: 0.3;
+        }
+        
+        .no-results h3 {
+            font-size: var(--font-size-2xl);
+            margin-bottom: var(--space-2);
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .back-to-home {
+            text-align: center;
+            margin-bottom: var(--space-6);
+        }
+        
+        .back-to-home.top-center {
+            margin-top: 0;
+            margin-bottom: var(--space-8);
+        }
+        
+        .back-to-home a {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: var(--font-size-lg);
+            font-weight: var(--font-weight-medium);
+            transition: all var(--transition-normal);
+            padding: var(--space-2) var(--space-4);
+            border-radius: var(--radius-full);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .back-to-home a:hover {
+            gap: var(--space-3);
+            color: white;
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .search-container {
+                padding: 20px var(--space-4);
+            }
+            
+            .search-box-wrapper {
+                padding: var(--space-6);
+            }
+            
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Password Protection Modal -->
+    <div class="password-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="lock-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h1>Private Portfolio</h1>
+                <p>This portfolio contains confidential UX case studies and private client work. A password is required
+                    to view the content.</p>
+            </div>
+
+            <form class="password-form" method="post" onsubmit="return false;">
+                <div class="input-group">
+                    <input type="password" id="passwordInput" class="password-input" placeholder="Enter password"
+                        required>
+                    <button type="button" class="toggle-password" aria-label="Toggle password visibility">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+
+                <button type="button" class="submit-btn" id="submitPassword">
+                    Access Portfolio  <i class="fas fa-unlock me-2"></i>
+                </button>
+
+                <div class="error-message" id="passwordError">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    Incorrect password. Please try again.
+                </div>
+
+                <div class="request-password-section">
+                    <div class="divider">
+                        <span>or</span>
+                    </div>
+                    
+                    <button type="button" class="request-btn" id="requestPassword">
+                        <i class="fas fa-envelope me-2"></i>
+                        Request Access
+                    </button>
+                </div>
+            </form>
+
+            <div class="privacy-notice">
+                <p><i class="fas fa-shield-alt me-2"></i>Your privacy is important. This password is only used to
+                    protect sensitive portfolio content.</p>
+            </div>
+
+            <div class="alternative-access">
+                <div class="divider">
+                    <span>or</span>
+                </div>
+                
+                <a href="https://dribbble.com/melissacasole" class="dribbble-btn" target="_blank">
+                    <i class="fab fa-dribbble"></i>
+                    <span>View My Dribbble</span>
+                </a>
+                
+                <p class="alternative-text">Don't have the password? Check out my public work on Dribbble!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Request Password Modal -->
+    <div class="request-modal" id="requestModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="lock-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <h1>Request Portfolio Access</h1>
+                <p>Please provide your information to request access to the portfolio. You'll receive a temporary password via email.</p>
+            </div>
+
+            <form class="request-form" id="requestForm">
+                <div class="input-group">
+                    <label for="requestName">Full Name *</label>
+                    <input type="text" id="requestName" name="requestName" class="request-input" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="requestEmail">Email Address *</label>
+                    <input type="email" id="requestEmail" name="requestEmail" class="request-input" placeholder="Enter your email address" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="requestCompany">Company/Organization</label>
+                    <input type="text" id="requestCompany" name="requestCompany" class="request-input" placeholder="Enter your company name">
+                </div>
+
+                <div class="input-group">
+                    <label for="requestReason">Reason for Access *</label>
+                    <select id="requestReason" name="requestReason" class="request-input" required>
+                        <option value="">Select a reason</option>
+                        <option value="recruitment">Recruitment/Hiring</option>
+                        <option value="collaboration">Project Collaboration</option>
+                        <option value="partnership">Business Partnership</option>
+                        <option value="reference">Reference/Recommendation</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="input-group" id="otherReasonGroup" style="display: none;">
+                    <label for="otherReason">Please specify</label>
+                    <textarea id="otherReason" name="otherReason" class="request-input" placeholder="Please describe your reason for access"></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitRequest">
+                    <i class="fas fa-paper-plane me-2"></i>
+                    Send Request
+                </button>
+
+                <button type="button" class="cancel-btn" id="cancelRequest">
+                    Cancel
+                </button>
+            </form>
+
+            <div class="success-message" id="requestSuccess" style="display: none;">
+                <i class="fas fa-check-circle"></i>
+                <h3>Request Submitted!</h3>
+                <p>Thank you for your interest! I will send you a temporary password via email as soon as possible.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content (Hidden until password is entered) -->
+    <div id="mainContent">
+        <!-- Search Page -->
+        <div class="portfolio-search-page">
+            <!-- Aurora Effect -->
+            <div class="aurora">
+                <div class="aurora-layer"></div>
+                <div class="aurora-layer"></div>
+                <div class="aurora-layer"></div>
+                <div class="aurora-layer"></div>
+                <div class="aurora-layer"></div>
+                <div class="aurora-layer"></div>
+                <div class="aurora-layer"></div>
+                <div class="aurora-layer"></div>
+            </div>
+            
+            <div class="search-container">
+                <div class="back-to-home top-center">
+                    <a href="index.html">
+                        <i class="fas fa-arrow-left"></i>
+                        Back to Home
+                    </a>
+                </div>
+                
+                <div class="search-header">
+                    <h1>Portfolio Search</h1>
+                    <p>Discover my work by exploring skills, industries, and project types</p>
+                </div>
+                
+                <div class="search-box-wrapper">
+                    <div class="search-input-group">
+                        <div class="search-icon-wrapper">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <input type="text" id="portfolioSearch" class="search-input" 
+                               placeholder="Try: medical software, AI, cybersecurity, design process...">
+                        <button class="clear-search-btn" id="clearSearch" style="display: none;">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="search-hints">
+                        <span class="search-hint-tag" data-search="medical software">Medical Software</span>
+                        <span class="search-hint-tag" data-search="artificial intelligence">AI & Machine Learning</span>
+                        <span class="search-hint-tag" data-search="cybersecurity">Cybersecurity</span>
+                        <span class="search-hint-tag" data-search="form builder">Form Builder</span>
+                        <span class="search-hint-tag" data-search="prototyping">Prototyping</span>
+                        <span class="search-hint-tag" data-search="embedded systems">Embedded Systems</span>
+                    </div>
+                </div>
+                
+                <div class="search-results-container" id="searchResults" style="display: none;">
+                    <div class="results-header">
+                        <span class="results-count" id="resultsCount"></span>
+                    </div>
+                    <div class="results-grid" id="resultsGrid"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="js/libs-init.js"></script>
+    <script src="js/main.js"></script>
+    
+    <script>
+        // Portfolio search data
+        const portfolioData = [
+            {
+                title: "Horizon Control",
+                description: "Revolutionary arthroscopy software through embedded systems and authentic surgical prototyping. Company's first-ever Arduino integration with medical cameras.",
+                image: "assets/images/horizonControl/slider/8.jpg",
+                link: "project1.html",
+                keywords: "medical software arthroscopy hospital healthcare embedded systems arduino python hardware integration surgical cameras prototyping medical devices medical technology",
+                tags: ["Medical Software", "Embedded Systems", "Arduino", "Python"],
+                categories: "medical-software,embedded-systems"
+            },
+            {
+                title: "AdFluence",
+                description: "AI-powered media buying platform leveraging machine learning for dynamic ad delivery across retail, tourism, medical, and other verticals.",
+                image: "assets/images/adf/adf2.png",
+                link: "project2.html",
+                keywords: "artificial intelligence machine learning AI ML media buying advertising digital marketing retail tourism medical verticals algorithm front-end development javascript react dynamic ad delivery programmatic advertising",
+                tags: ["AI & Machine Learning", "Media Buying", "Front-End Development"],
+                categories: "ai-ml,media-buying"
+            },
+            {
+                title: "Form Builder",
+                description: "Custom form builder integrated into an existing cybersecurity platform with real user testing and feedback. Built with modern development tools.",
+                image: "assets/images/saviynt/Form Builder1.png",
+                link: "project3.html",
+                keywords: "cybersecurity security forms builder form builder user testing feedback web development custom forms enterprise security platform identity management access control user experience testing",
+                tags: ["Cybersecurity", "Form Builder", "AI & Machine Learning"],
+                categories: "cybersecurity,form-builder"
+            }
+        ];
+        
+        // Search functionality
+        $(document).ready(function() {
+            let searchTimeout;
+            const $searchInput = $('#portfolioSearch');
+            const $clearBtn = $('#clearSearch');
+            const $resultsContainer = $('#searchResults');
+            const $resultsGrid = $('#resultsGrid');
+            const $resultsCount = $('#resultsCount');
+            const $hintTags = $('.search-hint-tag');
+            
+            // Search input handler
+            $searchInput.on('input', function() {
+                const value = $(this).val();
+                
+                // Show/hide clear button
+                $clearBtn.toggle(value.length > 0);
+                
+                // Clear existing timeout
+                clearTimeout(searchTimeout);
+                
+                // Wait for user to stop typing
+                searchTimeout = setTimeout(() => {
+                    performSearch(value);
+                }, 300);
+            });
+            
+            // Clear search
+            $clearBtn.on('click', function() {
+                $searchInput.val('');
+                $(this).hide();
+                $resultsContainer.hide();
+                resetHintTags();
+            });
+            
+            // Hint tag click with micro-interactions
+            $hintTags.on('click', function(e) {
+                e.preventDefault();
+                const $clickedTag = $(this);
+                const searchTerm = $clickedTag.data('search');
+                
+                // Get click position relative to the tag
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                // Micro-interaction: Ripple effect
+                const ripple = $('<span class="tag-ripple"></span>');
+                ripple.css({
+                    width: '20px',
+                    height: '20px',
+                    left: x - 10 + 'px',
+                    top: y - 10 + 'px'
+                });
+                $clickedTag.append(ripple);
+                
+                // Animate the chip
+                gsap.to($clickedTag[0], {
+                    scale: 0.95,
+                    duration: 0.1,
+                    yoyo: true,
+                    repeat: 1,
+                    ease: "power2.out"
+                });
+                
+                // Pulse effect
+                gsap.to($clickedTag[0], {
+                    boxShadow: "0 0 20px rgba(99, 102, 241, 0.5)",
+                    duration: 0.3,
+                    yoyo: true,
+                    repeat: 1,
+                    ease: "power2.out"
+                });
+                
+                // Update all tags
+                resetHintTags();
+                $clickedTag.addClass('tag-active');
+                
+                // Update search
+                $searchInput.val(searchTerm).focus();
+                $clearBtn.show();
+                
+                // Show results with delay for better UX
+                setTimeout(() => {
+                    performSearch(searchTerm);
+                }, 200);
+                
+                // Remove ripple after animation
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+            
+            // Reset all hint tags to inactive state
+            function resetHintTags() {
+                $hintTags.removeClass('tag-active');
+            }
+            
+            // Perform search
+            function performSearch(query) {
+                if (!query || query.trim() === '') {
+                    $resultsContainer.hide();
+                    return;
+                }
+                
+                query = query.toLowerCase().trim();
+                const queryWords = query.split(' ').filter(w => w.length > 0);
+                
+                const results = portfolioData.filter(project => {
+                    // Search in title, description, keywords, and tags
+                    const searchText = `${project.title} ${project.description} ${project.keywords} ${project.tags.join(' ')}`.toLowerCase();
+                    
+                    // Check if all query words are present
+                    return queryWords.every(word => searchText.includes(word));
+                });
+                
+                // If no results, try to find partial matches or suggest alternatives
+                if (results.length === 0) {
+                    // Try partial word matching
+                    const partialResults = portfolioData.filter(project => {
+                        const searchText = `${project.title} ${project.description} ${project.keywords} ${project.tags.join(' ')}`.toLowerCase();
+                        return queryWords.some(word => searchText.includes(word));
+                    });
+                    
+                    if (partialResults.length > 0) {
+                        displayResults(partialResults, true);
+                    } else {
+                        displaySuggestions();
+                    }
+                } else {
+                    displayResults(results, false);
+                }
+            }
+            
+            // Display suggestions when no results found
+            function displaySuggestions() {
+                const suggestions = [
+                    { query: "medical software", label: "Medical Software" },
+                    { query: "artificial intelligence", label: "AI & Machine Learning" },
+                    { query: "cybersecurity", label: "Cybersecurity" },
+                    { query: "prototyping", label: "Prototyping" }
+                ];
+                
+                $resultsGrid.html(`
+                    <div class="no-results">
+                        <i class="fas fa-lightbulb"></i>
+                        <h3>No exact matches found</h3>
+                        <p>Try searching for:</p>
+                        <div class="suggestions" style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; margin-top: 20px;">
+                            ${suggestions.map(s => `
+                                <button class="suggestion-chip" data-search="${s.query}" style="
+                                    padding: 12px 24px;
+                                    background: rgba(99, 102, 241, 0.1);
+                                    border: 2px solid rgba(99, 102, 241, 0.3);
+                                    border-radius: 25px;
+                                    color: #818cf8;
+                                    font-weight: 600;
+                                    cursor: pointer;
+                                    transition: all 0.3s ease;
+                                    font-size: 1rem;
+                                ">
+                                    ${s.label}
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                `);
+                
+                $resultsCount.html('<span style="color: #f59e0b;">0 results found</span>');
+                $resultsContainer.fadeIn();
+                
+                // Add click handler to suggestions
+                $('.suggestion-chip').on('click', function() {
+                    const query = $(this).data('search');
+                    $searchInput.val(query).focus();
+                    $clearBtn.show();
+                    performSearch(query);
+                    resetHintTags();
+                    $hintTags.filter((i, el) => $(el).data('search') === query).addClass('tag-active');
+                });
+            }
+            
+            // Display results
+            function displayResults(results, isPartial) {
+                const resultCards = results.map((project, index) => `
+                    <div class="result-card" style="animation: fadeInUp 0.5s ease-out ${index * 0.1}s both;">
+                        <img src="${project.image}" alt="${project.title}" class="result-card-image">
+                        <div class="result-card-content">
+                            <h3>${project.title}</h3>
+                            <p>${project.description}</p>
+                            <div class="result-card-tags">
+                                ${project.tags.map(tag => `<span class="result-card-tag">${tag}</span>`).join('')}
+                            </div>
+                            <a href="${project.link}" class="result-card-link">
+                                View Case Study
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                `).join('');
+                
+                $resultsGrid.html(resultCards);
+                
+                const resultText = isPartial 
+                    ? `<span style="color: #fbbf24;">${results.length} related ${results.length === 1 ? 'result' : 'results'} found</span>`
+                    : `${results.length} ${results.length === 1 ? 'result' : 'results'} found`;
+                
+                $resultsCount.html(resultText);
+                $resultsContainer.fadeIn();
+            }
+        });
+    </script>
+</body>
+
+</html>
+

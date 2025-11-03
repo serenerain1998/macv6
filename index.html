@@ -26,10 +26,362 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.3.1/css/hover-min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="css/themes.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
     <script async defer src="https://tools.luckyorange.com/core/lo.js?site-id=51b04e98"></script>
+    
+    <style>
+        /* Navbar Search Button Styles */
+        .navbar-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+        }
+        
+        .search-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius-full);
+            width: 40px;
+            height: 40px;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            text-decoration: none;
+        }
+        
+        .search-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+        
+        .search-btn:active {
+            transform: scale(0.95);
+        }
+        
+        @media (max-width: 768px) {
+            .navbar-actions {
+                gap: var(--space-2);
+            }
+            
+            .search-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 1rem;
+            }
+        }
+        
+        /* About Section - New Layout */
+        .about-intro-layout {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .about-image-wrapper-top {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+        
+        .image-frame {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            aspect-ratio: 1;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 30px;
+            box-shadow: 0 30px 60px rgba(102, 126, 234, 0.3),
+                        0 0 100px rgba(118, 75, 162, 0.2);
+            transform: rotate(-3deg);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+        
+        .image-frame:hover {
+            transform: rotate(0deg) scale(1.02);
+            box-shadow: 0 40px 80px rgba(102, 126, 234, 0.4),
+                        0 0 120px rgba(118, 75, 162, 0.3);
+        }
+        
+        .frame-decoration {
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 30%,
+                rgba(255, 255, 255, 0.1) 50%,
+                transparent 70%
+            );
+            animation: shimmer 3s ease-in-out infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .melissa-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 20px;
+            position: relative;
+            z-index: 1;
+            filter: brightness(1.05) contrast(1.05);
+            transition: filter 0.4s ease;
+        }
+        
+        .image-frame:hover .melissa-photo {
+            filter: brightness(1.1) contrast(1.1);
+        }
+        
+        .image-shine {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            z-index: 2;
+            transition: left 0.6s ease;
+            pointer-events: none;
+        }
+        
+        .image-frame:hover .image-shine {
+            left: 100%;
+        }
+        
+        .about-image-wrapper-top::before,
+        .about-image-wrapper-top::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            opacity: 0.2;
+            filter: blur(40px);
+            z-index: 0;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .about-image-wrapper-top::before {
+            top: -50px;
+            right: -50px;
+            animation-delay: 0s;
+        }
+        
+        .about-image-wrapper-top::after {
+            bottom: -50px;
+            left: -50px;
+            animation-delay: 3s;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+            }
+            50% {
+                transform: translateY(-20px) translateX(20px);
+            }
+        }
+        
+        .about-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .about-header h3 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: signature-glow 3s ease-in-out infinite;
+            transform: rotate(-1deg);
+            transition: all 0.3s ease;
+        }
+        
+        .about-header h3:hover {
+            transform: rotate(0deg) scale(1.05);
+        }
+        
+        @keyframes signature-glow {
+            0%, 100% {
+                filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.5));
+            }
+            50% {
+                filter: drop-shadow(0 0 20px rgba(102, 126, 234, 0.8));
+            }
+        }
+        
+        .about-copy {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+        }
+        
+        .copy-block {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-left: 4px solid rgba(102, 126, 234, 0.5);
+            border-radius: 12px;
+            padding: 25px 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .copy-block::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.5), transparent);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .copy-block:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(102, 126, 234, 0.3);
+            border-left-color: rgba(102, 126, 234, 0.8);
+            transform: translateX(5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.1);
+        }
+        
+        .copy-block:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .copy-block.highlight-block {
+            border-left-color: rgba(102, 126, 234, 1);
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.08), rgba(118, 75, 162, 0.08));
+        }
+        
+        .copy-block.highlight-block:hover {
+            border-color: rgba(102, 126, 234, 0.5);
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.12), rgba(118, 75, 162, 0.12));
+        }
+        
+        .copy-block .intro-text {
+            margin: 0;
+            line-height: 1.8;
+            text-align: center;
+        }
+        
+        .copy-icon {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(102, 126, 234, 0.2);
+            border-radius: 50%;
+            margin-bottom: 15px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .copy-icon i {
+            font-size: 1.5rem;
+            color: var(--color-primary-400);
+            transition: all 0.3s ease;
+        }
+        
+        .copy-block:hover .copy-icon {
+            background: rgba(102, 126, 234, 0.3);
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        .copy-block:hover .copy-icon i {
+            color: var(--color-primary-300);
+        }
+        
+        .copy-block.highlight-block .copy-icon {
+            background: rgba(102, 126, 234, 0.3);
+        }
+        
+        .copy-block.highlight-block .copy-icon i {
+            color: rgba(102, 126, 234, 0.9);
+        }
+        
+        .copy-block.highlight-block:hover .copy-icon {
+            background: rgba(102, 126, 234, 0.4);
+            transform: scale(1.15) rotate(-5deg);
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .about-intro-layout {
+                gap: 30px;
+            }
+            
+            .image-frame {
+                max-width: 350px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .about-intro-layout {
+                gap: 20px;
+            }
+            
+            .image-frame {
+                max-width: 100%;
+                padding: 15px;
+            }
+            
+            .copy-block {
+                padding: 20px 25px;
+            }
+            
+            .about-header h3 {
+                font-size: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .about-header h3 {
+                font-size: 2rem;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -177,9 +529,14 @@
                     <li><a class="nav-link" href="#contact">Contact</a></li>
                 </ul>
 
-                <button class="navbar-toggle" aria-label="Toggle navigation menu">
-                    <i class="fas fa-bars"></i>
-                </button>
+                <div class="navbar-actions">
+                    <a href="search.html" class="search-btn" aria-label="Search Portfolio">
+                        <i class="fas fa-search"></i>
+                    </a>
+                    <button class="navbar-toggle" aria-label="Toggle navigation menu">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
             </div>
         </nav>
 
@@ -239,14 +596,62 @@
 
                 <div class="about-content">
                     <div class="about-main" data-aos="fade-up" data-aos-delay="100">
-                        <div class="about-intro">
-                            <div class="intro-badge">
-                                <i class="fas fa-star"></i>
-                                <span>20+ Years Experience</span>
+                        <div class="about-intro-layout">
+                            <!-- Image at top -->
+                            <div class="about-image-wrapper-top">
+                                <div class="image-frame">
+                                    <div class="frame-decoration"></div>
+                                    <img src="assets/images/mewithcoffee.jpg" alt="Melissa Casole" class="melissa-photo">
+                                    <div class="image-shine"></div>
+                                </div>
                             </div>
-                            <h3>I'm Melissa Casole</h3>
-                            <p class="intro-text">I'm a UX/UI designer with over 20 years of experience creating user-centered digital solutions. My approach combines deep user research, thoughtful design, and rigorous testing to deliver experiences that are both beautiful and functional.</p>
-                            <p class="intro-text">I specialize in complex systems, accessibility, and creating inclusive designs that work for everyone. My work spans e-commerce, fintech, healthcare, and enterprise applications.</p>
+                            
+                            <!-- Name with badge -->
+                            <div class="about-header">
+                                <div class="intro-badge">
+                                    <i class="fas fa-star"></i>
+                                    <span>20+ Years Experience</span>
+                                </div>
+                                <h3>I'm Melissa</h3>
+                            </div>
+                            
+                            <!-- Copy with decorative border -->
+                            <div class="about-copy">
+                                <div class="copy-block">
+                                    <div class="copy-icon">
+                                        <i class="fas fa-lightbulb"></i>
+                                    </div>
+                                    <p class="intro-text">I'm a UX/UI designer with over 20 years of experience creating user-centered digital solutions. I tend to thrive where design, technology, and strategy meet. I am passionate about learning and teaching something new every day — you'll never hear me say "I can't".</p>
+                                </div>
+                                
+                                <div class="copy-block">
+                                    <div class="copy-icon">
+                                        <i class="fas fa-rocket"></i>
+                                    </div>
+                                    <p class="intro-text">I'm passionate about building full blown UIs with sturdy UX bones and developing POCs that speak to the true intention of the design. I have led design systems from the ground up, guided engineering teams, and partnered with PMs and customers to create products that ship at scale.</p>
+                                </div>
+                                
+                                <div class="copy-block highlight-block">
+                                    <div class="copy-icon">
+                                        <i class="fas fa-cocktail"></i>
+                                    </div>
+                                    <p class="intro-text"><strong>My secret sauce</strong> is creating the perfect cocktail of cognitive psych and design which translates to products that pull on the natural instincts of users.</p>
+                                </div>
+                                
+                                <div class="copy-block">
+                                    <div class="copy-icon">
+                                        <i class="fas fa-code"></i>
+                                    </div>
+                                    <p class="intro-text">You'll often find me designing and building functional prototypes, building and scaling design systems, and working with engineering teams to bring designs to life. Whether it's a design system, a complex enterprise workflow, or a customer-facing app, my focus stays the same: <em>make it simple, make it usable, and make it impactful.</em></p>
+                                </div>
+                                
+                                <div class="copy-block">
+                                    <div class="copy-icon">
+                                        <i class="fas fa-universal-access"></i>
+                                    </div>
+                                    <p class="intro-text">I specialize in complex systems, accessibility, and creating inclusive designs that work for everyone. My work spans risk and compliance, healthcare and medical device technology, cybersecurity, logistics and supply chain, e-commerce, fintech, AI tooling, and enterprise applications.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -391,7 +796,7 @@
             </div>
 
             <div class="projects-grid">
-                <div class="project-card" data-aos="fade-up" data-aos-delay="100" data-categories="medical-software,embedded-systems">
+                <div class="project-card" data-aos="fade-up" data-aos-delay="100" data-categories="medical-software,embedded-systems" data-keywords="medical software arthroscopy hospital healthcare embedded systems arduino python hardware integration surgical cameras prototyping medical devices medical technology">
                     <div class="project-image">
                         <img src="assets/images/horizonControl/slider/8.jpg"
                             alt="Arthroscopy Embedded Medical Software">
@@ -413,7 +818,7 @@
                     </div>
                 </div>
 
-                <div class="project-card" data-aos="fade-up" data-aos-delay="200" data-categories="ai-ml,media-buying">
+                <div class="project-card" data-aos="fade-up" data-aos-delay="200" data-categories="ai-ml,media-buying" data-keywords="artificial intelligence machine learning AI ML media buying advertising digital marketing retail tourism medical verticals algorithm front-end development javascript react dynamic ad delivery programmatic advertising">
                     <div class="project-image">
                         <img src="assets/images/adf/adf2.png"
                             alt="Dynamic Media Buying Platform">
@@ -435,7 +840,7 @@
                     </div>
                 </div>
 
-                <div class="project-card" data-aos="fade-up" data-aos-delay="300" data-categories="cybersecurity,form-builder">
+                <div class="project-card" data-aos="fade-up" data-aos-delay="300" data-categories="cybersecurity,form-builder" data-keywords="cybersecurity security forms builder form builder user testing feedback web development custom forms enterprise security platform identity management access control user experience testing">
                     <div class="project-image">
                         <img src="assets/images/saviynt/Form Builder1.png"
                             alt="Form Builder - Cybersecurity">
