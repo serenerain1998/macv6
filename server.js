@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 3000;
 // Middleware
 app.use(cors());
 app.use(express.json());
-app.use(express.static('.'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Simple storage using environment variables (works with Vercel)
 let pendingRequests = {};
@@ -830,9 +830,10 @@ app.post('/api/tts', async (req, res) => {
   }
 });
 
-// Serve the main page
+// Serve the main page (only used for local dev — on Vercel the static
+// public/index.html is served directly by the platform).
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // Only start a real listener when invoked directly (local dev / `node server.js`).

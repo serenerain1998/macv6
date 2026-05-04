@@ -71,11 +71,27 @@ data/
 !assets/images/saviynt/form_proto.mov
 !assets/images/saviynt/savi_final_comp.mp4
 !assets/images/saviynt/form-builder.mp4
+!public/assets/images/saviynt/form1.mov
+!public/assets/images/saviynt/form2.mov
+!public/assets/images/saviynt/form3.mov
+!public/assets/images/saviynt/form4.mov
+!public/assets/images/saviynt/form_proto.mov
+!public/assets/images/saviynt/savi_final_comp.mp4
+!public/assets/images/saviynt/form-builder.mp4
+
+# Allow case-study videos that were already tracked in old assets/ paths
+!public/assets/images/adf/*.mp4
+!public/assets/images/adf/*.mov
+!public/assets/images/horizonControl/video/*.mp4
+!public/assets/images/horizonControl/video/*.mov
 
 # Ambient Clinical Assistant walkthrough videos (project5 case study)
 !videos/
 !videos/*.mov
 !videos/*.mp4
+!public/videos/
+!public/videos/*.mov
+!public/videos/*.mp4
 
 # Large image files
 *.psd
