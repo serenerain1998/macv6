@@ -2459,10 +2459,36 @@
   }
 
   // ===== EXPORTS =====
-  
+
+  // Re-bind element-level handlers after SPA navigation swaps #mainContent.
+  // We intentionally skip one-time setup (password auth, document/window
+  // listeners that would double-bind, perf optimizations) — only re-run the
+  // init functions whose handlers/observers attach to elements that just got
+  // replaced.
+  function spaReInit() {
+    try {
+      cacheElements();
+      if (!state.isAuthenticated) return;
+      initProjectFilters();
+      initSmoothScrolling();
+      initIntersectionObserver();
+      initTooltipLabels();
+      initImageSlider();
+      initVideoAutoplay();
+      initMosaicWall();
+      initGalleryModal();
+      initSTARProgressIndicator();
+      animateCounters();
+      animateSkillProgress();
+    } catch (err) {
+      console.warn('[main] spaReInit error:', err);
+    }
+  }
+
   // Make functions available globally if needed
   window.MainApp = {
     init,
+    spaReInit,
     state,
     filterProjects,
     updateActiveNavigation,

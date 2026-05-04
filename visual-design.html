@@ -29,7 +29,6 @@
     <link href="css/themes.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
-    <script async defer src="https://tools.luckyorange.com/core/lo.js?site-id=51b04e98"></script>
     
     <style>
         /* Navbar Search Button Styles */
@@ -78,6 +77,7 @@
             }
         }
     </style>
+    <link href="css/melissa-ai.css?v=8" rel="stylesheet">
 </head>
 
 <body>
@@ -244,7 +244,7 @@
             </div>
 
             <!-- Category Filters -->
-            <div class="visual-filters" data-aos="fade-up" data-aos-delay="100">
+            <div class="visual-filters">
                 <button class="filter-btn active" data-filter="all">All Work</button>
                 <button class="filter-btn" data-filter="medical">Medical</button>
                 <button class="filter-btn" data-filter="travel">Travel</button>
@@ -583,7 +583,6 @@
                 <p>&copy; 2025 Melissa Casole. All rights reserved. | Designed with ❤️ for user experience.</p>
             </div>
         </footer>
-    </div>
 
     <!-- Visual Design Modal -->
     <div class="visual-modal" id="visualModal">
@@ -629,8 +628,9 @@
     
     <!-- Visual Design Specific Scripts -->
     <script>
-        // Visual Design Mosaic Animations
-        document.addEventListener('DOMContentLoaded', function() {
+        // Visual Design Mosaic Animations — runs on initial load AND after SPA nav re-execute.
+        (function() {
+        function init() {
             // Initialize GSAP animations for mosaic items
             gsap.registerPlugin(ScrollTrigger);
             
@@ -937,19 +937,32 @@
                 }
             });
 
-            // Floating animation for filter buttons
-            gsap.to('.visual-filters', {
-                y: -20,
-                duration: 2,
-                ease: "power2.inOut",
-                yoyo: true,
-                repeat: -1
-            });
-        });
+            // Filter buttons enter with a stagger, then settle into place. This
+            // runs once on mount; the mosaic items continue to animate via the
+            // ScrollTrigger above as the user scrolls into view.
+            gsap.fromTo('.visual-filters .filter-btn',
+                { opacity: 0, y: 30, scale: 0.92 },
+                {
+                    opacity: 1,
+                    y: 0,
+                    scale: 1,
+                    duration: 0.6,
+                    ease: 'power2.out',
+                    stagger: 0.08,
+                    clearProps: 'transform',
+                }
+            );
+        }
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+        else init();
+        })();
     </script>
-    
+    </div>
+
     <!-- Vercel Analytics -->
     <script src="js/vercel-analytics.js"></script>
+    <script src="js/spa-nav.js?v=6" defer></script>
+    <script src="js/melissa-ai.js?v=8" defer></script>
 </body>
 
 </html>

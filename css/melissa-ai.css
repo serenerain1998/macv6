@@ -1,0 +1,350 @@
+/* =====================================================================
+   Melissa AI — conversational portfolio widget
+   ===================================================================== */
+
+.mai-root {
+  --mai-bg: #0f172a;
+  --mai-panel: #111827;
+  --mai-panel-2: #1e293b;
+  --mai-border: rgba(255, 255, 255, 0.08);
+  --mai-text: #f1f5f9;
+  --mai-text-muted: #94a3b8;
+  --mai-accent: #3b82f6;
+  --mai-accent-2: #8b5cf6;
+  --mai-accent-grad: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  --mai-radius: 16px;
+  --mai-radius-sm: 10px;
+  --mai-shadow: 0 18px 48px rgba(0, 0, 0, 0.45);
+  position: fixed;
+  inset: auto 0 0 auto;
+  z-index: 2147483000; /* sit above modals but below browser UI */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif;
+  color: var(--mai-text);
+  pointer-events: none;
+}
+
+.mai-root * { box-sizing: border-box; }
+.mai-root > * { pointer-events: auto; }
+
+/* ----- Floating launcher button ------------------------------------ */
+
+.mai-launcher {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  width: 64px;
+  height: 64px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  background: var(--mai-accent-grad);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 12px 32px rgba(59, 130, 246, 0.45), 0 0 0 0 rgba(139, 92, 246, 0.5);
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  animation: mai-pulse 3s ease-in-out infinite;
+}
+
+.mai-launcher:hover { transform: translateY(-2px) scale(1.05); }
+.mai-launcher:active { transform: translateY(0) scale(0.98); }
+
+.mai-launcher svg { width: 28px; height: 28px; }
+
+@keyframes mai-pulse {
+  0%, 100% { box-shadow: 0 12px 32px rgba(59, 130, 246, 0.45), 0 0 0 0 rgba(139, 92, 246, 0.4); }
+  50%      { box-shadow: 0 12px 32px rgba(59, 130, 246, 0.55), 0 0 0 12px rgba(139, 92, 246, 0); }
+}
+
+.mai-launcher.mai-hidden { opacity: 0; pointer-events: none; transform: scale(0.6); }
+
+/* ----- Greeting bubble (5s tease) ---------------------------------- */
+
+.mai-greeting {
+  position: fixed;
+  right: 100px;
+  bottom: 36px;
+  max-width: 260px;
+  padding: 12px 16px 12px 14px;
+  background: #fff;
+  color: #0f172a;
+  border-radius: 14px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+  font-size: 14px;
+  line-height: 1.45;
+  opacity: 0;
+  transform: translateY(8px) scale(0.96);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  pointer-events: none;
+}
+
+.mai-greeting.mai-show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.mai-greeting::after {
+  content: "";
+  position: absolute;
+  right: -6px;
+  bottom: 18px;
+  width: 12px;
+  height: 12px;
+  background: #fff;
+  transform: rotate(45deg);
+  box-shadow: 2px -2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.mai-greeting-close {
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  padding: 4px;
+}
+.mai-greeting-close:hover { color: #0f172a; }
+
+/* ----- Chat panel -------------------------------------------------- */
+
+.mai-panel {
+  position: fixed;
+  right: 24px;
+  bottom: 100px;
+  width: 380px;
+  max-width: calc(100vw - 32px);
+  height: 580px;
+  max-height: calc(100vh - 120px);
+  background: var(--mai-panel);
+  border-radius: var(--mai-radius);
+  border: 1px solid var(--mai-border);
+  box-shadow: var(--mai-shadow);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(20px) scale(0.96);
+  transform-origin: bottom right;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  pointer-events: none;
+}
+
+.mai-panel.mai-open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+/* Header */
+.mai-header {
+  padding: 16px 18px;
+  background: var(--mai-accent-grad);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mai-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-family: "Dancing Script", "Brush Script MT", cursive;
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: -0.5px;
+}
+
+.mai-header-text { flex: 1; min-width: 0; }
+.mai-header-name { font-weight: 600; font-size: 15px; line-height: 1.2; }
+.mai-header-role { font-size: 12px; opacity: 0.85; line-height: 1.2; margin-top: 2px; }
+
+.mai-header-actions { display: flex; gap: 4px; }
+
+.mai-iconbtn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.12);
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease;
+}
+.mai-iconbtn:hover { background: rgba(255, 255, 255, 0.22); }
+.mai-iconbtn svg { width: 16px; height: 16px; }
+.mai-iconbtn.mai-off { opacity: 0.5; }
+
+/* Messages */
+.mai-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--mai-panel);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+}
+.mai-messages::-webkit-scrollbar { width: 6px; }
+.mai-messages::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 999px; }
+
+.mai-msg {
+  max-width: 82%;
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-size: 14px;
+  line-height: 1.5;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+.mai-msg.mai-from-bot {
+  align-self: flex-start;
+  background: var(--mai-panel-2);
+  color: var(--mai-text);
+  border-bottom-left-radius: 4px;
+}
+
+.mai-msg.mai-from-user {
+  align-self: flex-end;
+  background: var(--mai-accent-grad);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+
+.mai-typing {
+  align-self: flex-start;
+  background: var(--mai-panel-2);
+  color: var(--mai-text-muted);
+  border-radius: 14px;
+  border-bottom-left-radius: 4px;
+  padding: 12px 14px;
+  display: inline-flex;
+  gap: 4px;
+}
+.mai-typing span {
+  width: 6px; height: 6px; border-radius: 999px; background: currentColor;
+  animation: mai-bounce 1.2s ease-in-out infinite;
+}
+.mai-typing span:nth-child(2) { animation-delay: 0.15s; }
+.mai-typing span:nth-child(3) { animation-delay: 0.3s; }
+@keyframes mai-bounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30%           { transform: translateY(-4px); opacity: 1; }
+}
+
+/* Input row */
+.mai-input-row {
+  border-top: 1px solid var(--mai-border);
+  padding: 10px;
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  background: var(--mai-panel);
+}
+
+.mai-textarea {
+  flex: 1;
+  background: var(--mai-panel-2);
+  border: 1px solid var(--mai-border);
+  color: var(--mai-text);
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.4;
+  padding: 10px 12px;
+  border-radius: var(--mai-radius-sm);
+  resize: none;
+  max-height: 120px;
+  overflow-y: auto;
+  scrollbar-width: none;
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+.mai-textarea::-webkit-scrollbar { width: 0; height: 0; display: none; }
+.mai-textarea:focus { border-color: var(--mai-accent); }
+.mai-textarea::placeholder { color: var(--mai-text-muted); }
+
+.mai-send, .mai-mic {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+.mai-send {
+  background: var(--mai-accent-grad);
+  color: #fff;
+}
+.mai-send:disabled { opacity: 0.45; cursor: default; }
+.mai-send:not(:disabled):hover { transform: scale(1.05); }
+.mai-send svg { width: 18px; height: 18px; }
+
+.mai-mic {
+  background: var(--mai-panel-2);
+  color: var(--mai-text);
+  border: 1px solid var(--mai-border);
+}
+.mai-mic:hover { background: #2c3a52; }
+.mai-mic.mai-listening {
+  background: #ef4444;
+  color: #fff;
+  border-color: #ef4444;
+  animation: mai-mic-pulse 1.2s ease-in-out infinite;
+}
+.mai-mic svg { width: 18px; height: 18px; }
+.mai-mic.mai-disabled { opacity: 0.35; cursor: default; }
+@keyframes mai-mic-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.5); }
+  50%      { box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
+}
+
+/* Footer note */
+.mai-footnote {
+  font-size: 11px;
+  color: var(--mai-text-muted);
+  text-align: center;
+  padding: 6px 12px 10px;
+  background: var(--mai-panel);
+}
+
+/* Mobile */
+@media (max-width: 520px) {
+  .mai-panel {
+    right: 12px;
+    left: 12px;
+    bottom: 92px;
+    width: auto;
+    height: calc(100vh - 120px);
+  }
+  .mai-launcher { right: 16px; bottom: 16px; }
+  .mai-greeting { right: 88px; max-width: calc(100vw - 110px); }
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  .mai-launcher,
+  .mai-mic.mai-listening { animation: none; }
+  .mai-panel,
+  .mai-greeting { transition: opacity 0.15s ease; }
+}

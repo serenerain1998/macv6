@@ -72,6 +72,11 @@ data/
 !assets/images/saviynt/savi_final_comp.mp4
 !assets/images/saviynt/form-builder.mp4
 
+# Ambient Clinical Assistant walkthrough videos (project5 case study)
+!videos/
+!videos/*.mov
+!videos/*.mp4
+
 # Large image files
 *.psd
 *.ai

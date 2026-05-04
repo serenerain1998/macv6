@@ -1,0 +1,1428 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-58LS07X7LB"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-58LS07X7LB');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ambient Clinical Assistant - AI Interaction Concept | Melissa Casole</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="assets/favicon/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="assets/favicon/android-chrome-512x512.png">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.3.1/css/hover-min.css" rel="stylesheet">
+    <link href="css/themes.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+
+    <style>
+        /* Navbar Search Button Styles */
+        .navbar-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+        }
+
+        .search-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius-full);
+            width: 40px;
+            height: 40px;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            text-decoration: none;
+        }
+
+        .search-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        .search-btn:active {
+            transform: scale(0.95);
+        }
+
+        @media (max-width: 768px) {
+            .navbar-actions {
+                gap: var(--space-2);
+            }
+
+            .search-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 1rem;
+            }
+        }
+
+        /* Feature Showcase Styling — copied from project4 to keep aesthetic consistent */
+        .feature-showcase {
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .feature-showcase .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .feature-showcase .section-header {
+            margin-bottom: 40px;
+        }
+
+        .feature-showcase .section-header h2 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .feature-showcase .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 2px;
+        }
+
+        .feature-showcase .section-header p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.2rem;
+            margin-top: 20px;
+        }
+
+        .feature-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            margin-top: 60px;
+            position: relative;
+        }
+
+        .feature-content.reverse {
+            direction: rtl;
+        }
+
+        .feature-content.reverse > * {
+            direction: ltr;
+        }
+
+        .feature-text {
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            position: relative;
+            z-index: 2;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .feature-text:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(99, 102, 241, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-text h3 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .feature-text h3::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 2px;
+        }
+
+        .feature-text p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.8;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-text ul {
+            list-style: none;
+            padding: 0;
+            margin: 1.5rem 0;
+        }
+
+        .feature-text ul li {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.8;
+            padding-left: 30px;
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .feature-text ul li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .feature-text ul li strong {
+            color: #a7b4ff;
+            font-weight: 600;
+        }
+
+        .feature-visual {
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-visual .image-container {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .feature-visual .image-container img,
+        .feature-visual .image-container video {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 12px;
+            background: #000;
+        }
+
+        @media (max-width: 968px) {
+            .feature-content,
+            .feature-content.reverse {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            .feature-content.reverse {
+                direction: ltr;
+            }
+        }
+
+        /* Video walkthrough — text on top, full-width video below for max
+           recruiter visibility. Overrides the default 2-col feature-content. */
+        .video-walkthrough .feature-content,
+        .video-walkthrough .feature-content.reverse {
+            display: flex;
+            flex-direction: column;
+            direction: ltr;
+            gap: 32px;
+            margin-top: 60px;
+        }
+        .video-walkthrough .feature-text {
+            order: 1;
+            max-width: 900px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        .video-walkthrough .feature-visual {
+            order: 2;
+            width: 100%;
+        }
+        .video-walkthrough .feature-visual .image-container {
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 0;
+            background: #000;
+        }
+        .video-walkthrough .feature-visual .image-container video {
+            width: 100%;
+            height: auto;
+            border-radius: 16px;
+        }
+
+        /* Tech section: centered header, two equal glass cards side by side,
+           descriptions stacked below — symmetric and visually balanced. */
+        .technical-implementation .section-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 60px;
+        }
+        .technical-implementation .section-header h2 {
+            display: inline-block;
+        }
+        .technical-implementation .section-header h2::after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* === Tech section: full-viewport-width, two stacked horizontal cards ===
+           Hammer max-width and width with !important across every level so the
+           global .container (max-width: 1000px in styles.css) and main.css's
+           .tech-content grid (1fr 2fr) can't claw it back. */
+        section.technical-implementation > .container {
+            max-width: 100% !important;
+            width: 100% !important;
+            padding: 0 32px !important;
+            margin: 0 !important;
+        }
+        @media (max-width: 768px) {
+            section.technical-implementation > .container {
+                padding: 0 16px !important;
+            }
+        }
+
+        section.technical-implementation .tech-content.tech-content--stacked {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 64px !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            grid-template-columns: none !important;
+        }
+
+        section.technical-implementation .tech-stacks-row {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 32px !important;
+            width: 100% !important;
+        }
+
+        /* Each card stretches the full row */
+        section.technical-implementation .tech-stacks-row .tech-overview {
+            width: 100% !important;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 40px;
+            backdrop-filter: blur(20px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex !important;
+            flex-direction: column !important;
+        }
+        section.technical-implementation .tech-stacks-row .tech-overview:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(99, 102, 241, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        section.technical-implementation .tech-stacks-row .tech-overview h3 {
+            color: white;
+            font-size: 1.5rem;
+            margin: 0 0 28px 0 !important;
+            display: flex !important;
+            align-items: center;
+            gap: 14px;
+        }
+        section.technical-implementation .tech-stacks-row .tech-overview h3::before {
+            content: '';
+            width: 4px;
+            height: 26px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+
+        /* Items inside each card lay out horizontally — single row that wraps */
+        section.technical-implementation .tech-stacks-row .tech-overview .tech-stack {
+            display: grid !important;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important;
+            gap: 16px !important;
+            width: 100% !important;
+        }
+
+        /* Detail cards row beneath — same full-width treatment */
+        section.technical-implementation .tech-content--stacked .tech-details {
+            display: grid !important;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+            gap: 24px !important;
+            width: 100% !important;
+        }
+
+        @media (max-width: 768px) {
+            .tech-stacks-row {
+                grid-template-columns: 1fr;
+            }
+            .tech-stacks-row .tech-overview {
+                padding: 28px;
+            }
+        }
+    </style>
+    <link href="css/melissa-ai.css?v=8" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Password Protection Modal -->
+    <div class="password-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="lock-icon">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h1>Private Portfolio</h1>
+                <p>This portfolio contains confidential UX case studies and private client work. A password is required
+                    to view the content.</p>
+            </div>
+
+            <form class="password-form" method="post" onsubmit="return false;">
+                <div class="input-group">
+                    <input type="password" id="passwordInput" class="password-input" placeholder="Enter password"
+                        required>
+                    <button type="button" class="toggle-password" aria-label="Toggle password visibility">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+
+                <button type="button" class="submit-btn" id="submitPassword">
+                    Access Portfolio  <i class="fas fa-unlock me-2"></i>
+                </button>
+
+                <div class="error-message" id="passwordError">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    Incorrect password. Please try again.
+                </div>
+
+                <div class="request-password-section">
+                    <div class="divider">
+                        <span>or</span>
+                    </div>
+
+                    <button type="button" class="request-btn" id="requestPassword">
+                        <i class="fas fa-envelope me-2"></i>
+                        Request Access
+                    </button>
+                </div>
+            </form>
+
+            <div class="privacy-notice">
+                <p><i class="fas fa-shield-alt me-2"></i>Your privacy is important. This password is only used to
+                    protect sensitive portfolio content.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Request Password Modal -->
+    <div class="request-modal" id="requestModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="lock-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <h1>Request Portfolio Access</h1>
+                <p>Please provide your information to request access to the portfolio. You'll receive a temporary password via email.</p>
+            </div>
+
+            <form class="request-form" id="requestForm">
+                <div class="input-group">
+                    <label for="requestName">Full Name *</label>
+                    <input type="text" id="requestName" name="requestName" class="request-input" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="requestEmail">Email Address *</label>
+                    <input type="email" id="requestEmail" name="requestEmail" class="request-input" placeholder="Enter your email address" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="requestCompany">Company/Organization</label>
+                    <input type="text" id="requestCompany" name="requestCompany" class="request-input" placeholder="Enter your company name">
+                </div>
+
+                <div class="input-group">
+                    <label for="requestReason">Reason for Access *</label>
+                    <select id="requestReason" name="requestReason" class="request-input" required>
+                        <option value="">Select a reason</option>
+                        <option value="recruitment">Recruitment/Hiring</option>
+                        <option value="collaboration">Project Collaboration</option>
+                        <option value="partnership">Business Partnership</option>
+                        <option value="reference">Reference/Recommendation</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <div class="input-group" id="otherReasonGroup" style="display: none;">
+                    <label for="otherReason">Please specify</label>
+                    <textarea id="otherReason" name="otherReason" class="request-input" placeholder="Please describe your reason for access"></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitRequest">
+                    <i class="fas fa-paper-plane me-2"></i>
+                    Send Request
+                </button>
+
+                <button type="button" class="cancel-btn" id="cancelRequest">
+                    Cancel
+                </button>
+            </form>
+
+            <div class="success-message" id="requestSuccess" style="display: none;">
+                <i class="fas fa-check-circle"></i>
+                <h3>Request Submitted!</h3>
+                <p>Thank you for your interest! I will send you a temporary password via email as soon as possible.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content (Hidden until password is entered) -->
+    <div id="mainContent">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="navbar-container">
+                <a class="navbar-brand" href="index.html">
+                    <img src="assets/images/mac_designs_logo_white.png" alt="MAC Designs Logo" class="logo-image">
+                </a>
+
+                <ul class="navbar-nav">
+                    <li><a class="nav-link" href="index.html#home">Home</a></li>
+                    <li><a class="nav-link" href="index.html#about">About</a></li>
+                    <li><a class="nav-link" href="index.html#projects">Projects</a></li>
+                    <li><a class="nav-link" href="methodology.html">Methodology</a></li>
+                    <li><a class="nav-link" href="visual-design.html">Visual Design</a></li>
+                    <li><a class="nav-link" href="index.html#contact">Contact</a></li>
+                </ul>
+
+                <div class="navbar-actions">
+                    <a href="search.html" class="search-btn" aria-label="Search Portfolio">
+                        <i class="fas fa-search"></i>
+                    </a>
+                    <button class="navbar-toggle" aria-label="Toggle navigation menu">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- STAR Progress Indicator -->
+        <div class="star-progress-indicator">
+            <div class="star-progress-steps">
+                <div class="star-step" data-step="situation">
+                    <div class="star-step-circle">S</div>
+                    <div class="star-step-label">Situation</div>
+                </div>
+                <div class="star-step" data-step="task">
+                    <div class="star-step-circle">T</div>
+                    <div class="star-step-label">Task</div>
+                </div>
+                <div class="star-step" data-step="action">
+                    <div class="star-step-circle">A</div>
+                    <div class="star-step-label">Action</div>
+                </div>
+                <div class="star-step" data-step="result">
+                    <div class="star-step-circle">R</div>
+                    <div class="star-step-label">Result</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hero Section -->
+        <section class="case-study-hero">
+            <div class="hero-background">
+                <div class="aurora">
+                    <div class="aurora-layer"></div>
+                    <div class="aurora-layer"></div>
+                    <div class="aurora-layer"></div>
+                    <div class="aurora-layer"></div>
+                </div>
+            </div>
+
+            <div class="hero-content">
+                <div class="project-meta" data-aos="fade-up">
+                    <span class="project-category">AI Interaction Concept</span>
+                    <span class="project-duration">Concept Exploration</span>
+                    <span class="project-role">UX Designer</span>
+                </div>
+
+                <h1 class="hero-title" data-aos="fade-up" data-aos-delay="100">
+                    <span class="gradient-text">Ambient Clinical Assistant</span>
+                </h1>
+
+                <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="200">
+                    A voice-driven, ambient AI interface designed to support clinicians in high-pressure environments without getting in their way
+                </p>
+
+                <div class="hero-stats" data-aos="fade-up" data-aos-delay="300">
+                    <div class="stat-item">
+                        <span class="stat-number">Voice</span>
+                        <span class="stat-label">Primary Modality</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">1000+</span>
+                        <span class="stat-label">Voice Interactions</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">Multi</span>
+                        <span class="stat-label">Role-Aware</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- At a Glance Section -->
+        <section class="container">
+            <div class="at-a-glance" data-aos="fade-up">
+                <h3 class="at-a-glance-title">
+                    <i class="fas fa-info-circle"></i>
+                    At a Glance
+                </h3>
+                <div class="at-a-glance-grid">
+                    <div class="at-a-glance-item" data-aos="fade-up" data-aos-delay="100">
+                        <div class="at-a-glance-label">Role</div>
+                        <div class="at-a-glance-value">
+                            <i class="fas fa-user"></i>
+                            UX Designer
+                        </div>
+                    </div>
+                    <div class="at-a-glance-item" data-aos="fade-up" data-aos-delay="200">
+                        <div class="at-a-glance-label">Type</div>
+                        <div class="at-a-glance-value">
+                            <i class="fas fa-flask"></i>
+                            Concept Exploration
+                        </div>
+                    </div>
+                    <div class="at-a-glance-item" data-aos="fade-up" data-aos-delay="300">
+                        <div class="at-a-glance-label">Domain</div>
+                        <div class="at-a-glance-value">
+                            <i class="fas fa-heartbeat"></i>
+                            High-stakes Clinical
+                        </div>
+                    </div>
+                    <div class="at-a-glance-item" data-aos="fade-up" data-aos-delay="400">
+                        <div class="at-a-glance-label">Modality</div>
+                        <div class="at-a-glance-value">
+                            <i class="fas fa-microphone"></i>
+                            Voice + Ambient AI
+                        </div>
+                    </div>
+                    <div class="at-a-glance-item impact-highlight" data-aos="fade-up" data-aos-delay="500">
+                        <div class="at-a-glance-label">Core Idea</div>
+                        <div class="at-a-glance-value">
+                            <i class="fas fa-eye-slash"></i>
+                            Attention-First Design
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SITUATION: The Problem -->
+        <section class="executive-summary" data-star="situation">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <div class="star-section-header">
+                        <span class="star-badge situation">
+                            <i class="fas fa-map-marked-alt"></i>
+                            Situation
+                        </span>
+                    </div>
+                    <h2>The Problem</h2>
+                    <p>Clinical environments aren't short on technology. They're short on attention.</p>
+                </div>
+
+                <div class="summary-content">
+                    <div class="summary-text" data-aos="fade-up" data-aos-delay="100">
+                        <p class="lead">
+                            Multiple roles, overlapping workflows, dozens of disconnected systems. Every screen demands a hand. Every alert demands a glance. Cognitive load is the real bottleneck — not data, not capability.
+                        </p>
+
+                        <p>
+                            Switching between tools mid-care is dangerous. Looking down at a tablet during a critical moment is dangerous. The interface itself becomes a source of risk. The work happens with hands and eyes elsewhere, but most software is still built for screens you stop and stare at.
+                        </p>
+
+                        <div class="key-highlights">
+                            <div class="highlight-item">
+                                <i class="fas fa-layer-group"></i>
+                                <h4>Fragmented Tools</h4>
+                                <p>Disconnected systems force constant context switching</p>
+                            </div>
+                            <div class="highlight-item">
+                                <i class="fas fa-brain"></i>
+                                <h4>Cognitive Overload</h4>
+                                <p>Attention is the bottleneck, not information</p>
+                            </div>
+                            <div class="highlight-item">
+                                <i class="fas fa-hand-paper"></i>
+                                <h4>Hands Already Busy</h4>
+                                <p>Touch interfaces compete with the actual work</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="summary-visual" data-aos="fade-left" data-aos-delay="200">
+                        <div class="image-container">
+                            <img src="https://placehold.co/600x500/0a0a0a/667eea?text=Clinical+Workflow" alt="Concept illustration: clinical workflow">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TASK: The Opportunity -->
+        <section class="task-section" data-star="task">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <div class="star-section-header">
+                        <span class="star-badge task">
+                            <i class="fas fa-bullseye"></i>
+                            Task
+                        </span>
+                    </div>
+                    <h2>The Opportunity</h2>
+                    <p>Voice and ambient interaction collapse the gap between intent and action — done right, the environment itself becomes responsive</p>
+                </div>
+
+                <div class="success-criteria" data-aos="fade-up" data-aos-delay="100">
+                    <h3 class="success-criteria-title">Design Goals</h3>
+                    <div class="criteria-grid">
+                        <div class="criteria-item" data-aos="fade-up" data-aos-delay="100">
+                            <div class="criteria-icon">
+                                <i class="fas fa-feather"></i>
+                            </div>
+                            <div class="criteria-label">Reduce Cognitive Load</div>
+                            <div class="criteria-value">Take routine surrounding workflow off the clinician's mental stack</div>
+                        </div>
+                        <div class="criteria-item" data-aos="fade-up" data-aos-delay="200">
+                            <div class="criteria-icon">
+                                <i class="fas fa-users-cog"></i>
+                            </div>
+                            <div class="criteria-label">Support Multiple Roles</div>
+                            <div class="criteria-value">Recognize who's speaking and what they need from the same moment</div>
+                        </div>
+                        <div class="criteria-item" data-aos="fade-up" data-aos-delay="300">
+                            <div class="criteria-icon">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <div class="criteria-label">Surface in Real Time</div>
+                            <div class="criteria-value">Bring the right information forward at the moment it's relevant</div>
+                        </div>
+                        <div class="criteria-item" data-aos="fade-up" data-aos-delay="400">
+                            <div class="criteria-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="criteria-label">Earn Trust</div>
+                            <div class="criteria-value">Stay quiet until the system has something genuinely useful to say</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="key-challenges" data-aos="fade-up" data-aos-delay="200" style="margin-top: 3rem;">
+                    <h3>Where Current Systems Fall Short</h3>
+                    <div class="criteria-grid">
+                        <div class="criteria-item" data-aos="fade-up" data-aos-delay="100">
+                            <div class="criteria-icon">
+                                <i class="fas fa-window-restore"></i>
+                            </div>
+                            <div class="criteria-label">Screen-First Thinking</div>
+                            <div class="criteria-value">Clinical software is still designed for stationary attention, not active care</div>
+                        </div>
+                        <div class="criteria-item" data-aos="fade-up" data-aos-delay="200">
+                            <div class="criteria-icon">
+                                <i class="fas fa-volume-up"></i>
+                            </div>
+                            <div class="criteria-label">Noisy by Default</div>
+                            <div class="criteria-value">Alerts compete for attention without earning it, breeding alarm fatigue</div>
+                        </div>
+                        <div class="criteria-item" data-aos="fade-up" data-aos-delay="300">
+                            <div class="criteria-icon">
+                                <i class="fas fa-user-times"></i>
+                            </div>
+                            <div class="criteria-label">Role-Blind</div>
+                            <div class="criteria-value">Same interface for every user, regardless of what they're doing or why</div>
+                        </div>
+                        <div class="criteria-item" data-aos="fade-up" data-aos-delay="400">
+                            <div class="criteria-icon">
+                                <i class="fas fa-comment-dots"></i>
+                            </div>
+                            <div class="criteria-label">Command-Driven Voice</div>
+                            <div class="criteria-value">Existing voice tools require rigid commands, not conversational intent</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ACTION: My Approach -->
+        <section class="ux-process" data-star="action">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <div class="star-section-header">
+                        <span class="star-badge action">
+                            <i class="fas fa-rocket"></i>
+                            Action
+                        </span>
+                    </div>
+                    <h2>My Approach</h2>
+                    <p>I started with workflows, not screens — designing around the people involved and the moments that matter</p>
+                </div>
+
+                <div class="process-timeline">
+                    <div class="timeline-item" data-aos="fade-up" data-aos-delay="100">
+                        <div class="timeline-marker">
+                            <i class="fas fa-route"></i>
+                        </div>
+                        <div class="timeline-content">
+                            <h3>Step 1: Map Where Attention Breaks</h3>
+                            <p>Before designing anything, I mapped the moments where attention shifts away from the patient — handoffs, verifications, retrieval, documentation. These are the seams in the workflow where friction accumulates and where an ambient layer could quietly absorb the load.</p>
+                            <ul>
+                                <li>Identified attention-break points across a typical care workflow</li>
+                                <li>Categorized moments by cognitive cost and frequency</li>
+                                <li>Looked for tasks that didn't require hands or eyes</li>
+                                <li>Marked which moments belonged to which role</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item" data-aos="fade-up" data-aos-delay="200">
+                        <div class="timeline-marker">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="timeline-content">
+                            <h3>Step 2: Design Around Roles, Not Data</h3>
+                            <p>Different roles need different things from the same moment. The system has to know whose voice it's hearing and what stage of the workflow they're in. I modeled the same interaction from multiple perspectives — what's useful to one role is noise to another.</p>
+                            <ul>
+                                <li>Defined role-specific signal vs. noise for each workflow stage</li>
+                                <li>Mapped when a role wants confirmation vs. quiet acknowledgment</li>
+                                <li>Designed shared moments where multiple roles overhear the same response</li>
+                                <li>Built voice-recognition into the interaction model from the start</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item" data-aos="fade-up" data-aos-delay="300">
+                        <div class="timeline-marker">
+                            <i class="fas fa-comment-dots"></i>
+                        </div>
+                        <div class="timeline-content">
+                            <h3>Step 3: Model the Interaction Patterns</h3>
+                            <p>I didn't model commands. I modeled patterns. When the system stays silent. When it speaks. When it surfaces something visually. When it gets out of the way entirely. This is where the design lives — in the rhythm and timing, not the words.</p>
+                            <ul>
+                                <li>Defined four response modes: silent, audible, visual, and deferred</li>
+                                <li>Built decision rules for which mode fits which moment</li>
+                                <li>Designed for graceful failure — when in doubt, the system stays quiet</li>
+                                <li>Specified short-form responses by default (one sentence or none)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item" data-aos="fade-up" data-aos-delay="400">
+                        <div class="timeline-marker">
+                            <i class="fas fa-flask"></i>
+                        </div>
+                        <div class="timeline-content">
+                            <h3>Step 4: Prototype Behavior, Not Screens</h3>
+                            <p>You can't validate ambient design by reviewing mockups. I prototyped the actual behavior — voice scripts, timed scenarios, role-based interaction flows. The point wasn't how it looked. It was how it felt in the room.</p>
+                            <ul>
+                                <li>Wrote conversational scripts for high-friction moments</li>
+                                <li>Walked through timed scenarios with multiple speakers</li>
+                                <li>Tested when silence was the better answer</li>
+                                <li>Iterated on response length, tone, and timing</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature Section: Design Principles -->
+        <section class="feature-showcase">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <h2>Design Principles</h2>
+                    <p>Five rules that shaped every decision — when to speak, when to listen, and when to disappear</p>
+                </div>
+
+                <div class="feature-content">
+                    <div class="feature-text" data-aos="fade-up" data-aos-delay="100">
+                        <h3>Restraint as a Feature</h3>
+                        <p>Every principle pulls in the same direction: the system earns attention by not demanding it. These aren't aspirations — they're decision criteria.</p>
+                        <ul>
+                            <li><strong>Passive until needed.</strong> Listening, not interrupting.</li>
+                            <li><strong>Context-aware.</strong> Knows the role, the workflow, the moment.</li>
+                            <li><strong>Minimal responses.</strong> Says only what's useful. Never more.</li>
+                            <li><strong>Non-intrusive.</strong> No alert that doesn't earn its place.</li>
+                            <li><strong>Trust-driven.</strong> The clinician stays in control. Always.</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-visual" data-aos="fade-left" data-aos-delay="200">
+                        <div class="image-container">
+                            <img src="https://placehold.co/600x500/0a0a0a/764ba2?text=Design+Principles" alt="Concept illustration: design principles">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature Section: Interaction Model -->
+        <section class="feature-showcase">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <h2>Interaction Model</h2>
+                    <p>Voice-first, workflow-aware, and visually quiet — the model coordinates input, response, and silence</p>
+                </div>
+
+                <div class="feature-content reverse">
+                    <div class="feature-visual" data-aos="fade-right" data-aos-delay="100">
+                        <div class="image-container">
+                            <img src="https://placehold.co/600x500/0a0a0a/667eea?text=Interaction+Model" alt="Concept illustration: voice + visual interaction model">
+                        </div>
+                    </div>
+
+                    <div class="feature-text" data-aos="fade-up" data-aos-delay="200">
+                        <h3>Voice First, Visual Second</h3>
+                        <p>Voice is the primary input — short phrases, natural language, no clumsy wake words to fumble in a critical moment. Responses are short. Often one sentence. Sometimes none at all.</p>
+                        <ul>
+                            <li><strong>Natural activation.</strong> Recognizes intent without rigid command syntax.</li>
+                            <li><strong>Workflow-aware behavior.</strong> Reads the stage, knows when a question is rhetorical.</li>
+                            <li><strong>Coordinated UI.</strong> Visual updates appear on peripheral displays only when they add value.</li>
+                            <li><strong>Silence as a response.</strong> When nothing useful can be said, the system says nothing.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature Section: AI as Interface Controller -->
+        <section class="feature-showcase">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <h2>AI as Interface Controller</h2>
+                    <p>The assistant doesn't just talk — it acts. Voice or text commands can drive the UI itself.</p>
+                </div>
+
+                <div class="feature-content">
+                    <div class="feature-text" data-aos="fade-up" data-aos-delay="100">
+                        <h3>Conversation Becomes Action</h3>
+                        <p>Most AI assistants are bolted on top of an interface — they answer questions but can't reach into the UI. This system can. A spoken phrase or typed prompt isn't just a query; it's a command the system can execute against the live interface.</p>
+                        <ul>
+                            <li><strong>Voice and text parity.</strong> Same intent surface — say it or type it, the system responds the same way.</li>
+                            <li><strong>UI-aware actions.</strong> Open a panel, surface a record, filter a list, switch context — all triggered by natural language.</li>
+                            <li><strong>Contextual continuity.</strong> The assistant tracks workflow state, so commands like "show me the last one" or "go back" resolve correctly without restating context.</li>
+                            <li><strong>No menus to learn.</strong> Anything reachable through clicks is reachable through conversation. The interface stops being a maze.</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-visual" data-aos="fade-left" data-aos-delay="200">
+                        <div class="image-container">
+                            <img src="https://placehold.co/600x500/0a0a0a/667eea?text=AI+Drives+the+UI" alt="Concept illustration: AI controlling the interface via voice or text command">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature Section: Prototyping -->
+        <section class="feature-showcase">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <h2>Prototyping</h2>
+                    <p>You can't validate ambient design by reviewing mockups — you have to hear it</p>
+                </div>
+
+                <div class="feature-content">
+                    <div class="feature-text" data-aos="fade-up" data-aos-delay="100">
+                        <h3>Behavior Over Pixels</h3>
+                        <p>Static screens couldn't tell this story. I prototyped the actual behavior — the timing, the silence, the moments the system speaks and the moments it doesn't.</p>
+                        <ul>
+                            <li><strong>Voice scripts.</strong> Written exchanges for high-friction moments, tuned for length and tone.</li>
+                            <li><strong>Scenario walkthroughs.</strong> Timed dialogues with multiple roles in a single space.</li>
+                            <li><strong>Interaction flows.</strong> Branching maps of when the system speaks, surfaces, or stays quiet.</li>
+                            <li><strong>Felt experience.</strong> The point wasn't how it looks. It was how it feels in the room.</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-visual" data-aos="fade-left" data-aos-delay="200">
+                        <div class="image-container">
+                            <img src="https://placehold.co/600x500/0a0a0a/764ba2?text=Prototyping+Behavior" alt="Concept illustration: prototyping voice behavior">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- See It In Action: Video Walkthrough -->
+        <section class="feature-showcase video-walkthrough">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <h2>See It In Action</h2>
+                    <p>Six short clips, each one a real interaction — from waking the assistant to controlling consoles by voice</p>
+                </div>
+
+                <!-- 1. Intro -->
+                <div class="feature-content">
+                    <div class="feature-text" data-aos="fade-up" data-aos-delay="100">
+                        <h3>Wake &amp; Greet</h3>
+                        <p>The assistant lives in a sleep state until I speak to it. The first interaction matters — I greet it, and it greets me back by name.</p>
+                        <ul>
+                            <li><strong>Sleep to awake.</strong> A natural greeting wakes the system; no button press, no wake word.</li>
+                            <li><strong>Personal recognition.</strong> The assistant knows who's in the room and responds accordingly.</li>
+                            <li><strong>Tone-setting.</strong> Being known immediately changes how the rest of the conversation feels.</li>
+                        </ul>
+                    </div>
+                    <div class="feature-visual" data-aos="fade-left" data-aos-delay="200">
+                        <div class="image-container">
+                            <video controls autoplay muted loop playsinline preload="metadata" poster="videos/intro-poster.jpg">
+                                <source src="videos/intro.mp4" type="video/mp4">
+                                <source src="videos/intro.mov" type="video/quicktime">
+                                Your browser doesn't support this video format.
+                            </video>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Case Count -->
+                <div class="feature-content reverse">
+                    <div class="feature-visual" data-aos="fade-right" data-aos-delay="100">
+                        <div class="image-container">
+                            <video controls autoplay muted loop playsinline preload="metadata" poster="videos/caseCount-poster.jpg">
+                                <source src="videos/caseCount.mp4" type="video/mp4">
+                                <source src="videos/caseCount.mov" type="video/quicktime">
+                                Your browser doesn't support this video format.
+                            </video>
+                        </div>
+                    </div>
+                    <div class="feature-text" data-aos="fade-up" data-aos-delay="200">
+                        <h3>Case Count for the Day</h3>
+                        <p>I ask how many cases I have today. The assistant pulls from my schedule, recognizes the role, and answers immediately — no menu, no app switch.</p>
+                        <ul>
+                            <li><strong>Schedule-aware.</strong> The system has my day already loaded and contextual.</li>
+                            <li><strong>Personalized.</strong> Knows whose schedule it's referencing without me specifying.</li>
+                            <li><strong>Single-step answer.</strong> One question, one response — no drilling through views.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 3. Check Off Counts -->
+                <div class="feature-content">
+                    <div class="feature-text" data-aos="fade-up" data-aos-delay="100">
+                        <h3>Hands-Free UI Updates</h3>
+                        <p>In a sterile environment, every touch is a tradeoff. I voice-prompt the assistant to update the case counts, and it modifies the UI on my behalf — no gloves coming off, no second device, no break in workflow.</p>
+                        <ul>
+                            <li><strong>Voice as a hand replacement.</strong> Exactly when touch isn't an option.</li>
+                            <li><strong>UI updates from natural language.</strong> The system reaches into the interface and acts.</li>
+                            <li><strong>Sterile-field-safe.</strong> No need to step away from the case to log something.</li>
+                        </ul>
+                    </div>
+                    <div class="feature-visual" data-aos="fade-left" data-aos-delay="200">
+                        <div class="image-container">
+                            <video controls autoplay muted loop playsinline preload="metadata" poster="videos/checkOffCounts-poster.jpg">
+                                <source src="videos/checkOffCounts.mp4" type="video/mp4">
+                                <source src="videos/checkOffCounts.mov" type="video/quicktime">
+                                Your browser doesn't support this video format.
+                            </video>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Prep Cards -->
+                <div class="feature-content reverse">
+                    <div class="feature-visual" data-aos="fade-right" data-aos-delay="100">
+                        <div class="image-container">
+                            <video controls autoplay muted loop playsinline preload="metadata" poster="videos/prefCards-poster.jpg">
+                                <source src="videos/prefCards.mp4" type="video/mp4">
+                                <source src="videos/prefCards.mov" type="video/quicktime">
+                                Your browser doesn't support this video format.
+                            </video>
+                        </div>
+                    </div>
+                    <div class="feature-text" data-aos="fade-up" data-aos-delay="200">
+                        <h3>Surgeon Preference Cards on Demand</h3>
+                        <p>The scrub tech needs to know exactly how this surgeon prefers their tools laid out. I ask for the prep cards for the procedure, and the assistant pulls them up in a lightbox — zoomable and navigable entirely by voice.</p>
+                        <ul>
+                            <li><strong>Procedure-specific.</strong> The right cards for the right surgeon, surfaced by name.</li>
+                            <li><strong>Voice-controlled lightbox.</strong> Zoom in, zoom out, next image — all spoken.</li>
+                            <li><strong>Reference without contact.</strong> Sterility preserved; no surface touched.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 5. Schedule -->
+                <div class="feature-content">
+                    <div class="feature-text" data-aos="fade-up" data-aos-delay="100">
+                        <h3>The Schedule, Conversationally</h3>
+                        <p>I ask the assistant to show me the schedule. From there it's a conversation — filter by surgeon, open a specific day, ask what cases a provider has, all by voice. The interface bends to questions instead of the other way around.</p>
+                        <ul>
+                            <li><strong>Voice-driven filtering.</strong> Narrow down by surgeon, date, or procedure type without clicking.</li>
+                            <li><strong>Drill into a day.</strong> Open the details for any date and walk through what's scheduled.</li>
+                            <li><strong>Conversational follow-ups.</strong> "What does Dr. X have tomorrow?" works as a natural next question.</li>
+                        </ul>
+                    </div>
+                    <div class="feature-visual" data-aos="fade-left" data-aos-delay="200">
+                        <div class="image-container">
+                            <video controls autoplay muted loop playsinline preload="metadata" poster="videos/schedule-poster.jpg">
+                                <source src="videos/schedule.mp4" type="video/mp4">
+                                <source src="videos/schedule.mov" type="video/quicktime">
+                                Your browser doesn't support this video format.
+                            </video>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. Consoles -->
+                <div class="feature-content reverse">
+                    <div class="feature-visual" data-aos="fade-right" data-aos-delay="100">
+                        <div class="image-container">
+                            <video controls autoplay muted loop playsinline preload="metadata" poster="videos/consoles-poster.jpg">
+                                <source src="videos/consoles.mp4" type="video/mp4">
+                                <source src="videos/consoles.mov" type="video/quicktime">
+                                Your browser doesn't support this video format.
+                            </video>
+                        </div>
+                    </div>
+                    <div class="feature-text" data-aos="fade-up" data-aos-delay="200">
+                        <h3>Console Telemetry &amp; 3D Inspection</h3>
+                        <p>Fluid system, shaver, camera system, RF — every console has its own stats and state. The assistant gives me the rundown on demand. There's also an interactive 3D model rendered with three.js that rotates a full 360° for inspection.</p>
+                        <ul>
+                            <li><strong>Live stats by voice.</strong> Fluid, shaver, camera, RF — pulled in real time.</li>
+                            <li><strong>Per-console drilldown.</strong> Ask about one system, get the metrics that matter for it.</li>
+                            <li><strong>Interactive 3D model.</strong> Built with three.js — orbit and inspect the equipment from any angle.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- The Tech Behind the Concept -->
+        <section class="technical-implementation">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <h2>The Tech Behind the Concept</h2>
+                    <p>The stack that made the prototype feel real — conversational AI, real-time voice, and a browser as the runtime</p>
+                </div>
+
+                <div class="tech-content tech-content--stacked" data-aos="fade-up" data-aos-delay="200">
+                    <div class="tech-stacks-row">
+                        <div class="tech-overview" data-aos="fade-up" data-aos-delay="100">
+                            <h3>The Project Toolkit</h3>
+                            <div class="tech-stack">
+                                <div class="tech-item">
+                                    <i class="fas fa-brain"></i>
+                                    <span>Anthropic Claude</span>
+                                </div>
+                                <div class="tech-item">
+                                    <i class="fas fa-bolt"></i>
+                                    <span>Claude Haiku 4.5</span>
+                                </div>
+                                <div class="tech-item">
+                                    <i class="fas fa-robot"></i>
+                                    <span>OpenAI API</span>
+                                </div>
+                                <div class="tech-item">
+                                    <i class="fas fa-wave-square"></i>
+                                    <span>ElevenLabs</span>
+                                </div>
+                                <div class="tech-item">
+                                    <i class="fas fa-microphone-alt"></i>
+                                    <span>Web Speech API</span>
+                                </div>
+                                <div class="tech-item">
+                                    <i class="fas fa-volume-up"></i>
+                                    <span>Streaming TTS</span>
+                                </div>
+                                <div class="tech-item">
+                                    <i class="fab fa-figma"></i>
+                                    <span>Figma Make</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tech-overview" data-aos="fade-up" data-aos-delay="200">
+                            <h3>AI in My Daily Workflow</h3>
+                            <div class="tech-stack">
+                                <div class="tech-item">
+                                    <i class="fas fa-code"></i>
+                                    <span>Cursor</span>
+                                </div>
+                                <div class="tech-item">
+                                    <i class="fas fa-terminal"></i>
+                                    <span>Claude Code (CLI)</span>
+                                </div>
+                                <div class="tech-item">
+                                    <i class="fas fa-brain"></i>
+                                    <span>Anthropic Claude</span>
+                                </div>
+                                <div class="tech-item">
+                                    <i class="fab fa-figma"></i>
+                                    <span>Figma Make</span>
+                                </div>
+                                <div class="tech-item">
+                                    <i class="fas fa-wave-square"></i>
+                                    <span>ElevenLabs</span>
+                                </div>
+                                <div class="tech-item">
+                                    <i class="fas fa-comments"></i>
+                                    <span>ChatGPT</span>
+                                </div>
+                                <div class="tech-item">
+                                    <i class="fas fa-volume-up"></i>
+                                    <span>TTS APIs</span>
+                                </div>
+                                <div class="tech-item">
+                                    <i class="fas fa-microphone-alt"></i>
+                                    <span>Web Speech</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tech-details" data-aos="fade-up" data-aos-delay="300">
+                        <div class="tech-detail-item">
+                            <h4>Anthropic Claude — The Conversational Brain</h4>
+                            <p>Claude handles the natural language layer — interpreting intent, holding context across the workflow, and responding in short, human phrasing rather than rigid command output. Haiku 4.5 specifically gave me sub-second response generation, which is what makes a voice exchange feel like a conversation instead of a query.</p>
+                        </div>
+
+                        <div class="tech-detail-item">
+                            <h4>OpenAI API — A Second Brain for Comparison</h4>
+                            <p>I tested the same workflows against OpenAI to compare tone, latency, and instruction-following. Different models have different conversational personalities — finding the right fit for a clinical context meant evaluating both.</p>
+                        </div>
+
+                        <div class="tech-detail-item">
+                            <h4>ElevenLabs — Naturalistic Voice Output</h4>
+                            <p>The eleven_v3 model produces speech with the kind of pacing and emotional shading that mid-tier TTS can't match. For an ambient assistant, where the voice is the whole interface, this was non-negotiable. Streamed audio arrives as bytes, played progressively in the browser instead of waiting for the full file.</p>
+                        </div>
+
+                        <div class="tech-detail-item">
+                            <h4>Web Speech API — Native, No Wake Word</h4>
+                            <p>Voice input runs directly through the browser's speech recognition — no native app, no wake word, no setup. Pressing the mic starts listening; the system handles the rest. It's the fastest way to a working ambient prototype without getting stuck in platform-specific tooling.</p>
+                        </div>
+
+                        <div class="tech-detail-item">
+                            <h4>Streaming Architecture — Speak While Generating</h4>
+                            <p>The chat response streams from Claude word-by-word. As soon as a complete sentence is ready, it's dispatched to TTS — which itself streams audio bytes as they're synthesized. The next sentence pre-buffers while the current one plays. End-to-end perceived latency from "speak" to "hear" lands in the 1–1.5s range, which is the threshold for conversational comfort.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RESULT: Outcome -->
+        <section class="result-section" data-star="result">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <div class="star-section-header">
+                        <span class="star-badge result">
+                            <i class="fas fa-trophy"></i>
+                            Result
+                        </span>
+                    </div>
+                    <h2>Outcome</h2>
+                    <p>A different model for software in high-stakes settings — one where the interface fades and the workflow stays in focus</p>
+                </div>
+
+                <div class="achievements-grid">
+                    <div class="achievement-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="achievement-icon">
+                            <i class="fas fa-eye-slash"></i>
+                        </div>
+                        <h3>Attention-First Design</h3>
+                        <p>Demonstrates that the best interface is sometimes the one you barely notice. The system absorbs surrounding workflow so the clinician's attention stays where it belongs — on the patient and the work in front of them.</p>
+                        <div class="achievement-metric">
+                            <span class="metric-number">Quiet</span>
+                            <span class="metric-label">By Default</span>
+                        </div>
+                    </div>
+
+                    <div class="achievement-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="achievement-icon">
+                            <i class="fas fa-users-cog"></i>
+                        </div>
+                        <h3>Role-Aware Voice</h3>
+                        <p>Shows what role-aware voice can do beyond simple commands. The same moment delivers different signal to different people, and the system adapts without anyone configuring it.</p>
+                        <div class="achievement-metric">
+                            <span class="metric-number">Multi-Role</span>
+                            <span class="metric-label">Adaptive</span>
+                        </div>
+                    </div>
+
+                    <div class="achievement-card" data-aos="fade-up" data-aos-delay="300">
+                        <div class="achievement-icon">
+                            <i class="fas fa-cube"></i>
+                        </div>
+                        <h3>Ambient as a Pattern</h3>
+                        <p>Reframes AI in clinical software away from chatbots layered on dashboards and toward systems that understand context, respect attention, and earn trust through restraint.</p>
+                        <div class="achievement-metric">
+                            <span class="metric-number">Context</span>
+                            <span class="metric-label">Aware</span>
+                        </div>
+                    </div>
+
+                    <div class="achievement-card" data-aos="fade-up" data-aos-delay="400">
+                        <div class="achievement-icon">
+                            <i class="fas fa-hand-holding-heart"></i>
+                        </div>
+                        <h3>Trust Through Restraint</h3>
+                        <p>Argues that attention is a design problem. The system that earns trust isn't the loudest one — it's the one that knows when to stay quiet and when to surface something worth surfacing.</p>
+                        <div class="achievement-metric">
+                            <span class="metric-number">Earned</span>
+                            <span class="metric-label">Trust</span>
+                        </div>
+                    </div>
+
+                    <div class="achievement-card" data-aos="fade-up" data-aos-delay="500">
+                        <div class="achievement-icon">
+                            <i class="fas fa-terminal"></i>
+                        </div>
+                        <h3>AI Drives the UI</h3>
+                        <p>Beyond conversation, voice and text commands can directly control the interface — opening panels, surfacing records, switching context. Anything reachable through clicks is reachable through natural language.</p>
+                        <div class="achievement-metric">
+                            <span class="metric-number">UI</span>
+                            <span class="metric-label">Controllable</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reflection -->
+                <div class="key-learnings" data-aos="fade-up" data-aos-delay="500" style="margin-top: 4rem;">
+                    <h3>Reflection</h3>
+                    <div class="learnings-grid">
+                        <div class="learning-card">
+                            <div class="learning-icon">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <h4>The Hardest Part</h4>
+                            <p>It wasn't the AI. It was the restraint. Designing a system that knows when <em>not</em> to act is harder than designing one that responds to every input — but in environments like this, every unnecessary intervention is a distraction, and every distraction has a cost.</p>
+                        </div>
+                        <div class="learning-card">
+                            <div class="learning-icon">
+                                <i class="fas fa-compass"></i>
+                            </div>
+                            <h4>Where AI Is Heading</h4>
+                            <p>Not chatbots layered on top of dashboards. Ambient systems that understand context, respect attention, and earn trust by staying quiet until they have something worth saying. That's the bar.</p>
+                        </div>
+                        <div class="learning-card">
+                            <div class="learning-icon">
+                                <i class="fas fa-seedling"></i>
+                            </div>
+                            <h4>Future Potential</h4>
+                            <p>The same pattern translates anywhere attention is finite and stakes are high — operating environments, emergency response, command centers. The technical foundations are here. What's missing is the design discipline to use them well.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Next Project -->
+        <section class="next-project">
+            <div class="container">
+                <div class="next-project-content" data-aos="fade-up">
+                    <h2>Next Case Study</h2>
+                    <h3>Horizon Control - Arthroscopy Embedded Medical Software</h3>
+                    <p>Bridging digital design and real-world surgery with hardware-integrated prototypes surgeons could actually use in operating rooms.</p>
+                    <a href="project1.html" class="btn-primary">
+                        <i class="fas fa-arrow-right"></i>
+                        <span>View Next Project</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Navigation</h3>
+                    <ul>
+                        <li><a href="index.html#home">Home</a></li>
+                        <li><a href="index.html#projects">Projects</a></li>
+                        <li><a href="index.html#about">About</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Projects</h3>
+                    <ul>
+                        <li><a href="project1.html">Horizon Control</a></li>
+                        <li><a href="project2.html">AdFluence</a></li>
+                        <li><a href="project3.html">Form Builder</a></li>
+                        <li><a href="project4.html">Design System Request Form</a></li>
+                        <li><a href="project5.html">Ambient Clinical Assistant</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Connect</h3>
+                    <div class="social-links">
+                        <a href="https://linkedin.com/in/melissacasole" target="_blank" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="https://dribbble.com/melissacasole" target="_blank" aria-label="Dribbble">
+                            <i class="fab fa-dribbble"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="assets/docs/melissa_casole_ux_resume.pdf" download>Resume</a></li>
+                        <li><a href="index.html#about">Skills</a></li>
+                        <li><a href="index.html#contact">Contact Info</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 Melissa Casole. All rights reserved. | Designed with ❤️ for user experience.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Floating Resume Button -->
+    <a href="assets/docs/melissa_casole_ux_resume.pdf" class="floating-resume-btn" download>
+        <i class="fas fa-download"></i>
+        <span>Resume</span>
+    </a>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
+    <!-- Vercel Analytics -->
+    <script src="js/vercel-analytics.js"></script>
+
+    <script src="js/libs-init.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/spa-nav.js?v=6" defer></script>
+    <script src="js/melissa-ai.js?v=8" defer></script>
+</body>
+
+</html>
