@@ -13,7 +13,12 @@ const PORT = process.env.PORT || 3000;
 // Middleware
 app.use(cors());
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+// Static asset serving is handled by Vercel's CDN in production. Only attach
+// express.static during local dev; otherwise the bundler pulls public/ into
+// the function and blows past Vercel's 300MB limit.
+if (require.main === module) {
+  app.use(express.static(path.join(__dirname, 'public')));
+}
 
 // Simple storage using environment variables (works with Vercel)
 let pendingRequests = {};
@@ -830,15 +835,13 @@ app.post('/api/tts', async (req, res) => {
   }
 });
 
-// Serve the main page (only used for local dev — on Vercel the static
-// public/index.html is served directly by the platform).
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
-
-// Only start a real listener when invoked directly (local dev / `node server.js`).
-// On Vercel, server.js is loaded by api/[...slug].js as a serverless function.
+// Local-dev entry point. On Vercel, server.js is loaded by api/index.js as a
+// serverless function and Vercel serves the static public/ tree via the CDN —
+// neither this listener nor the / handler need to run.
 if (require.main === module) {
+  app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  });
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
   });
