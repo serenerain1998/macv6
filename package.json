@@ -5,9 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server.js",
-    "build": "echo 'Static site - no build required'",
-    "vercel-build": "echo 'Vercel build completed'"
+    "dev": "nodemon server.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.91.1",
