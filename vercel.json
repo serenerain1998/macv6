@@ -1,47 +1,11 @@
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "server.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "*.html",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "css/**",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "js/**",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "assets/**",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "videos/**",
-      "use": "@vercel/static"
-    }
+  "rewrites": [
+    { "source": "/login", "destination": "/login.html" }
   ],
-  "routes": [
-    {
-      "src": "/login",
-      "dest": "/login.html"
-    },
-    {
-      "src": "/api/(.*)",
-      "dest": "/server.js"
-    },
-    {
-      "src": "/(.*\\.(js|css|png|jpg|jpeg|gif|svg|ico|mp4|mov|pdf))",
-      "dest": "/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/$1"
+  "functions": {
+    "api/[...slug].js": {
+      "includeFiles": "skills/**",
+      "maxDuration": 30
     }
-  ]
+  }
 }
