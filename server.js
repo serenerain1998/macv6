@@ -427,23 +427,19 @@ app.get('/api/decline-request/:requestId', async (req, res) => {
 // Verify temporary password
 app.post('/api/verify-password', (req, res) => {
   const { password } = req.body;
-  
-  console.log('Password verification request for:', password);
-  console.log('Available temporary passwords:', Object.keys(temporaryPasswords));
-  
+
   if (!password) {
-    return res.status(400).json({ 
-      success: false, 
-      message: 'Password required' 
+    return res.status(400).json({
+      success: false,
+      message: 'Password required'
     });
   }
 
-  // First check the hardcoded password
-  if (password === 'MelissaAI123!') {
-    console.log('Hardcoded password valid');
-    res.json({ 
-      success: true, 
-      message: 'Password valid' 
+  // Master password lives in SITE_PASSWORD env var.
+  if (process.env.SITE_PASSWORD && password === process.env.SITE_PASSWORD) {
+    res.json({
+      success: true,
+      message: 'Password valid'
     });
     return;
   }
@@ -468,10 +464,80 @@ app.post('/api/verify-password', (req, res) => {
   }
 
   console.log('Temporary password valid');
-  res.json({ 
-    success: true, 
-    message: 'Password valid' 
+  res.json({
+    success: true,
+    message: 'Password valid'
   });
+});
+
+// =====================================================================
+// Site-wide auth — HMAC-signed cookie issued on /api/auth/login,
+// verified on every request by middleware.js at the edge.
+// =====================================================================
+
+const AUTH_COOKIE_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
+
+function signAuthCookie(secret, expiryMs) {
+  const sig = crypto
+    .createHmac('sha256', secret)
+    .update(String(expiryMs))
+    .digest('base64')
+    .replace(/=+$/, '')
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_');
+  return `${expiryMs}.${sig}`;
+}
+
+function authCookieAttributes(value, maxAgeSec) {
+  return [
+    `auth=${value}`,
+    'HttpOnly',
+    'Secure',
+    'SameSite=Lax',
+    'Path=/',
+    `Max-Age=${maxAgeSec}`,
+  ].join('; ');
+}
+
+app.post('/api/auth/login', (req, res) => {
+  const { password } = req.body || {};
+  const expectedPassword = process.env.SITE_PASSWORD;
+  const secret = process.env.AUTH_SECRET;
+
+  if (!expectedPassword || !secret) {
+    console.error('[auth] SITE_PASSWORD or AUTH_SECRET not configured');
+    return res.status(500).json({ success: false, message: 'Server not configured' });
+  }
+
+  // Check master password first; fall back to temp passwords from email-approval flow.
+  let valid = false;
+  if (typeof password === 'string' && password.length > 0) {
+    if (password === expectedPassword) {
+      valid = true;
+    } else {
+      const passwordData = temporaryPasswords[password];
+      if (passwordData && Date.now() <= passwordData.expiresAt) {
+        valid = true;
+      }
+    }
+  }
+
+  if (!valid) {
+    // Small fixed delay to slow brute force; do not log the attempted password.
+    return setTimeout(() => {
+      res.status(401).json({ success: false, message: 'Invalid password' });
+    }, 400);
+  }
+
+  const expiry = Date.now() + AUTH_COOKIE_MAX_AGE_MS;
+  const cookieValue = signAuthCookie(secret, expiry);
+  res.setHeader('Set-Cookie', authCookieAttributes(cookieValue, Math.floor(AUTH_COOKIE_MAX_AGE_MS / 1000)));
+  res.json({ success: true });
+});
+
+app.post('/api/auth/logout', (req, res) => {
+  res.setHeader('Set-Cookie', 'auth=; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=0');
+  res.json({ success: true });
 });
 
 // Clean up expired passwords and old pending requests (run every hour)
