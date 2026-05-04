@@ -1,9 +1,10 @@
 {
   "rewrites": [
-    { "source": "/login", "destination": "/login.html" }
+    { "source": "/login", "destination": "/login.html" },
+    { "source": "/api/:path*", "destination": "/api/index?_path=:path*" }
   ],
   "functions": {
-    "api/[...slug].js": {
+    "api/index.js": {
       "includeFiles": "skills/**",
       "maxDuration": 30
     }
