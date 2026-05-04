@@ -3,5 +3,14 @@
   "outputDirectory": "public",
   "rewrites": [
     { "source": "/login", "destination": "/login.html" }
-  ]
+  ],
+  "functions": {
+    "api/chat.js": {
+      "includeFiles": "skills/**",
+      "maxDuration": 60
+    },
+    "api/tts.js": {
+      "maxDuration": 60
+    }
+  }
 }
