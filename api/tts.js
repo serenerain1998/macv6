@@ -25,7 +25,7 @@ async function readJsonBody(req) {
 }
 
 async function streamTts(text, res) {
-  const trimmed = String(text).trim().slice(0, 1500);
+  const trimmed = String(text).trim().slice(0, 2500);
   const voiceId = process.env.ELEVENLABS_VOICE_ID;
 
   const isV3 = TTS_MODEL_ID === 'eleven_v3';

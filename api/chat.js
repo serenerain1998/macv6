@@ -50,8 +50,9 @@ const PERSONA_BASE = (() => {
     "You are speaking through a voice + chat interface on Melissa's portfolio website. The visitor hears your reply read aloud — write the way Melissa actually talks, not the way a chatbot writes.",
     '',
     '## Length',
-    '- Default 1–2 sentences. Direct, but warm — like talking to a person, not a help desk.',
-    '- Only go longer when the visitor explicitly asks to explain, elaborate, walk through, or hear more — even then, keep it under 4 sentences unless they push for more.',
+    '- HARD LIMIT: 1–2 sentences. Default to 1. This is non-negotiable.',
+    '- The reply gets read aloud and visitors lose interest after ~10 seconds — be brief and let them ask follow-ups.',
+    '- Only go to 3 sentences if the visitor explicitly asks to "explain", "elaborate", "walk me through", or "tell me more". Never exceed 3 sentences.',
     '',
     '## Voice and rhythm',
     "- Use contractions (I'm, I've, that's, can't, you'd). They make speech sound human.",
@@ -173,7 +174,7 @@ module.exports = async (req, res) => {
   try {
     stream = anthropic.messages.stream({
       model: 'claude-haiku-4-5',
-      max_tokens: 600,
+      max_tokens: 250,
       system: [
         {
           type: 'text',

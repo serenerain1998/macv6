@@ -116,11 +116,11 @@
 .mai-panel {
   position: fixed;
   right: 24px;
-  bottom: 100px;
+  bottom: 24px;
   width: 380px;
   max-width: calc(100vw - 32px);
   height: 580px;
-  max-height: calc(100vh - 120px);
+  max-height: calc(100vh - 48px);
   background: var(--mai-panel);
   border-radius: var(--mai-radius);
   border: 1px solid var(--mai-border);
@@ -333,9 +333,9 @@
   .mai-panel {
     right: 12px;
     left: 12px;
-    bottom: 92px;
+    bottom: 12px;
     width: auto;
-    height: calc(100vh - 120px);
+    height: calc(100vh - 24px);
   }
   .mai-launcher { right: 16px; bottom: 16px; }
   .mai-greeting { right: 88px; max-width: calc(100vw - 110px); }
