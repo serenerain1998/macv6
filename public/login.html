@@ -4,129 +4,290 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
-  <title>Sign in — Melissa Casole</title>
+  <title>Private Portfolio — Melissa Casole</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <style>
+    :root {
+      --color-primary-400: #60a5fa;
+      --color-primary-500: #3b82f6;
+      --color-secondary-400: #38bdf8;
+      --color-secondary-500: #0ea5e9;
+      --color-neutral-300: #cbd5e1;
+      --color-neutral-400: #94a3b8;
+    }
+
     * { box-sizing: border-box; }
     html, body {
       margin: 0;
       padding: 0;
-      height: 100%;
+      min-height: 100%;
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #0a0a0a;
       color: #fff;
     }
     body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 24px;
+      padding: 1rem;
     }
-    .card {
-      width: 100%;
-      max-width: 420px;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 16px;
-      padding: 40px 32px;
+
+    .modal-content {
+      background: rgba(0, 0, 0, 1);
       backdrop-filter: blur(20px);
-    }
-    h1 {
-      margin: 0 0 8px 0;
-      font-size: 24px;
-      font-weight: 600;
-      letter-spacing: -0.02em;
-    }
-    p.sub {
-      margin: 0 0 28px 0;
-      color: rgba(255, 255, 255, 0.6);
-      font-size: 14px;
-      line-height: 1.5;
-    }
-    label {
-      display: block;
-      font-size: 13px;
-      color: rgba(255, 255, 255, 0.7);
-      margin-bottom: 8px;
-    }
-    input[type="password"] {
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      padding: 48px;
+      max-width: 560px;
       width: 100%;
-      padding: 12px 14px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 10px;
-      color: #fff;
-      font-size: 15px;
-      transition: border-color 0.2s, background 0.2s;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
     }
-    input[type="password"]:focus {
+
+    .modal-header { margin-bottom: 32px; }
+    .lock-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, var(--color-primary-400), var(--color-secondary-400));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      font-size: 2rem;
+      color: white;
+    }
+    .modal-header h1 {
+      color: white;
+      font-size: 1.75rem;
+      font-weight: 700;
+      margin: 0 0 16px;
+    }
+    .modal-header p {
+      color: var(--color-neutral-300);
+      font-size: 1rem;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .password-form { margin-bottom: 32px; }
+
+    .input-group {
+      position: relative;
+      margin-bottom: 24px;
+    }
+    .password-input {
+      width: 100%;
+      padding: 16px 48px 16px 16px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      color: white;
+      font-size: 1rem;
+      transition: all 0.2s ease;
+    }
+    .password-input::placeholder { color: var(--color-neutral-400); }
+    .password-input:focus {
       outline: none;
-      border-color: #667eea;
-      background: rgba(255, 255, 255, 0.07);
+      border-color: var(--color-primary-400);
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
     }
-    button {
-      width: 100%;
-      margin-top: 16px;
-      padding: 12px 14px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    .password-input.error {
+      border-color: #ef4444;
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+    }
+    .toggle-password {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
       border: none;
-      border-radius: 10px;
-      color: #fff;
-      font-size: 15px;
+      color: var(--color-neutral-400);
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+    }
+    .toggle-password:hover {
+      color: #cbd5e1;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 16px 32px;
+      background: linear-gradient(135deg, var(--color-primary-500), var(--color-secondary-500));
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-size: 1rem;
       font-weight: 600;
       cursor: pointer;
-      transition: transform 0.15s, box-shadow 0.15s, opacity 0.2s;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
     }
-    button:hover:not(:disabled) {
-      transform: translateY(-1px);
-      box-shadow: 0 10px 24px rgba(102, 126, 234, 0.3);
+    .submit-btn:hover:not(:disabled) {
+      background: linear-gradient(135deg, var(--color-primary-400), var(--color-secondary-400));
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3);
     }
-    button:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-    .error {
-      margin-top: 14px;
-      padding: 10px 12px;
-      background: rgba(239, 68, 68, 0.1);
-      border: 1px solid rgba(239, 68, 68, 0.3);
-      border-radius: 8px;
-      color: #fca5a5;
-      font-size: 13px;
+    .submit-btn:active { transform: translateY(0); }
+    .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .error-message {
       display: none;
+      color: #fca5a5;
+      font-size: 0.875rem;
+      margin-top: 16px;
+      padding: 12px;
+      background: rgba(239, 68, 68, 0.1);
+      border: 1px solid rgba(239, 68, 68, 0.25);
+      border-radius: 8px;
     }
-    .error.show { display: block; }
+    .error-message.show { display: flex; align-items: center; gap: 8px; justify-content: center; }
+
+    .privacy-notice {
+      color: var(--color-neutral-400);
+      font-size: 0.875rem;
+      line-height: 1.5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .privacy-notice i { color: var(--color-primary-400); }
+
+    .alternative-access { margin-top: 32px; }
+    .divider {
+      display: flex;
+      align-items: center;
+      margin: 16px 0;
+      color: var(--color-neutral-400);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+    .divider span { padding: 0 16px; }
+
+    .dribbble-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 20px;
+      background: rgba(234, 76, 137, 0.1);
+      border: 1px solid rgba(234, 76, 137, 0.3);
+      border-radius: 12px;
+      color: #ea4c89;
+      font-size: 0.95rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .dribbble-btn:hover {
+      background: rgba(234, 76, 137, 0.18);
+      border-color: rgba(234, 76, 137, 0.5);
+      transform: translateY(-1px);
+    }
+    .alternative-text {
+      margin-top: 12px;
+      color: var(--color-neutral-400);
+      font-size: 0.875rem;
+    }
+
+    @media (max-width: 480px) {
+      .modal-content { padding: 32px 20px; }
+      .modal-header h1 { font-size: 1.5rem; }
+    }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1>Sign in</h1>
-    <p class="sub">This portfolio contains client work under NDA. Enter the access password to continue.</p>
-    <form id="loginForm" autocomplete="off">
-      <label for="password">Password</label>
-      <input type="password" id="password" name="password" required autofocus>
-      <button type="submit" id="submitBtn">Sign in</button>
-      <div class="error" id="error"></div>
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="lock-icon"><i class="fas fa-lock"></i></div>
+      <h1>Private Portfolio</h1>
+      <p>This portfolio contains confidential UX case studies and private client work. A password is required to view the content.</p>
+    </div>
+
+    <form class="password-form" id="loginForm" method="post" autocomplete="off" onsubmit="return false;">
+      <div class="input-group">
+        <input
+          type="password"
+          id="passwordInput"
+          class="password-input"
+          placeholder="Enter password"
+          required
+          autofocus>
+        <button type="button" class="toggle-password" id="togglePassword" aria-label="Toggle password visibility">
+          <i class="fas fa-eye" id="toggleIcon"></i>
+        </button>
+      </div>
+
+      <button type="submit" class="submit-btn" id="submitBtn">
+        Access Portfolio <i class="fas fa-unlock"></i>
+      </button>
+
+      <div class="error-message" id="errorMessage">
+        <i class="fas fa-exclamation-triangle"></i>
+        <span id="errorText">Incorrect password. Please try again.</span>
+      </div>
     </form>
+
+    <div class="privacy-notice">
+      <i class="fas fa-shield-alt"></i>
+      Your privacy is important. This password is only used to protect sensitive portfolio content.
+    </div>
+
+    <div class="alternative-access">
+      <div class="divider"><span>or</span></div>
+      <a href="https://dribbble.com/melissacasole" class="dribbble-btn" target="_blank" rel="noopener">
+        <i class="fab fa-dribbble"></i>
+        <span>View My Dribbble</span>
+      </a>
+      <p class="alternative-text">Don't have the password? Check out my public work on Dribbble.</p>
+    </div>
   </div>
+
   <script>
     (function () {
       const form = document.getElementById('loginForm');
-      const passwordInput = document.getElementById('password');
+      const passwordInput = document.getElementById('passwordInput');
       const submitBtn = document.getElementById('submitBtn');
-      const errorEl = document.getElementById('error');
+      const errorEl = document.getElementById('errorMessage');
+      const errorText = document.getElementById('errorText');
+      const togglePasswordBtn = document.getElementById('togglePassword');
+      const toggleIcon = document.getElementById('toggleIcon');
 
       function showError(msg) {
-        errorEl.textContent = msg;
+        errorText.textContent = msg;
         errorEl.classList.add('show');
+        passwordInput.classList.add('error');
       }
       function clearError() {
         errorEl.classList.remove('show');
+        passwordInput.classList.remove('error');
       }
+
+      togglePasswordBtn.addEventListener('click', () => {
+        const showing = passwordInput.type === 'text';
+        passwordInput.type = showing ? 'password' : 'text';
+        toggleIcon.className = showing ? 'fas fa-eye' : 'fas fa-eye-slash';
+      });
 
       function getNextPath() {
         const params = new URLSearchParams(window.location.search);
         const next = params.get('next') || '/';
-        // Only allow same-origin paths.
         if (!next.startsWith('/') || next.startsWith('//')) return '/';
         return next;
       }
@@ -135,7 +296,8 @@
         e.preventDefault();
         clearError();
         submitBtn.disabled = true;
-        submitBtn.textContent = 'Signing in…';
+        const originalLabel = submitBtn.innerHTML;
+        submitBtn.innerHTML = 'Signing in… <i class="fas fa-circle-notch fa-spin"></i>';
         try {
           const res = await fetch('/api/auth/login', {
             method: 'POST',
@@ -143,7 +305,6 @@
             body: JSON.stringify({ password: passwordInput.value }),
           });
           if (res.ok) {
-            // Tell the legacy client-side password modal to stay hidden.
             try {
               localStorage.setItem('portfolioAuthenticated', 'true');
               localStorage.setItem('portfolioAuthTimestamp', Date.now().toString());
@@ -152,12 +313,12 @@
             return;
           }
           const data = await res.json().catch(() => ({}));
-          showError(data.message || 'Invalid password');
+          showError(data.message || 'Incorrect password. Please try again.');
         } catch (err) {
-          showError('Connection error. Try again.');
+          showError('Connection error. Please try again.');
         } finally {
           submitBtn.disabled = false;
-          submitBtn.textContent = 'Sign in';
+          submitBtn.innerHTML = originalLabel;
         }
       });
     })();
