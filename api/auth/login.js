@@ -49,8 +49,16 @@ module.exports = async (req, res) => {
   const expected = process.env.SITE_PASSWORD;
   const secret = process.env.AUTH_SECRET;
   if (!expected || !secret) {
-    console.error('[auth] SITE_PASSWORD or AUTH_SECRET not configured');
-    res.status(500).json({ success: false, message: 'Server not configured' });
+    const missing = [];
+    if (!expected) missing.push('SITE_PASSWORD');
+    if (!secret) missing.push('AUTH_SECRET');
+    console.error('[auth] missing env vars:', missing.join(', '));
+    // Surface the missing variable names (not values) to help debug deploys.
+    res.status(500).json({
+      success: false,
+      message: 'Server not configured',
+      missing,
+    });
     return;
   }
 
