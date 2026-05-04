@@ -143,6 +143,11 @@
             body: JSON.stringify({ password: passwordInput.value }),
           });
           if (res.ok) {
+            // Tell the legacy client-side password modal to stay hidden.
+            try {
+              localStorage.setItem('portfolioAuthenticated', 'true');
+              localStorage.setItem('portfolioAuthTimestamp', Date.now().toString());
+            } catch (_) { /* private browsing — ignore */ }
             window.location.href = getNextPath();
             return;
           }
