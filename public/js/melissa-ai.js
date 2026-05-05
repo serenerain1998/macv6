@@ -44,22 +44,36 @@ console.log('[melissa-ai] script loaded v=3');
   const MAX_HISTORY = 20;
 
   // -----------------------------
-  // Page context detection
+  // Page context detection — reads the live DOM so the AI knows exactly
+  // which page the visitor is looking at and, on a case-study page, the
+  // actual project name and one-line summary shown on screen.
   // -----------------------------
   function detectPageContext() {
     const path = window.location.pathname || '';
     const file = path.split('/').pop() || 'index.html';
-    const title = (document.title || '').trim();
 
-    const projectMap = {
-      'project1.html': 'Project 1: Design System Leadership',
-      'project2.html': 'Project 2: Healthcare Workflow UX',
-      'project3.html': 'Project 3: AI Interaction Prototype',
-      'project4.html': 'Project 4: Advanced Prototyping / Hardware Interaction',
-    };
-    const projectSlug = projectMap[file] || null;
+    // Strip the trailing "| Melissa Casole" suffix from the doc title.
+    const rawTitle = (document.title || '').trim();
+    const title = rawTitle.replace(/\s*\|\s*Melissa Casole\s*$/i, '').trim();
 
-    return { title, path: file, projectSlug };
+    let pageType = 'home';
+    if (/^project\d+\.html$/.test(file)) pageType = 'project';
+    else if (file === 'projects.html') pageType = 'projects-index';
+    else if (file === 'methodology.html') pageType = 'methodology';
+    else if (file === 'visual-design.html') pageType = 'visual-design';
+    else if (file === 'search.html') pageType = 'search';
+    else if (file === '' || file === 'index.html') pageType = 'home';
+
+    let projectName = null;
+    let projectSummary = null;
+    if (pageType === 'project') {
+      const heroTitle = document.querySelector('.hero-title');
+      const heroSubtitle = document.querySelector('.hero-subtitle');
+      if (heroTitle) projectName = heroTitle.textContent.replace(/\s+/g, ' ').trim();
+      if (heroSubtitle) projectSummary = heroSubtitle.textContent.replace(/\s+/g, ' ').trim();
+    }
+
+    return { pageType, path: file, title, projectName, projectSummary };
   }
 
   // -----------------------------

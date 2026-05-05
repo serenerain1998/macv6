@@ -153,15 +153,35 @@ module.exports = async (req, res) => {
 
   let pageContextBlock = '';
   if (pageContext && typeof pageContext === 'object') {
-    const { title, path: pagePath, projectSlug } = pageContext;
-    const safe = (v) => (typeof v === 'string' ? v.slice(0, 200) : '');
-    pageContextBlock =
-      '\n\n# CURRENT PAGE CONTEXT\n' +
-      `The visitor is currently viewing this page on Melissa's portfolio:\n` +
-      `- Title: ${safe(title) || 'unknown'}\n` +
-      `- Path: ${safe(pagePath) || 'unknown'}\n` +
-      (projectSlug ? `- Project slug: ${safe(projectSlug)}\n` : '') +
-      `Use the matching project section from PORTFOLIO PROJECT LANGUAGE if relevant. If unsure, speak generically about Melissa's process.`;
+    const safe = (v, max = 400) =>
+      typeof v === 'string' ? v.replace(/\s+/g, ' ').trim().slice(0, max) : '';
+    const pageType = safe(pageContext.pageType, 40) || 'unknown';
+    const pagePath = safe(pageContext.path, 80);
+    const title = safe(pageContext.title, 200);
+    const projectName = safe(pageContext.projectName, 200);
+    const projectSummary = safe(pageContext.projectSummary, 600);
+
+    let block = '\n\n# CURRENT PAGE CONTEXT\n';
+    block += `The visitor is currently on this page of Melissa's portfolio:\n`;
+    block += `- Page type: ${pageType}\n`;
+    block += `- Path: ${pagePath || 'unknown'}\n`;
+    block += `- Page title: ${title || 'unknown'}\n`;
+
+    if (pageType === 'project' && projectName) {
+      block += `- Project name (visible in the hero on screen): ${projectName}\n`;
+      if (projectSummary) {
+        block += `- One-line summary visible on screen: "${projectSummary}"\n`;
+      }
+      block += '\n## Contextual rule for "this project"\n';
+      block +=
+        'If the visitor says "this project", "tell me about this", "what does this do", "walk me through this", or any vague "this/it" reference, they mean THE PROJECT NAMED ABOVE. Talk about THAT specific project. Match it to the closest section in PORTFOLIO PROJECT LANGUAGE if the topic clearly fits (medical / hardware / design system / AI interaction / enterprise workflow); otherwise speak from the project name and summary above. Never ask "which project?" when the visitor is already on a project page.\n';
+    } else {
+      block += '\n## Contextual rule for "this project"\n';
+      block +=
+        'The visitor is NOT on a specific project page right now. If they say "this project", "tell me about this project", or anything vague without naming a project, ask which one they mean — keep it light: "Which one are you looking at?" or "Which project — the medical one, the design system, or…?". Do not guess.\n';
+    }
+
+    pageContextBlock = block;
   }
 
   res.setHeader('Content-Type', 'text/plain; charset=utf-8');
