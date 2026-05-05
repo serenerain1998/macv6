@@ -5,6 +5,14 @@
 (function() {
   'use strict';
 
+  // main.js sits inside #mainContent, so spa-nav.js re-executes it on every
+  // page swap. Without this guard each run would re-attach all the global
+  // scroll/click/keydown listeners (60+ listeners after 5 navigations) and
+  // restart the password-modal flash. Re-binding for swapped-in elements
+  // happens via window.MainApp.spaReInit instead.
+  if (window.__mainAppInitialized) return;
+  window.__mainAppInitialized = true;
+
   // ===== STATE MANAGEMENT =====
   const state = {
     currentFilter: 'all',

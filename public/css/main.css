@@ -2714,7 +2714,10 @@ body.is-scrolling .contact-section {
   width: 100%;
   height: 100%;
   background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
-  display: flex;
+  /* Hidden by default so the freshly-swapped modal never flashes during
+     SPA navigation. main.js's showPasswordModal() opts back into display: flex
+     for the rare case the legacy gate needs to fire on a non-authed visitor. */
+  display: none;
   align-items: center;
   justify-content: center;
   z-index: 99999;
